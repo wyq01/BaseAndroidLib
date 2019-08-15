@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.annotation.TargetApi
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.net.Uri
 import android.os.Build
 import android.text.TextUtils
@@ -447,6 +448,11 @@ abstract class BaseWebActivity : BaseActivity() {
      * 打开或关闭重力感应
      */
     fun enableSensorRotate(sensorRotate: Boolean) {
+//        requestedOrientation = if (sensorRotate) {
+//            ActivityInfo.SCREEN_ORIENTATION_SENSOR
+//        } else {
+//            ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+//        }
         ScreenRotateUtils.getInstance(this).enableSensorRotate(sensorRotate)
     }
 

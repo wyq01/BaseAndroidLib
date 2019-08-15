@@ -101,7 +101,6 @@ class ScreenRotateUtils(context: Context) {
                     orientation += 360
                 }
             }
-
             /**
              * 获取手机系统的重力感应开关设置，这段代码看需求，不要就删除
              * screenchange = 1 表示开启，screenchange = 0 表示禁用
@@ -176,14 +175,18 @@ class ScreenRotateUtils(context: Context) {
                     /**
                      * 根据手机屏幕的朝向角度，来设置内容的横竖屏，并且记录状态
                      */
-                    if (orientation in 46..134) {
+                    if (orientation in 45..135) {
                         mActivity!!.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE
-                    } else if (orientation in 136..224) {
+                        LogUtil.d("8 反向横屏 ${mActivity!!.requestedOrientation}")
+                    } else if (orientation in 136..225) {
                         mActivity!!.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT
-                    } else if (orientation in 226..314) {
+                        LogUtil.d("9 反向竖屏 ${mActivity!!.requestedOrientation}")
+                    } else if (orientation in 226..315) {
                         mActivity!!.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
-                    } else if (orientation in 316..359 || orientation in 1..44) {
+                        LogUtil.d("0 正向横屏 ${mActivity!!.requestedOrientation}")
+                    } else if (orientation in 316..360 || orientation in 0..44) {
                         mActivity!!.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+                        LogUtil.d("1 正向竖屏 ${mActivity!!.requestedOrientation}")
                     }
                 }
             }

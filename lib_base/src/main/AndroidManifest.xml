@@ -54,17 +54,17 @@
         <!-- **********************基础框架必须声明********************** -->
         <activity
             android:name=".printer.PrinterConnectAct"
-            android:configChanges="keyboardHidden|orientation"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".qrcode.QRCodeAct"
-            android:configChanges="keyboardHidden|orientation"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".image.PhotoViewAct"
-            android:configChanges="keyboardHidden|orientation"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
@@ -73,12 +73,12 @@
             android:screenOrientation="landscape"/>
         <activity
             android:name=".office.OfficeReaderAct"
-            android:configChanges="keyboardHidden|orientation"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".office.TbsOfficeReaderAct"
-            android:configChanges="keyboardHidden|orientation"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
 

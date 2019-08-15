@@ -2,6 +2,7 @@ package com.wyq.base
 
 import android.Manifest
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.content.res.Configuration
 import android.graphics.BitmapFactory
 import android.net.Uri
@@ -139,10 +140,19 @@ abstract class BaseActivity : AppCompatActivity() {
      */
     private fun initNotchScreen() {
         if (fixNotch) {
-            layoutContentView?.setPadding(
-                if (ScreenRotateUtils.screenIsLandscape(this)) notchHeight else 0,
-                0, 0, 0
-            )
+            var left = 0
+            var right = 0
+            when(requestedOrientation) {
+                ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE -> {
+                    left = notchHeight
+                    right = 0
+                }
+                ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE -> {
+                    left = 0
+                    right = notchHeight
+                }
+            }
+            layoutContentView?.setPadding(left, 0, right, 0)
         }
     }
 

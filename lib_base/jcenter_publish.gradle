@@ -11,9 +11,6 @@ if(projectPropertiesFile.exists()){
 // read properties
 def projectName = properties.getProperty("project.name")
 def projectGroup = properties.getProperty("project.group")
-def projectGroupId = properties.getProperty("project.groupId")
-def projectArtifactId = properties.getProperty("project.artifactId")
-def projectVersion = properties.getProperty("project.version")
 def projectSiteUrl = properties.getProperty("project.siteUrl")
 def projectGitUrl = properties.getProperty("project.gitUrl")
 
@@ -26,7 +23,7 @@ def bintrayApikey = properties.getProperty("bintray.apikey")
 def bintrayRepo = properties.getProperty("bintray.repo")
 
 group projectGroup
-version projectVersion
+version version_name
 
 task sourcesJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
@@ -100,7 +97,7 @@ bintray {
         repo = bintrayRepo
         name = projectName
         desc = 'An library for Android projects'  //项目描述
-        websiteUrl = projectGitUrl
+        websiteUrl = projectSiteUrl
         vcsUrl = projectGitUrl
         licenses = ["Apache-2.0"]
         publish = true

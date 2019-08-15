@@ -15,7 +15,7 @@
 
         <activity
             android:name=".basic.BasicInputAct"
-            android:configChanges="keyboardHidden|orientation"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden">
@@ -33,13 +33,13 @@
             android:windowSoftInputMode="stateHidden"/>
         <activity
             android:name=".basic.BasicPrintTestAct"
-            android:configChanges="keyboardHidden|orientation"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"/>
         <activity
             android:name=".basic.WebTestAct"
-            android:configChanges="keyboardHidden|orientation"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"/>
