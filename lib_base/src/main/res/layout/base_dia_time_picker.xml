@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="?attr/dialogPreferredPadding"
+        android:paddingRight="?attr/dialogPreferredPadding"
+        android:paddingTop="?attr/dialogPreferredPadding">
+
+        <TextView
+            android:id="@+id/titleTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="选择时间"
+            android:textColor="@color/toolbar"
+            android:textSize="@dimen/dp_16" />
+
+        <com.wyq.base.view.timepicker.TimePickerView
+            android:id="@+id/timePickerView"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_120"
+            app:lunarThemeColor="@color/toolbar"
+            app:normalTextColor="#FF777777"
+            app:scrollAnimation="true"
+            app:solarThemeColor="@color/toolbar" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/buttonPanel"
+        style="?attr/buttonBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="bottom"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/dp_10"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10"
+        android:paddingTop="@dimen/dp_10">
+
+        <android.support.v4.widget.Space
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:visibility="invisible" />
+
+        <Button
+            android:id="@+id/cancelBtn"
+            style="?attr/buttonBarNegativeButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/dp_16"
+            android:background="?attr/selectableItemBackground"
+            android:text="@string/button_cancel"
+            android:textColor="@color/toolbar" />
+
+        <Button
+            android:id="@+id/confirmBtn"
+            style="?attr/buttonBarPositiveButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:text="@string/button_confirm"
+            android:textColor="@color/toolbar" />
+    </LinearLayout>
+
+</LinearLayout>

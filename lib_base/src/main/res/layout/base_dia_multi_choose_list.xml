@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/titleView"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_40">
+
+        <TextView
+            android:id="@+id/titleTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dp_15"
+            android:textColor="@color/text_tip"
+            tools:text="标题"
+            android:textSize="@dimen/dp_16" />
+
+        <ImageView
+            android:id="@+id/closeBtn"
+            android:layout_width="@dimen/dp_22"
+            android:layout_height="@dimen/dp_22"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dp_15"
+            android:visibility="gone"
+            app:srcCompat="@drawable/base_ic_close" />
+
+        <View
+            android:id="@+id/noLicenseVerDivider"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"
+            android:layout_alignParentBottom="true"
+            android:background="@color/light_divider" />
+    </RelativeLayout>
+
+    <com.wyq.base.view.MaxHeightRecyclerView
+        android:id="@+id/filterRv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        android:scrollbars="vertical"
+        android:layout_weight="1"
+        app:maxHeight="@dimen/dp_300"
+        tools:listitem="@layout/base_ada_list_dialog" />
+
+    <LinearLayout
+        android:id="@+id/buttonPanel"
+        style="?attr/buttonBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="bottom"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/dp_10"
+        android:paddingRight="@dimen/dp_10">
+
+        <android.support.v4.widget.Space
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:visibility="invisible" />
+
+        <Button
+            android:id="@+id/cancelBtn"
+            style="?attr/buttonBarNegativeButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/dp_16"
+            android:background="?attr/selectableItemBackground"
+            android:text="@string/button_cancel"
+            android:textColor="@color/toolbar" />
+
+        <Button
+            android:id="@+id/confirmBtn"
+            style="?attr/buttonBarPositiveButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:text="@string/button_confirm"
+            android:textColor="@color/toolbar" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,107 @@
+<resources>
+
+    <!--
+        Base application theme, dependent on API level. This theme is replaced
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+    -->
+    <!--<style name="AppBaseTheme" parent="Theme.AppCompat.Light.DarkActionBar">-->
+    <style name="AppBaseTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
+        <item name="colorPrimary">@color/toolbar</item>
+        <item name="colorPrimaryDark">@color/toolbar</item>
+        <item name="colorAccent">@color/toolbar</item>
+
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+
+        <item name="android:windowContentOverlay">@null</item>
+        <!--<item name="android:windowAnimationStyle">@style/CommonAnimation</item>-->
+
+        <item name="colorControlNormal">@color/colorPrimary</item>
+        <item name="colorControlActivated">@color/colorPrimary</item>
+
+        <!-- 设置activity切换动画 -->
+        <item name="android:windowAnimationStyle">@style/activityAnimation</item>
+    </style>
+
+    <!-- 自定义APP Theme -->
+    <style name="SlideTheme" parent="AppBaseTheme">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
+    <!-- 自定义dialog -->
+    <style name="progressDialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
+    <!-- animation 样式 -->
+    <style name="activityAnimation" parent="@android:style/Animation">
+        <item name="android:activityOpenEnterAnimation">@anim/base_activity_slide_right_in</item>
+        <item name="android:activityOpenExitAnimation">@anim/base_activity_slide_left_out</item>
+        <item name="android:activityCloseEnterAnimation">@anim/base_activity_slide_left_in</item>
+        <item name="android:activityCloseExitAnimation">@anim/base_activity_slide_right_out</item>
+    </style>
+
+    <style name="SwitchButtonStyle">
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:paddingTop">4dp</item>
+        <item name="android:paddingBottom">4dp</item>
+    </style>
+
+    <style name="AppTheme.Dialog.DateTime" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:windowMinWidthMinor">85%</item>
+        <item name="android:windowMinWidthMajor">85%</item>
+        <item name="android:maxWidth">@dimen/dp_360</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.Dialog.DateTimeWider" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:windowMinWidthMinor">100%</item>
+        <item name="android:windowMinWidthMajor">100%</item>
+        <item name="android:maxWidth">@dimen/dp_400</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+    <style name="Matisse.App" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorPrimary">@color/dracula_primary</item>
+        <item name="colorPrimaryDark">@color/dracula_primary</item>
+        <item name="toolbar">@style/Toolbar.Dracula</item>
+        <item name="album.dropdown.title.color">@color/dracula_album_dropdown_title_text</item>
+        <item name="album.dropdown.count.color">@color/dracula_album_dropdown_count_text</item>
+        <item name="album.element.color">@android:color/white</item>
+        <item name="album.thumbnail.placeholder">@color/dracula_album_dropdown_thumbnail_placeholder</item>
+        <item name="album.emptyView">@drawable/ic_empty_dracula</item>
+        <item name="album.emptyView.textColor">@color/dracula_album_empty_view</item>
+        <item name="item.placeholder">@color/dracula_item_placeholder</item>
+        <item name="item.checkCircle.backgroundColor">@color/dracula_item_checkCircle_backgroundColor</item>
+        <item name="item.checkCircle.borderColor">@color/dracula_item_checkCircle_borderColor</item>
+        <item name="page.bg">@color/dracula_page_bg</item>
+        <item name="bottomToolbar.bg">@color/dracula_bottom_toolbar_bg</item>
+        <item name="bottomToolbar.preview.textColor">@color/dracula_bottom_toolbar_preview</item>
+        <item name="bottomToolbar.apply.textColor">@color/dracula_bottom_toolbar_apply</item>
+        <item name="preview.bottomToolbar.back.textColor">@color/dracula_preview_bottom_toolbar_back_text</item>
+        <item name="preview.bottomToolbar.apply.textColor">@color/dracula_preview_bottom_toolbar_apply</item>
+        <item name="android:listPopupWindowStyle">@style/Popup.Dracula</item>
+        <item name="listPopupWindowStyle">@style/Popup.Dracula</item>
+        <item name="capture.textColor">@color/dracula_capture</item>
+    </style>
+
+    <style name="ListDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:windowMinWidthMinor">90%</item>
+        <item name="android:windowMinWidthMajor">90%</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+</resources>

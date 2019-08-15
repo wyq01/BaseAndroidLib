@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CompanyDetailItem">
+        <attr name="item_tip" format="string" />
+        <attr name="item_content" format="string" />
+        <attr name="item_divider" format="boolean" />
+    </declare-styleable>
+</resources>

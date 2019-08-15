@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/errorIv"
+        android:layout_width="@dimen/dp_100"
+        android:layout_height="@dimen/dp_100"
+        android:tint="#adadad"
+        app:layout_constraintBottom_toTopOf="@+id/tipTv"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:srcCompat="@drawable/base_ic_no_network" />
+
+    <TextView
+        android:id="@+id/tipTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_20"
+        android:text="网络连接失败"
+        android:textColor="@color/text_tip"
+        android:textSize="@dimen/dp_18"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/tip2Tv"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/errorIv"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <TextView
+        android:id="@+id/tip2Tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_20"
+        android:text="请检查您的网络设置或重新加载"
+        android:textColor="@color/text_tip"
+        android:textSize="@dimen/dp_16"
+        app:layout_constraintBottom_toTopOf="@+id/reloadBtn"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tipTv"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <com.wyq.base.view.CommonShapeButton
+        android:id="@+id/reloadBtn"
+        android:layout_width="@dimen/dp_200"
+        android:layout_height="@dimen/dp_36"
+        android:layout_marginLeft="@dimen/dp_30"
+        android:layout_marginRight="@dimen/dp_30"
+        android:layout_marginTop="@dimen/dp_20"
+        android:text="重新加载"
+        android:textColor="@color/btn_common_normal"
+        android:textSize="@dimen/dp_14"
+        app:csb_activeEnable="true"
+        app:csb_cornerRadius="@dimen/dp_18"
+        app:csb_fillColor="@android:color/transparent"
+        app:csb_strokeColor="@color/btn_common_normal"
+        app:csb_strokeWidth="@dimen/dp_1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tip2Tv" />
+
+</android.support.constraint.ConstraintLayout>

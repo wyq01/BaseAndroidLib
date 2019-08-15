@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<color name="text_important">#7B82AE</color>
+
+	<color name="food_org_tag_blue">#3183FB</color>
+	<color name="food_org_tag_yellow">#FFEB3B</color>
+	<color name="food_org_tag_gray">#9E9E9E</color>
+
+	<color name="tab_select">#1DE4FC</color>
+	<color name="tab_un_select">#FFFFFF</color>
+
+	<color name="chart_end">#09F9B8</color>
+	<color name="chart_start">#0036F4</color>
+	<color name="chart">#036EE2</color>
+
+	<color name="increase">#FF106E</color>
+	<color name="reduce">#3DFF76</color>
+
+	<color name="egyptian_blue">#193D9C</color>
+
+</resources>

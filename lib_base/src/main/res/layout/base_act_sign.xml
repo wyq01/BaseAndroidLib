@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:clipToPadding="true">
+
+    <include
+        android:id="@+id/header"
+        layout="@layout/base_common_act_header" />
+
+    <RelativeLayout
+        android:id="@+id/container"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header">
+
+        <com.wyq.base.sign.view.PaintView
+            android:id="@+id/paintView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fadingEdge="none" />
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/clearBtn"
+            android:layout_width="@dimen/dp_36"
+            android:layout_height="@dimen/dp_36"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="@dimen/sign_tool_padding"
+            android:layout_marginBottom="@dimen/sign_tool_padding"
+            app:cardCornerRadius="@dimen/dp_18">
+
+            <ImageView
+                android:id="@+id/clearIv"
+                android:layout_width="@dimen/dp_25"
+                android:layout_height="@dimen/dp_25"
+                android:layout_gravity="center" />
+        </android.support.v7.widget.CardView>
+    </RelativeLayout>
+</android.support.constraint.ConstraintLayout>

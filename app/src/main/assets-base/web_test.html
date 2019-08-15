@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<script>
+    function toggleScreenOrientation() {
+        window.plus.toggleScreenOrientation();
+        document.getElementById("change").innerHTML = "已切换屏幕方向"
+    }
+    function screenIsLandscape() {
+        window.plus.screenIsLandscape(function(bool) {
+            document.getElementById("screen").innerHTML = bool
+        });
+    }
+    function sign() {
+        window.plus.sign(function(string) {
+            document.getElementById("sign").innerHTML = "签名文件路径为：" + string
+        });
+    }
+    function oldPrint() {
+        window.plus.print("header", "title", "content", "stamp", false, function(bool) {
+            document.getElementById("print").innerHTML = bool
+        });
+    }
+    function print() {
+        window.plus.print('[{"blankHeight":20,"type":"blank"},{"align":"left","bold":true,"text":"苏州xxxx有限公司：","textSize":2,"underLine":false,"type":"text"},{"blankHeight":20,"type":"blank"},{"align":"left","bold":false,"text":"因你公司违反了xxxx规定，现对你司进行如下处罚：","textSize":1,"underLine":false,"type":"text"},{"blankHeight":20,"type":"blank"},{"align":"left","bold":false,"text":" 从今日起至","textSize":1,"underLine":false,"type":"text"},{"align":"left","bold":true,"text":"2020年1月1日","textSize":2,"underLine":true,"type":"text"},{"align":"left","bold":false,"text":"不得开门营业，直到整改结束。","textSize":1,"underLine":false,"type":"text"},{"blankHeight":100,"type":"blank"}]', function(bool) {
+            document.getElementById("print2").innerHTML = bool
+        });
+    }
+    function enableSensorRotate(sensorRotate) {
+        window.plus.enableSensorRotate(sensorRotate);
+    }
+</script>
+<button type="button" onclick="toggleScreenOrientation()">
+    切换屏幕方向
+</button>
+<p id="change"></p>
+<button type="button" onclick="screenIsLandscape()">
+    屏幕是否为横屏
+</button>
+<p id="screen"></p>
+<button type="button" onclick="sign()">
+    手写签名
+</button>
+<p id="sign"></p>
+<button type="button" onclick="oldPrint()">
+    旧版打印
+</button>
+<p id="print"></p>
+<button type="button" onclick="print()">
+    新版打印
+</button>
+<p id="print2"></p>
+<button type="button" onclick="enableSensorRotate(true)">
+    打开重力感应
+</button>
+<button type="button" onclick="enableSensorRotate(false)">
+    关闭重力感应
+</button>
+</body>
+</html>

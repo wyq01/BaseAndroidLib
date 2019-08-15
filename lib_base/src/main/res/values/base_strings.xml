@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="base_permission_request">为了能够给您提供更好的服务，请您同意以下权限</string>
+    <string name="base_permission_rationale">为了能够给您提供更好的服务，请您同意以下权限</string>
+    <string name="base_permission_setting">为了能够给您提供更好的服务，请您手动赋予权限</string>
+    <string name="base_permission_denied">没有授权需要的权限，无法响应该功能</string>
+    <string name="base_permission_never_ask_again">没有授权需要的权限，请在应用信息页授予权限</string>
+    <string name="button_allow">允许</string>
+    <string name="button_deny">拒绝</string>
+    <string name="button_ok">好</string>
+    <string name="button_commit">提交</string>
+    <string name="button_confirm">确定</string>
+    <string name="button_cancel">取消</string>
+    <string name="button_edit">编辑</string>
+    <string name="button_complete">完成</string>
+
+    <string name="sign_title">签名</string>
+
+    <string name="year">年</string>
+    <string name="month">月</string>
+    <string name="day">日</string>
+    <string name="hour">时</string>
+    <string name="minute">分</string>
+
+    <string name="loading_msg">正在加载</string>
+
+    <string name="scan_tip">将二维码/条形码放入框内，即可自动扫码</string>
+    <string name="scan_title">扫一扫</string>
+
+    <string name="press_again_to_exit">再按一次退出程序</string>
+</resources>

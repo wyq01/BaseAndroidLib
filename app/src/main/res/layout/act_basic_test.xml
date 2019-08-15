@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/oldTv"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/dp_10"
+        android:background="@drawable/bg_input_edit"
+        android:padding="@dimen/dp_5"
+        app:layout_constraintBottom_toTopOf="@+id/oldPrintBtn"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <com.wyq.base.view.CommonShapeButton
+        android:id="@+id/oldPrintBtn"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_36"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        android:text="旧版打印"
+        android:textColor="@color/white"
+        android:textSize="@dimen/dp_14"
+        app:csb_activeEnable="true"
+        app:csb_cornerRadius="@dimen/dp_4"
+        app:layout_constraintBottom_toTopOf="@+id/newTv"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/oldTv"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <EditText
+        android:id="@+id/newTv"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/dp_10"
+        android:background="@drawable/bg_input_edit"
+        android:padding="@dimen/dp_5"
+        app:layout_constraintBottom_toTopOf="@+id/signBtn"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/oldPrintBtn"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <com.wyq.base.view.CommonShapeButton
+        android:id="@+id/signBtn"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_36"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        android:layout_marginBottom="@dimen/dp_10"
+        android:text="添加签名"
+        android:textColor="@color/white"
+        android:textSize="@dimen/dp_14"
+        app:csb_activeEnable="true"
+        app:csb_cornerRadius="@dimen/dp_4"
+        app:layout_constraintBottom_toTopOf="@+id/print1Btn"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/newTv"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <com.wyq.base.view.CommonShapeButton
+        android:id="@+id/print1Btn"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_36"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        android:layout_marginBottom="@dimen/dp_10"
+        android:text="打印测试1"
+        android:textColor="@color/white"
+        android:textSize="@dimen/dp_14"
+        app:csb_activeEnable="true"
+        app:csb_cornerRadius="@dimen/dp_4"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/print2Btn"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/signBtn"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <com.wyq.base.view.CommonShapeButton
+        android:id="@+id/print2Btn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="打印测试2"
+        android:textColor="@color/white"
+        android:textSize="@dimen/dp_14"
+        app:csb_activeEnable="true"
+        app:csb_cornerRadius="@dimen/dp_4"
+        app:layout_constraintBottom_toBottomOf="@id/print1Btn"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintLeft_toRightOf="@id/print1Btn"
+        app:layout_constraintRight_toLeftOf="@+id/print3Btn"
+        app:layout_constraintTop_toTopOf="@id/print1Btn" />
+
+    <com.wyq.base.view.CommonShapeButton
+        android:id="@+id/print3Btn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        android:text="打印测试3"
+        android:textColor="@color/white"
+        android:textSize="@dimen/dp_14"
+        app:csb_activeEnable="true"
+        app:csb_cornerRadius="@dimen/dp_4"
+        app:layout_constraintBottom_toBottomOf="@id/print1Btn"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintLeft_toRightOf="@id/print2Btn"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/print1Btn" />
+
+</android.support.constraint.ConstraintLayout>

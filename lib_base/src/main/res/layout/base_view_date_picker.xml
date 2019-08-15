@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+       xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!--********************** 农历 **********************-->
+
+    <cn.carbswang.android.numberpickerview.library.NumberPickerView
+        android:id="@+id/picker_year"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1.5"
+        android:contentDescription="year_picker"
+        app:npv_HintText="@string/year"
+        app:npv_RespondChangeOnDetached="false"
+        app:npv_TextSizeHint="@dimen/dp_15"
+        app:npv_TextSizeNormal="@dimen/dp_15"
+        app:npv_TextSizeSelected="@dimen/dp_16"/>
+
+    <cn.carbswang.android.numberpickerview.library.NumberPickerView
+        android:id="@+id/picker_month"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_weight="1"
+        android:contentDescription="month_picker"
+        app:npv_HintText="@string/month"
+        app:npv_RespondChangeOnDetached="false"
+        app:npv_TextSizeHint="@dimen/dp_15"
+        app:npv_TextSizeNormal="@dimen/dp_15"
+        app:npv_TextSizeSelected="@dimen/dp_16"/>
+
+    <cn.carbswang.android.numberpickerview.library.NumberPickerView
+        android:id="@+id/picker_day"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:contentDescription="day_picker"
+        app:npv_AlternativeHint="@string/day"
+        app:npv_HintText="@string/day"
+        app:npv_RespondChangeOnDetached="false"
+        app:npv_TextSizeHint="@dimen/dp_15"
+        app:npv_TextSizeNormal="@dimen/dp_15"
+        app:npv_TextSizeSelected="@dimen/dp_16"/>
+
+</merge>

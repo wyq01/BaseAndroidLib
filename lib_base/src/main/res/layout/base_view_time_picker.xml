@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+       xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!--********************** 农历 **********************-->
+
+    <cn.carbswang.android.numberpickerview.library.NumberPickerView
+        android:id="@+id/picker_hour"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:contentDescription="hour_picker"
+        app:npv_HintText="@string/hour"
+        app:npv_RespondChangeOnDetached="false"
+        app:npv_TextSizeHint="@dimen/dp_15"
+        app:npv_TextSizeNormal="@dimen/dp_15"
+        app:npv_TextSizeSelected="@dimen/dp_16"/>
+
+    <cn.carbswang.android.numberpickerview.library.NumberPickerView
+        android:id="@+id/picker_minute"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_weight="1"
+        android:contentDescription="minute_picker"
+        app:npv_HintText="@string/minute"
+        app:npv_RespondChangeOnDetached="false"
+        app:npv_TextSizeHint="@dimen/dp_15"
+        app:npv_TextSizeNormal="@dimen/dp_15"
+        app:npv_TextSizeSelected="@dimen/dp_16"/>
+
+</merge>

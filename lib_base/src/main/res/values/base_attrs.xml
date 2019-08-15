@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="CircleImageView">
+        <attr name="border_width" format="dimension" />
+        <attr name="border_color" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="LoadingLayout">
+        <attr name="loadingView" format="reference" />
+        <attr name="noNetworkView" format="reference" />
+        <attr name="noDataView" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="CommonShapeButton">
+        <!--shape模式-->
+        <attr name="csb_shapeMode" format="enum">
+            <enum name="rectangle" value="0" />
+            <enum name="oval" value="1" />
+            <enum name="line" value="2" />
+            <enum name="ring" value="3" />
+        </attr>
+        <!--填充颜色-->
+        <attr name="csb_fillColor" format="color" />
+        <!--按压颜色-->
+        <attr name="csb_pressedColor" format="color" />
+        <!--描边颜色-->
+        <attr name="csb_strokeColor" format="color" />
+        <!--描边宽度-->
+        <attr name="csb_strokeWidth" format="dimension" />
+        <!--圆角大小-->
+        <attr name="csb_cornerRadius" format="dimension" />
+        <!--圆角位置-->
+        <attr name="csb_cornerPosition">
+            <flag name="topLeft" value="1" />
+            <flag name="topRight" value="2" />
+            <flag name="bottomRight" value="4" />
+            <flag name="bottomLeft" value="8" />
+        </attr>
+        <!--是否开启动效-->
+        <attr name="csb_activeEnable" format="boolean" />
+        <!--drawable位置-->
+        <attr name="csb_drawablePosition" format="enum">
+            <enum name="left" value="0" />
+            <enum name="top" value="1" />
+            <enum name="right" value="2" />
+            <enum name="bottom" value="3" />
+        </attr>
+        <!--渐变开始颜色-->
+        <attr name="csb_startColor" format="color" />
+        <!--渐变结束颜色-->
+        <attr name="csb_endColor" format="color" />
+        <!--渐变方向-->
+        <attr name="csb_orientation" format="enum">
+            <enum name="TOP_BOTTOM" value="0" />
+            <enum name="LEFT_RIGHT" value="1" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="RatingBar">
+        <!--尺寸值-->
+        <attr name="starImageSize" format="dimension" />
+        <!--星星间距-->
+        <attr name="starPadding" format="dimension" />
+        <!--星星总数-->
+        <attr name="starCount" format="integer" />
+        <!--空白的星星资源文件值-->
+        <attr name="starEmpty" format="reference" />
+        <!--满星资源文件值-->
+        <attr name="starFill" format="reference" />
+        <!--半星资源文件值-->
+        <attr name="starHalf" format="reference" />
+        <!--是否可点击boolean值-->
+        <attr name="clickable" format="boolean" />
+        <!--当前进度float值-->
+        <attr name="starStep" format="float" />
+        <!--每次进度方式的值，整星还是半星-->
+        <attr name="stepSize">
+            <enum name="Half" value="0" />
+            <enum name="Full" value="1" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="DatePickerView">
+        <attr name="scrollAnimation" format="reference|boolean" />
+        <attr name="solarThemeColor" format="reference|color" />
+        <attr name="lunarThemeColor" format="reference|color" />
+        <attr name="normalTextColor" format="reference|color" />
+    </declare-styleable>
+
+    <declare-styleable name="MaxHeightRecyclerView">
+        <attr name="maxHeight" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="ColorArcProgressBar">
+        <attr name="pb_circleWidth" format="dimension"/>
+        <attr name="pb_baseCircleColor" format="color"/>
+        <attr name="pb_baseCircleWidth" format="dimension"/>
+        <attr name="pb_title" format="string"/>
+        <attr name="pb_titleSize" format="dimension"/>
+        <attr name="pb_titleColor" format="color"/>
+        <attr name="pb_content" format="string"/>
+        <attr name="pb_contentSize" format="dimension"/>
+        <attr name="pb_contentColor" format="color"/>
+        <attr name="pb_unit" format="string"/>
+        <attr name="pb_unitSize" format="dimension"/>
+        <attr name="pb_unitColor" format="color"/>
+        <attr name="pb_startColor" format="color"/>
+        <attr name="pb_middleColor" format="color"/>
+        <attr name="pb_endColor" format="color"/>
+        <attr name="pb_currentValue" format="float"/>
+        <attr name="pb_maxValue" format="float"/>
+        <attr name="pb_startAngle" format="integer"/>
+        <attr name="pb_totalAngle" format="integer"/>
+        <attr name="pb_showContent" format="boolean"/>
+    </declare-styleable>
+</resources>
