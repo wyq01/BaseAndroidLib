@@ -29,4 +29,6 @@
     <string name="scan_title">扫一扫</string>
 
     <string name="press_again_to_exit">再按一次退出程序</string>
+
+    <string name="print_pair_more">配对更多设备</string>
 </resources>

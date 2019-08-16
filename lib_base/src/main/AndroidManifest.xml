@@ -46,7 +46,7 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:resizeableActivity="false"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
+        android:theme="@style/AppBaseTheme"
         tools:targetApi="N">
         <meta-data
             android:name="android.max_aspect"
