@@ -88,6 +88,20 @@ class BasicPrintTestAct : BaseActivity() {
             }
         }
 
+        print4Btn.click {
+            try {
+                print(newTv.text.toString())
+            } catch (e1: IOException) {
+                e1.printStackTrace()
+            } catch (e2: JsonSyntaxException) {
+                e2.printStackTrace()
+                ToastUtil.shortToast(this, "json格式不正确")
+            } catch (e3: NullPointerException) {
+                e3.printStackTrace()
+                ToastUtil.shortToast(this, e3.message!!)
+            }
+        }
+
         signBtn.click {
             SignActivity.startActivityForResult(this)
         }
@@ -243,7 +257,11 @@ class BasicPrintTestAct : BaseActivity() {
                 SignActivity.REQUEST_SIGN -> {
                     data?.let {
                         val path = it.getStringExtra(PenConfig.SAVE_PATH)
-                        list.add(SignPrint("打印人员签名", path))
+                        val signBean = SignPrint("打印人员签名", path)
+                        signBean.textSize = BasePrint.TextSize.X32.value
+                        signBean.bold = true
+                        signBean.underLine = true
+                        list.add(signBean)
                         list.add(BlankPrint(50))
                         initJson()
                     }

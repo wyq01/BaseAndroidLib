@@ -85,6 +85,8 @@ dependencies {
     implementation 'cn.pedant.safewebviewbridge:library:1.4'// js交互
     implementation 'com.github.abel533:ECharts:3.0.0.6' // echarts
     implementation 'com.github.smarxpan:NotchScreenTool:0.0.1'// 刘海屏适配
+    implementation 'com.jakewharton.rxbinding2:rxbinding:2.2.0' // rxbinding
+    implementation 'com.github.bumptech.glide:glide:3.7.0' // 图片加载
 }
 
 configurations.all {

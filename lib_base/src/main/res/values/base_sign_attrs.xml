@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <declare-styleable name="CircleView">
+    <declare-styleable name="SignCircleImageView">
+        <attr name="civ_border_width" format="dimension" />
+        <attr name="civ_border_color" format="color" />
+        <attr name="civ_border_overlay" format="boolean" />
+        <attr name="civ_fill_color" format="color" />
+        <attr name="civ_circle_background_color" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="SignCircleView">
         <attr name="penColor" format="color"/>
         <attr name="outBorderColor" format="color"/>
         <attr name="sizeLevel" format="integer"/><!-- 画笔大小等级 -->

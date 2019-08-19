@@ -62,9 +62,26 @@
         app:layout_constraintBottom_toTopOf="@+id/print1Btn"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/print4Btn"
         app:layout_constraintTop_toBottomOf="@id/newTv"
         app:layout_constraintVertical_chainStyle="packed" />
+
+    <com.wyq.base.view.CommonShapeButton
+        android:id="@+id/print4Btn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        android:text="打印编辑框中内容"
+        android:textColor="@color/white"
+        android:textSize="@dimen/dp_14"
+        app:csb_activeEnable="true"
+        app:csb_cornerRadius="@dimen/dp_4"
+        app:layout_constraintBottom_toBottomOf="@id/signBtn"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintLeft_toRightOf="@id/signBtn"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/signBtn" />
 
     <com.wyq.base.view.CommonShapeButton
         android:id="@+id/print1Btn"

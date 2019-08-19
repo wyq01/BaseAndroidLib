@@ -40,13 +40,13 @@ public class CircleView extends View {
     public CircleView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
-        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.CircleView);
-        paintColor = ta.getColor(R.styleable.CircleView_penColor, PenConfig.PAINT_COLOR);
-        outBorderColor = ta.getColor(R.styleable.CircleView_penColor, Color.parseColor("#0c53ab"));
-        radiusLevel = ta.getInteger(R.styleable.CircleView_sizeLevel, 2);
+        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.SignCircleView);
+        paintColor = ta.getColor(R.styleable.SignCircleView_penColor, PenConfig.PAINT_COLOR);
+        outBorderColor = ta.getColor(R.styleable.SignCircleView_penColor, Color.parseColor("#0c53ab"));
+        radiusLevel = ta.getInteger(R.styleable.SignCircleView_sizeLevel, 2);
         circleRadius = DisplayUtil.dip2px(context, PaintSettingWindow.PEN_SIZES[radiusLevel]);
-        showBorder = ta.getBoolean(R.styleable.CircleView_showBorder, false);
-        showOutBorder = ta.getBoolean(R.styleable.CircleView_showOutBorder, false);
+        showBorder = ta.getBoolean(R.styleable.SignCircleView_showBorder, false);
+        showOutBorder = ta.getBoolean(R.styleable.SignCircleView_showOutBorder, false);
         ta.recycle();
         init();
     }

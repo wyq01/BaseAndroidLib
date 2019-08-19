@@ -24,6 +24,17 @@ class PrintBean {
     var textSize: Int = BasePrint.TextSize.X24.value // 字体大小
     var align: String = BasePrint.Align.LEFT.value // 对齐方式
 
+    public fun getTextSizeHeight(): Int {
+        return when(textSize) {
+            BasePrint.TextSize.X16.value -> 16
+            BasePrint.TextSize.X24.value -> 24
+            BasePrint.TextSize.X32.value -> 32
+            BasePrint.TextSize.X48.value -> 48
+            BasePrint.TextSize.X64.value -> 64
+            else -> 24
+        }
+    }
+
     public fun revertTextSize(): ESC.FONT_HEIGHT {
         return when(textSize) {
             BasePrint.TextSize.X16.value -> ESC.FONT_HEIGHT.x16

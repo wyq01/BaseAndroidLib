@@ -12,6 +12,7 @@ import android.provider.Settings
 import android.support.annotation.LayoutRes
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.AppCompatImageButton
+import android.text.TextUtils
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageButton
@@ -363,6 +364,10 @@ abstract class BaseActivity : AppCompatActivity() {
     private fun printText(bean: PrintBean, printer: JQPrinter) {
         bean.text?.let {
             printer.esc.text.print(bean.revertAlign(), bean.revertTextSize(), bean.bold, bean.underLine, bean.text)
+            // 右对齐、中对齐默认打印换行
+            if (bean.align == BasePrint.Align.RIGHT.value || bean.align == BasePrint.Align.CENTER.value) {
+                printEnter(printer)
+            }
         } ?: let {
             throw NullPointerException("类型为${bean.type}，text不可为空")
         }
@@ -379,6 +384,7 @@ abstract class BaseActivity : AppCompatActivity() {
         printEnter(printer)
 //        printer.esc.text.print(Printer_define.ALIGN.CENTER, ESC.FONT_HEIGHT.x24, false, "-----------------------------------------------")
         printer.esc.text.print("-----------------------------------------------")
+        printEnter(printer)
     }
 
     /**
@@ -431,14 +437,14 @@ abstract class BaseActivity : AppCompatActivity() {
                     SIGNATURE_WIDTH
                 )
                 signBmHeight = bm.height / 2
-                printer.esc.image.drawBitmap((bean.signTip?.length ?: 0) * 25, 0, bm)
+                printer.esc.image.drawBitmap((bean.signTip?.length ?: 0) * bean.getTextSizeHeight() + (if (TextUtils.isEmpty(bean.signTip)) 0 else 10), 0, bm)
             }
         } ?: let {
             throw NullPointerException("类型为${bean.type}，imgPath不可为空")
         }
         bean.signTip?.let {
             LogUtil.d("tip")
-            printer.esc.text.print(0, signBmHeight, bean.revertTextSize(), bean.bold, bean.underLine, it)
+            printer.esc.text.print(0, signBmHeight - bean.getTextSizeHeight() / 4, bean.revertTextSize(), bean.bold, bean.underLine, it)
             printEnter(printer)
         }
     }
