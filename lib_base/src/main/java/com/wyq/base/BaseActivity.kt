@@ -379,10 +379,14 @@ abstract class BaseActivity : AppCompatActivity() {
     private fun printLine(bean: PrintBean, printer: JQPrinter) {
         val lines = arrayOfNulls<ESC.LINE_POINT>(1)
         lines[0] = ESC.LINE_POINT(0, 575)
-        val lineStr = if (bean.lineTip.isNullOrEmpty()) "请沿此处撕开" else ""
-        printer.esc.text.print(lineStr)
+        bean.lineTip?.let {
+            if (!TextUtils.isEmpty(it)) {
+                printer.esc.text.print(it)
+            }
+        } ?: let {
+            printer.esc.text.print("请沿此处撕开")
+        }
         printEnter(printer)
-//        printer.esc.text.print(Printer_define.ALIGN.CENTER, ESC.FONT_HEIGHT.x24, false, "-----------------------------------------------")
         printer.esc.text.print("-----------------------------------------------")
         printEnter(printer)
     }
