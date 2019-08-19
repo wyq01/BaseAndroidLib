@@ -438,7 +438,7 @@ abstract class BaseActivity : AppCompatActivity() {
         }
         bean.signTip?.let {
             LogUtil.d("tip")
-            printer.esc.text.print(0, signBmHeight, it)
+            printer.esc.text.print(0, signBmHeight, bean.revertTextSize(), bean.bold, bean.underLine, it)
             printEnter(printer)
         }
     }

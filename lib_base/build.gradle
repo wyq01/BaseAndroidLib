@@ -9,7 +9,6 @@ androidExtensions {
 }
 
 android {
-
     compileSdkVersion compile_sdk_version
 
     defaultConfig {
@@ -63,100 +62,29 @@ dependencies {
     implementation "com.android.support:recyclerview-v7:${support_library_version}"
     implementation "com.android.support:appcompat-v7:${support_library_version}"
     implementation "com.android.support:cardview-v7:${support_library_version}"
-
-    // 约束布局
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
 
-    // 图表框架
-    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.2'
-
-    // 解决线程调度问题
-    implementation 'io.reactivex.rxjava2:rxjava:2.2.8'
-    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
-    implementation 'com.jakewharton.rxbinding2:rxbinding:2.2.0'
-
-    // okgo网络访问框架
-    implementation 'com.lzy.net:okgo:3.0.4'
-
-    // 事件总线
-    implementation 'org.greenrobot:eventbus:3.1.1'
-
-    // logger
-    implementation 'com.orhanobut:logger:2.1.1'
-
-    // gson解析
-    implementation 'com.google.code.gson:gson:2.7'
-
-    // 状态栏
-    implementation 'com.gyf.barlibrary:barlibrary:2.3.0'
-
-    // switchbutton
-    implementation 'com.kyleduo.switchbutton:library:2.0.0'
-
-    // 选项卡
-    implementation 'com.flyco.tablayout:FlycoTabLayout_Lib:2.2.0@aar'
-
-    // 下拉刷新框架
-    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-14'
-
-    // 没有使用特殊Header，可以不加这行
-    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-14'
-
-    // recyclerView adapter
-    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.46'
-
-    // android工具包
-    implementation 'com.blankj:utilcode:1.18.0'
-
-    // 图片加载框架
-    implementation 'com.github.bumptech.glide:glide:3.7.0'
-
-    // 选择图片框架
-    implementation 'com.zhihu.android:matisse:0.5.2-beta4'
-
-    // 裁剪图片
-    implementation 'com.github.yalantis:ucrop:2.2.2'
-
-    // 图片缩放
-    implementation 'it.sephiroth.android.library.imagezoom:library:1.0.4'
-
-    // ImageView缩放框架
-    implementation 'com.github.chrisbanes:PhotoView:2.1.3'
-
-    // 圆形图片
-    implementation 'de.hdodenhof:circleimageview:2.2.0'
-
-    // 圆角图片
-    implementation 'com.makeramen:roundedimageview:2.3.0'
-
-    // 运行时权限
-    implementation('com.github.hotchemi:permissionsdispatcher:2.4.0') {
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.8' // 线程调度
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1' // 线程调度
+    implementation 'com.lzy.net:okgo:3.0.4' // 网络访问
+    implementation 'org.greenrobot:eventbus:3.1.1' // 事件总线
+    implementation 'com.orhanobut:logger:2.1.1' // 日志
+    implementation 'com.google.code.gson:gson:2.7' // json解析
+    implementation 'com.gyf.barlibrary:barlibrary:2.3.0' // 状态栏
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.46' // recyclerView adapter
+    implementation 'com.blankj:utilcode:1.18.0' // 工具包
+    implementation 'com.zhihu.android:matisse:0.5.2-beta4' // 图片选择
+    implementation 'com.github.chrisbanes:PhotoView:2.1.3' // 图片手势缩放
+    implementation('com.github.hotchemi:permissionsdispatcher:2.4.0') { // 运行时权限
         exclude module: "support-v13"
     }
-    kapt 'com.github.hotchemi:permissionsdispatcher-processor:3.2.0'
-
-    // 滚动控件
-    implementation 'cn.carbswang.android:NumberPickerView:1.1.0'
-
-    // RecyclerView 分割线
-    implementation 'com.dinuscxj:recycleritemdecoration:1.0.0'
-
-    // 汉字转拼音
-    implementation 'com.github.promeg:tinypinyin:1.0.0'
-
-    // 二维码扫描
-    implementation 'com.king.zxing:zxing-lite:1.0.5'
-    implementation 'com.lxj:xpopup:1.7.4'
-    implementation 'com.github.huangyanbin:SmartTable:2.2.0'
-    implementation 'cn.pedant.safewebviewbridge:library:1.4'
-
-    // js交互框架
-    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
-
-    // 图表框架
-    implementation 'com.hyman:flowlayout-lib:1.1.2'
-    implementation 'com.github.abel533:ECharts:3.0.0.6'
-    implementation 'com.github.smarxpan:NotchScreenTool:0.0.1'
+    kapt 'com.github.hotchemi:permissionsdispatcher-processor:3.2.0' // 运行时权限
+    implementation 'cn.carbswang.android:NumberPickerView:1.1.0' // 滚动控件
+    implementation 'com.github.promeg:tinypinyin:1.0.0' // 汉字转拼音
+    implementation 'com.king.zxing:zxing-lite:1.0.5' // 二维码扫描
+    implementation 'cn.pedant.safewebviewbridge:library:1.4'// js交互
+    implementation 'com.github.abel533:ECharts:3.0.0.6' // echarts
+    implementation 'com.github.smarxpan:NotchScreenTool:0.0.1'// 刘海屏适配
 }
 
 configurations.all {

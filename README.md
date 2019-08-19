@@ -15,9 +15,9 @@
 |:-----------:|:-------:|:--------------:|:---------------------------------------------:|:---------:|
 | type        | String  | 打印类型           | text,line,blank,enter,stamp,signature，默认为text | 无         |
 | text        | String  | 打印的文本          | 不可为空，默认为null                                  | text      |
-| textSize    | int     | 字体大小           | 0(16号)，1(24号)，2(32号)，3(48号)，4(64号)，默认为1(24号)  | text      |
-| underLine   | boolean | 是否带下划线         | true,false，默认为false                           | text      |
-| bold        | boolean | 是否加粗           | true,false，默认为false                           | text      |
+| textSize    | int     | 字体大小           | 0(16号)，1(24号)，2(32号)，3(48号)，4(64号)，默认为1(24号)  | text,signature      |
+| underLine   | boolean | 是否带下划线         | true,false，默认为false                           | text,signature      |
+| bold        | boolean | 是否加粗           | true,false，默认为false                           | text,signature      |
 | align       | String  | 对齐方式           | left,right,center，默认为left                     | text      |
 | blankHeight | Int     | 空白高度           | 不可为负，默认为0                                     | blank     |
 | lineTip     | String  | 切割线提示          | 任意字符串，默认为：请沿此处撕开                              | line      |

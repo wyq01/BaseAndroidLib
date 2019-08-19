@@ -351,6 +351,22 @@ public class Text extends BaseESC {
     }
 
     /**
+     * @param x 横坐标
+     * @param y 纵坐标
+     * @param height 字体大小
+     * @param text 打印内容
+     * @throws IOException
+     */
+    public void print(int x, int y, ESC.FONT_HEIGHT height, boolean bold, boolean underLine, String text) throws IOException {
+        clearParams();
+        setXY(x, y);
+        setUnderline(underLine);
+        setFontHeight(height);
+        setBold(bold);
+        _port.write(text);
+    }
+
+    /**
      * @param align 对齐
      * @param height 字体大小
      * @param bold 加粗
