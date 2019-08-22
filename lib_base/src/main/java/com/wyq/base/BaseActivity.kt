@@ -1,6 +1,7 @@
 package com.wyq.base
 
 import android.Manifest
+import android.app.Activity
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.content.res.Configuration
@@ -23,11 +24,12 @@ import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import com.gyf.barlibrary.ImmersionBar
 import com.smarx.notchlib.NotchScreenManager
+import com.wyq.base.constant.RequestCode
 import com.wyq.base.event.BaseEvent
-import com.wyq.base.printer.bean.BasePrint
-import com.wyq.base.printer.bean.PrintResult
 import com.wyq.base.printer.PrinterConnectAct
+import com.wyq.base.printer.bean.BasePrint
 import com.wyq.base.printer.bean.PrintBean
+import com.wyq.base.printer.bean.PrintResult
 import com.wyq.base.printer.two.JQPrinter
 import com.wyq.base.printer.two.Printer_define
 import com.wyq.base.printer.two.esc.ESC
@@ -350,10 +352,25 @@ abstract class BaseActivity : AppCompatActivity() {
         }
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when(requestCode) {
+            RequestCode.REQUEST_PRINTER_CONNECT -> {
+                if (resultCode == Activity.RESULT_OK) {
+                    Handler().postDelayed({
+                        print(printContent)
+                    }, 300)
+                }
+            }
+        }
+    }
+
+    private var printContent: String? = null
     /**
      * 打印
      */
     protected fun print(json: String?): Int {
+        printContent = json
         printImplWithPermissionCheck(json)
         return printResult
     }

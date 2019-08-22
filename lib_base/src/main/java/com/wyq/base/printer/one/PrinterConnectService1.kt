@@ -94,44 +94,23 @@ class PrinterConnectService1 : Service() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(object : Observer<BluetoothSocket> {
                 override fun onSubscribe(d: Disposable) {
-                    EventBus.getDefault().post(
-                        PrinterConnectEvent(
-                            PrinterConnectEvent.STATUS_CONNECTING
-                        )
-                    )
+                    EventBus.getDefault().post(PrinterConnectEvent(PrinterConnectEvent.STATUS_CONNECTING))
                 }
                 override fun onNext(result: BluetoothSocket) {
                     try {
                         LogUtil.d("打印机连接成功")
                         bluetoothSocket = result
-                        (application as BaseApplication).setPrinter(
-                            Printer(
-                                bluetoothSocket?.outputStream,
-                                "GBK"
-                            )
-                        )
+                        (application as BaseApplication).setPrinter(Printer(bluetoothSocket?.outputStream, "GBK"))
                         (application as BaseApplication).setDeviceAddress(deviceAddress)
-                        EventBus.getDefault().post(
-                            PrinterConnectEvent(
-                                PrinterConnectEvent.STATUS_SUCCESS
-                            )
-                        )
+                        EventBus.getDefault().post(PrinterConnectEvent(PrinterConnectEvent.STATUS_SUCCESS))
                     } catch (e: IOException) {
                         e.printStackTrace()
-                        EventBus.getDefault().post(
-                            PrinterConnectEvent(
-                                PrinterConnectEvent.STATUS_FAILED
-                            )
-                        )
+                        EventBus.getDefault().post(PrinterConnectEvent(PrinterConnectEvent.STATUS_FAILED))
                         LogUtil.d("打印机连接失败")
                     }
                 }
                 override fun onError(e: Throwable) {
-                    EventBus.getDefault().post(
-                        PrinterConnectEvent(
-                            PrinterConnectEvent.STATUS_FAILED
-                        )
-                    )
+                    EventBus.getDefault().post(PrinterConnectEvent(PrinterConnectEvent.STATUS_FAILED))
                     LogUtil.d("打印机连接失败")
                 }
                 override fun onComplete() {}

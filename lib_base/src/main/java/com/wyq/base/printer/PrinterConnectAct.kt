@@ -3,7 +3,6 @@ package com.wyq.base.printer
 import android.app.Activity
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
-import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.provider.Settings
@@ -43,9 +42,9 @@ import java.util.*
 class PrinterConnectAct : BaseActivity() {
 
     companion object {
-        fun startActivity(context: Context) {
+        fun startActivity(context: Activity) {
             val intent = Intent(context, PrinterConnectAct::class.java)
-            context.startActivity(intent)
+            context.startActivityForResult(intent, RequestCode.REQUEST_PRINTER_CONNECT)
         }
     }
 
@@ -149,7 +148,6 @@ class PrinterConnectAct : BaseActivity() {
                 override fun onSubscribe(d: Disposable) {
                     printerAdapter?.showEmpty()
                 }
-
                 override fun onNext(bluetoothDevices: List<BluetoothDevice>) {
                     if (bluetoothDevices.isEmpty()) {
                         printerAdapter?.showEmpty()
@@ -159,11 +157,9 @@ class PrinterConnectAct : BaseActivity() {
                         printerAdapter?.notifyDataSetChanged()
                     }
                 }
-
                 override fun onError(e: Throwable) {
                     printerAdapter?.showEmpty()
                 }
-
                 override fun onComplete() {}
             })
     }
@@ -211,6 +207,9 @@ class PrinterConnectAct : BaseActivity() {
                 ProgressDialog.hideDialog()
                 val deviceAddress = (application as BaseApplication).getDeviceAddress()
                 printerAdapter?.updateSelected(deviceAddress)
+                val data = Intent()
+                setResult(RESULT_OK, data)
+                finish()
             }
             PrinterConnectEvent.STATUS_CONNECTED -> {
                 com.wyq.base.util.ToastUtil.shortToast(this, "打印机已连接")
