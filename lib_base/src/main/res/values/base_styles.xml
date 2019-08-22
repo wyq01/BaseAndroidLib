@@ -5,7 +5,7 @@
         by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
     -->
     <!--<style name="AppBaseTheme" parent="Theme.AppCompat.Light.DarkActionBar">-->
-    <style name="AppBaseTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="Theme.Base" parent="Base.Theme.AppCompat.Light.DarkActionBar">
         <!--
             Theme customizations available in newer API levels can go in
             res/values-vXX/styles.xml, while customizations related to
@@ -29,7 +29,7 @@
     </style>
 
     <!-- 自定义APP Theme -->
-    <style name="SlideTheme" parent="AppBaseTheme">
+    <style name="Theme.Base.Slide" parent="Theme.Base">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowIsTranslucent">true</item>
     </style>

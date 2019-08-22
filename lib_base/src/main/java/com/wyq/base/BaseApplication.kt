@@ -103,7 +103,7 @@ open class BaseApplication : MultiDexApplication() {
         stopService(Intent(this, BluetoothPairService::class.java))
     }
 
-    private fun initOkGo() {
+    open fun initOkGo() {
         //---------这里给出的是示例代码,告诉你可以这么传,实际使用的时候,根据需要传,不需要就不传-------------//
         val headers = HttpHeaders()
         // headers.put("header", "header"); // header不支持中文，不允许有特殊字符
@@ -166,7 +166,7 @@ open class BaseApplication : MultiDexApplication() {
     /**
      * 这里只是随便写的认证规则，具体每个业务是否需要验证，以及验证规则是什么，请与服务端或者leader确定
      */
-    private inner class SafeTrustManager : X509TrustManager {
+    inner class SafeTrustManager : X509TrustManager {
         @Throws(CertificateException::class)
         override fun checkClientTrusted(chain: Array<X509Certificate>, authType: String) {
         }
@@ -191,7 +191,7 @@ open class BaseApplication : MultiDexApplication() {
     /**
      * 这里只是我随便写的认证规则，具体每个业务是否需要验证，以及验证规则是什么，请与服务端或者leader确定
      */
-    private inner class SafeHostnameVerifier : HostnameVerifier {
+    inner class SafeHostnameVerifier : HostnameVerifier {
         override fun verify(hostname: String, session: SSLSession): Boolean {
             // 验证主机名是否匹配
             // return hostname.equals("server.jeasonlzy.com");
