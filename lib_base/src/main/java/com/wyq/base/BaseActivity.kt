@@ -69,6 +69,7 @@ abstract class BaseActivity : AppCompatActivity() {
     private var notchHeight = -1 // 刘海高度
     private var layoutContentView: View? = null // 布局内容
     private var fixNotch = true // 是否打开刘海适配，默认打开
+    private var containerId = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -135,7 +136,12 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     fun fixNotch(fixNotch: Boolean) {
+        fixNotch(fixNotch, -1)
+    }
+
+    fun fixNotch(fixNotch: Boolean, containerId: Int) {
         this.fixNotch = fixNotch
+        this.containerId = containerId
     }
 
     /**
@@ -155,7 +161,16 @@ abstract class BaseActivity : AppCompatActivity() {
                     right = notchHeight
                 }
             }
-            layoutContentView?.setPadding(left, 0, right, 0)
+            if (containerId != -1) {
+                val containerView = findViewById<View>(containerId)
+                if (containerView != null) {
+                    containerView.setPadding(left, 0, right, 0)
+                } else {
+                    layoutContentView?.setPadding(left, 0, right, 0)
+                }
+            } else {
+                layoutContentView?.setPadding(left, 0, right, 0)
+            }
         }
     }
 
@@ -320,7 +335,7 @@ abstract class BaseActivity : AppCompatActivity() {
         val printer = (application as BaseApplication).getJQPrinter()
         if (printer != null && printer.canPrint()) {
             try {
-                val list = Gson().fromJson<Array<PrintBean>>(json, Array<PrintBean>::class.java)
+                val list = Gson().fromJson(json, Array<PrintBean>::class.java)
                 LogUtil.d("开始打印")
                 for (item in list) {
                     when (item.type) {
@@ -468,7 +483,6 @@ abstract class BaseActivity : AppCompatActivity() {
             throw NullPointerException("类型为${bean.type}，imgPath不可为空")
         }
         bean.signTip?.let {
-            LogUtil.d("tip")
             printer.esc.text.print(0, signBmHeight - bean.getTextSizeHeight() / 4, bean.revertTextSize(), bean.bold, bean.underLine, it)
             printEnter(printer)
         }

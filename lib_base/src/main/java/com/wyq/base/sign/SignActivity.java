@@ -4,7 +4,6 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
@@ -58,9 +57,6 @@ import permissions.dispatcher.RuntimePermissions;
 public class SignActivity extends BaseActivity implements View.OnClickListener, PaintView.StepCallback {
 
     public static final int REQUEST_SIGN = 1001;
-    public static final int REQUEST_SIGN_UNIT = 1002;
-    public static final int REQUEST_SIGN_ENFORCE = 1003;
-    public static final int REQUEST_SIGN_WITNESS = 1004;
 
     public static final int CANVAS_MAX_WIDTH = 3000; // 画布最大宽度
     public static final int CANVAS_MAX_HEIGHT = 3000; // 画布最大高度
@@ -188,6 +184,8 @@ public class SignActivity extends BaseActivity implements View.OnClickListener, 
         }
         //显示隐藏拖拽按钮
         hideShowDrag();
+
+        fixNotch(true, R.id.container);
     }
 
     /**
@@ -368,29 +366,26 @@ public class SignActivity extends BaseActivity implements View.OnClickListener, 
             initSaveProgressDlg();
         }
         mSaveProgressDlg.show();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Bitmap result = mPaintView.buildAreaBitmap(isCrop);
-                    if (PenConfig.FORMAT_JPG.equals(format) && bgColor == Color.TRANSPARENT) {
-                        bgColor = Color.WHITE;
-                    }
-                    if (bgColor != Color.TRANSPARENT) {
-                        result = BitmapUtil.drawBgToBitmap(result, bgColor);
-                    }
-                    if (result == null) {
-                        mHandler.obtainMessage(MSG_SAVE_FAILED).sendToTarget();
-                        return;
-                    }
-                    mSavePath = BitmapUtil.saveImage(SignActivity.this, BitmapUtil.zoomImg(result, saveImageWidth), 100, format);
-                    if (mSavePath != null) {
-                        mHandler.obtainMessage(MSG_SAVE_SUCCESS).sendToTarget();
-                    } else {
-                        mHandler.obtainMessage(MSG_SAVE_FAILED).sendToTarget();
-                    }
-                } catch (Exception e) {}
-            }
+        new Thread(() -> {
+            try {
+                Bitmap result = mPaintView.buildAreaBitmap(isCrop);
+                if (PenConfig.FORMAT_JPG.equals(format) && bgColor == Color.TRANSPARENT) {
+                    bgColor = Color.WHITE;
+                }
+                if (bgColor != Color.TRANSPARENT) {
+                    result = BitmapUtil.drawBgToBitmap(result, bgColor);
+                }
+                if (result == null) {
+                    mHandler.obtainMessage(MSG_SAVE_FAILED).sendToTarget();
+                    return;
+                }
+                mSavePath = BitmapUtil.saveImage(SignActivity.this, BitmapUtil.zoomImg(result, saveImageWidth), 100, format);
+                if (mSavePath != null) {
+                    mHandler.obtainMessage(MSG_SAVE_SUCCESS).sendToTarget();
+                } else {
+                    mHandler.obtainMessage(MSG_SAVE_FAILED).sendToTarget();
+                }
+            } catch (Exception e) {}
         }).start();
     }
 
@@ -398,18 +393,8 @@ public class SignActivity extends BaseActivity implements View.OnClickListener, 
     void showRationaleForScan(final PermissionRequest request) {
         new BaseDialog.Builder(this).setMessage(R.string.base_permission_rationale)
                 .setCancelable(false)
-                .setNegativeButton(R.string.button_deny, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        request.cancel();
-                    }
-                })
-                .setPositiveButton(R.string.button_allow, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        request.proceed();
-                    }
-                }).create().show();
+                .setNegativeButton(R.string.button_deny, (dialog, which) -> request.cancel())
+                .setPositiveButton(R.string.button_allow, (dialog, which) -> request.proceed()).create().show();
     }
 
     @OnPermissionDenied(Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -423,14 +408,11 @@ public class SignActivity extends BaseActivity implements View.OnClickListener, 
                 .setMessage(R.string.base_permission_setting)
                 .setCancelable(false)
                 .setNegativeButton(R.string.button_cancel, null)
-                .setPositiveButton(R.string.button_confirm, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                        Uri uri = Uri.fromParts("package", BuildConfig.APPLICATION_ID, null);
-                        intent.setData(uri);
-                        startActivity(intent);
-                    }
+                .setPositiveButton(R.string.button_confirm, (dialog, which) -> {
+                    Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                    Uri uri = Uri.fromParts("package", BuildConfig.APPLICATION_ID, null);
+                    intent.setData(uri);
+                    startActivity(intent);
                 }).create().show();
     }
 
@@ -490,12 +472,9 @@ public class SignActivity extends BaseActivity implements View.OnClickListener, 
                 .setTitle("提示")
                 .setMessage("当前文字未保存，是否退出？")
                 .setNegativeButton("取消", null)
-                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        setResult(RESULT_CANCELED);
-                        finish();
-                    }
+                .setPositiveButton("确定", (dialog, which) -> {
+                    setResult(RESULT_CANCELED);
+                    finish();
                 }).create().show();
     }
 

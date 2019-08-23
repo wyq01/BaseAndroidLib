@@ -12,6 +12,7 @@
         android:layout_width="@dimen/dp_45"
         android:layout_height="@dimen/dp_45"
         android:contentDescription="TODO"
+        android:background="@android:color/transparent"
         android:padding="@dimen/dp_10"
         android:scaleType="centerInside"
         android:tint="@android:color/white"
