@@ -6,7 +6,7 @@ import android.widget.TextView
 import com.chad.library.adapter.base.BaseQuickAdapter.OnItemClickListener
 import com.chad.library.adapter.base.BaseViewHolder
 import com.wyq.example.R
-import com.wyq.example.basic.BasicAct
+import com.wyq.example.basic.WebViewAct
 import com.wyq.base.adapter.BaseAda
 import com.wyq.base.util.ClickUtil
 
@@ -20,7 +20,7 @@ class HistoryAdapter(context: Context?, data: List<String>?) :
             }
             val item = getItem(position)
             item?.let {
-                BasicAct.startActivity(mContext, it)
+                WebViewAct.startActivity(mContext, it)
             }
         }
     }

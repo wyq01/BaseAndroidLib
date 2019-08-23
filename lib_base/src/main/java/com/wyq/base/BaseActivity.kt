@@ -347,7 +347,7 @@ abstract class BaseActivity : AppCompatActivity() {
             }
         } else {
             (application as BaseApplication).clearDeviceAddress()
-            PrinterConnectAct.startActivity(this)
+            PrinterConnectAct.startActivity(this, true)
             printResult =  PrintResult.NONE
         }
     }
@@ -357,9 +357,13 @@ abstract class BaseActivity : AppCompatActivity() {
         when(requestCode) {
             RequestCode.REQUEST_PRINTER_CONNECT -> {
                 if (resultCode == Activity.RESULT_OK) {
-                    Handler().postDelayed({
-                        print(printContent)
-                    }, 300)
+                    data?.let {
+                        if (PrinterConnectAct.continuePrint(data)) {
+                            Handler().postDelayed({
+                                print(printContent)
+                            }, 300)
+                        }
+                    }
                 }
             }
         }

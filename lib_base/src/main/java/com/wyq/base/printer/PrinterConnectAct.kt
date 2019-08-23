@@ -24,6 +24,7 @@ import com.wyq.base.BuildConfig
 import com.wyq.base.R
 import com.wyq.base.util.click
 import com.wyq.base.BaseApplication
+import com.wyq.base.util.ToastUtil
 import io.reactivex.Observable
 import io.reactivex.ObservableOnSubscribe
 import io.reactivex.Observer
@@ -42,14 +43,31 @@ import java.util.*
 class PrinterConnectAct : BaseActivity() {
 
     companion object {
+        @JvmStatic
+        fun continuePrint(data: Intent?): Boolean {
+            data?.let {
+                return it.getBooleanExtra("continuePrint", false)
+            } ?: let {
+                return false
+            }
+        }
+
+        @JvmStatic
         fun startActivity(context: Activity) {
+            startActivity(context, false)
+        }
+        @JvmStatic
+        fun startActivity(context: Activity, continuePrint: Boolean) {
             val intent = Intent(context, PrinterConnectAct::class.java)
+            intent.putExtra("continuePrint", continuePrint)
             context.startActivityForResult(intent, RequestCode.REQUEST_PRINTER_CONNECT)
         }
     }
 
     private val sourceData = ArrayList<BluetoothDevice>()
     private var printerAdapter: PrinterAdapter? = null
+
+    private var continuePrint = false
 
     // 此处用于切换蓝牙连接方式
     private val isConnect: Boolean
@@ -71,8 +89,10 @@ class PrinterConnectAct : BaseActivity() {
             return printer?.isOpen ?: false
         }
 
-    override fun initLayout(): Int {
-        return R.layout.base_act_printer_connect
+    override fun initData(intent: Intent) {
+        super.initData(intent)
+
+        continuePrint = intent.getBooleanExtra("continuePrint", false)
     }
 
     override fun initViews() {
@@ -164,6 +184,10 @@ class PrinterConnectAct : BaseActivity() {
             })
     }
 
+    override fun initLayout(): Int {
+        return R.layout.base_act_printer_connect
+    }
+
     override fun overStatusBar(): Boolean {
         return false
     }
@@ -198,21 +222,22 @@ class PrinterConnectAct : BaseActivity() {
                     connect("")
                 })
             PrinterConnectEvent.STATUS_FAILED -> {
-                com.wyq.base.util.ToastUtil.shortToast(this, "打印机连接失败")
+                ToastUtil.shortToast(this, "打印机连接失败")
                 ProgressDialog.hideDialog()
                 printerAdapter?.updateSelected("")
             }
             PrinterConnectEvent.STATUS_SUCCESS -> {
-                com.wyq.base.util.ToastUtil.shortToast(this, "打印机连接成功")
+                ToastUtil.shortToast(this, "打印机连接成功")
                 ProgressDialog.hideDialog()
                 val deviceAddress = (application as BaseApplication).getDeviceAddress()
                 printerAdapter?.updateSelected(deviceAddress)
                 val data = Intent()
+                data.putExtra("continuePrint", continuePrint)
                 setResult(RESULT_OK, data)
                 finish()
             }
             PrinterConnectEvent.STATUS_CONNECTED -> {
-                com.wyq.base.util.ToastUtil.shortToast(this, "打印机已连接")
+                ToastUtil.shortToast(this, "打印机已连接")
                 ProgressDialog.hideDialog()
             }
         }

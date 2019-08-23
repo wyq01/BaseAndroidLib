@@ -7,6 +7,7 @@
         android:name=".app.TSApplication"
         android:allowBackup="true"
         android:icon="${app_icon}"
+        android:label="@string/app_name"
         android:networkSecurityConfig="@xml/network_security_config"
         android:resizeableActivity="false"
         android:supportsRtl="true"
@@ -14,7 +15,7 @@
         tools:targetApi="N">
 
         <activity
-            android:name=".basic.BasicInputAct"
+            android:name=".basic.MainAct"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
@@ -22,26 +23,21 @@
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".basic.BasicAct"
+            android:name=".basic.WebViewAct"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"/>
+            android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".basic.BasicPrintTestAct"
+            android:name=".basic.PrintTestAct"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"/>
-        <activity
-            android:name=".basic.WebTestAct"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"/>
+            android:windowSoftInputMode="stateHidden" />
     </application>
 </manifest>
