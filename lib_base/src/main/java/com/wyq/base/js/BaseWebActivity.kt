@@ -12,7 +12,7 @@ import cn.pedant.SafeWebViewBridge.InjectedChromeClient
 import cn.pedant.SafeWebViewBridge.JsCallback
 import com.wyq.base.BaseActivity
 import com.wyq.base.R
-import com.wyq.base.printer.bean.PrintResult
+import com.wyq.base.printer.event.PrintResultEvent
 import com.wyq.base.sign.SignActivity
 import com.wyq.base.sign.config.PenConfig
 import com.wyq.base.util.LogUtil
@@ -24,6 +24,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.base_act_web.*
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import java.io.IOException
 import java.io.UnsupportedEncodingException
 import java.net.URLEncoder
@@ -368,37 +370,17 @@ abstract class BaseWebActivity : BaseActivity() {
      * 打印
      */
     fun print(json: String?, jsCallback: JsCallback) {
-        Observable.create(ObservableOnSubscribe<Int> { emitter ->
-            try {
-                emitter.onNext(print(json))
-            } catch (e: Exception) {
-                e.printStackTrace()
-                emitter.onNext(PrintResult.NONE)
-            }
-        }).subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object : Observer<Int> {
-                override fun onSubscribe(d: Disposable) {}
-                override fun onNext(result: Int) {
-                    try {
-                        when(result) {
-                            PrintResult.FAILED -> jsCallback.apply(false)
-                            PrintResult.SUCCESS -> jsCallback.apply(true)
-                            else -> {}
-                        }
-                    } catch (e: JsCallback.JsCallbackException) {
-                        e.printStackTrace()
-                    }
-                }
-                override fun onError(e: Throwable) {
-                    try {
-                        jsCallback.apply(false)
-                    } catch (e: JsCallback.JsCallbackException) {
-                        e.printStackTrace()
-                    }
-                }
-                override fun onComplete() {}
-            })
+        this.jsCallback = jsCallback
+        print(json)
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onPrintResultEvent(event: PrintResultEvent) {
+        try {
+            jsCallback?.apply(event.success)
+        } catch (e: JsCallback.JsCallbackException) {
+            e.printStackTrace()
+        }
     }
 
     /**

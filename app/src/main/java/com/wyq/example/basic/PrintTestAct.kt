@@ -4,16 +4,18 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import com.google.gson.Gson
-import com.google.gson.JsonSyntaxException
-import com.wyq.example.R
 import com.wyq.base.BaseActivity
+import com.wyq.base.printer.PrinterConnectAct
 import com.wyq.base.printer.bean.*
+import com.wyq.base.printer.event.PrintResultEvent
 import com.wyq.base.sign.SignActivity
 import com.wyq.base.sign.config.PenConfig
 import com.wyq.base.util.ToastUtil
 import com.wyq.base.util.click
+import com.wyq.example.R
 import kotlinx.android.synthetic.main.act_print_test.*
-import java.io.IOException
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 class PrintTestAct : BaseActivity() {
 
@@ -44,66 +46,30 @@ class PrintTestAct : BaseActivity() {
         initJson()
 
         print1Btn.click {
-            try {
-                test1()
-                print(newTv.text.toString())
-            } catch (e1: IOException) {
-                e1.printStackTrace()
-            } catch (e2: JsonSyntaxException) {
-                e2.printStackTrace()
-                ToastUtil.shortToast(this, "json格式不正确")
-            } catch (e3: NullPointerException) {
-                e3.printStackTrace()
-                ToastUtil.shortToast(this, e3.message!!)
-            }
+            test1()
+            print(newTv.text.toString())
         }
 
         print2Btn.click {
-            try {
-                test2()
-                print(newTv.text.toString())
-            } catch (e1: IOException) {
-                e1.printStackTrace()
-            } catch (e2: JsonSyntaxException) {
-                e2.printStackTrace()
-                ToastUtil.shortToast(this, "json格式不正确")
-            } catch (e3: NullPointerException) {
-                e3.printStackTrace()
-                ToastUtil.shortToast(this, e3.message!!)
-            }
+            test2()
+            print(newTv.text.toString())
         }
 
         print3Btn.click {
-            try {
-                test3()
-                print(newTv.text.toString())
-            } catch (e1: IOException) {
-                e1.printStackTrace()
-            } catch (e2: JsonSyntaxException) {
-                e2.printStackTrace()
-                ToastUtil.shortToast(this, "json格式不正确")
-            } catch (e3: NullPointerException) {
-                e3.printStackTrace()
-                ToastUtil.shortToast(this, e3.message!!)
-            }
+            test3()
+            print(newTv.text.toString())
         }
 
         print4Btn.click {
-            try {
-                print(newTv.text.toString())
-            } catch (e1: IOException) {
-                e1.printStackTrace()
-            } catch (e2: JsonSyntaxException) {
-                e2.printStackTrace()
-                ToastUtil.shortToast(this, "json格式不正确")
-            } catch (e3: NullPointerException) {
-                e3.printStackTrace()
-                ToastUtil.shortToast(this, e3.message!!)
-            }
+            print(newTv.text.toString())
         }
 
         signBtn.click {
             SignActivity.startActivityForResult(this)
+        }
+
+        connectBtn.click {
+            PrinterConnectAct.startActivity(this)
         }
     }
 
@@ -267,6 +233,13 @@ class PrintTestAct : BaseActivity() {
                     }
                 }
             }
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onPrintResultEvent(event: PrintResultEvent) {
+        if (event.success) {
+            ToastUtil.shortToast(this, event.content ?: "")
         }
     }
 

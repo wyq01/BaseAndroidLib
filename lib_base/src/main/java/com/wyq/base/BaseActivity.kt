@@ -29,7 +29,7 @@ import com.wyq.base.event.BaseEvent
 import com.wyq.base.printer.PrinterConnectAct
 import com.wyq.base.printer.bean.BasePrint
 import com.wyq.base.printer.bean.PrintBean
-import com.wyq.base.printer.bean.PrintResult
+import com.wyq.base.printer.event.PrintResultEvent
 import com.wyq.base.printer.two.JQPrinter
 import com.wyq.base.printer.two.Printer_define
 import com.wyq.base.printer.two.esc.ESC
@@ -329,7 +329,6 @@ abstract class BaseActivity : AppCompatActivity() {
         onRequestPermissionsResult(requestCode, grantResults)
     }
 
-    private var printResult = PrintResult.NONE
     @NeedsPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
     internal fun printImpl(json: String?) {
         val printer = (application as BaseApplication).getJQPrinter()
@@ -347,23 +346,23 @@ abstract class BaseActivity : AppCompatActivity() {
                         BasePrint.Type.SIGNATURE.value -> printSignature(item, printer)
                     }
                 }
-                printResult = PrintResult.SUCCESS
+                EventBus.getDefault().post(PrintResultEvent(true, printContent))
             } catch (e1: IOException) {
                 e1.printStackTrace()
-                printResult = PrintResult.FAILED
+                ToastUtil.shortToast(this, e1.message!!)
+                EventBus.getDefault().post(PrintResultEvent(false, printContent))
             } catch (e2: JsonSyntaxException) {
                 e2.printStackTrace()
                 ToastUtil.shortToast(this, "json格式不正确")
-                printResult =  PrintResult.FAILED
+                EventBus.getDefault().post(PrintResultEvent(false, printContent))
             } catch (e3: java.lang.NullPointerException) {
                 e3.printStackTrace()
                 ToastUtil.shortToast(this, e3.message!!)
-                printResult =  PrintResult.FAILED
+                EventBus.getDefault().post(PrintResultEvent(false, printContent))
             }
         } else {
             (application as BaseApplication).clearDeviceAddress()
             PrinterConnectAct.startActivity(this, true)
-            printResult =  PrintResult.NONE
         }
     }
 
@@ -379,6 +378,10 @@ abstract class BaseActivity : AppCompatActivity() {
                             }, 300)
                         }
                     }
+                } else {
+                    if (PrinterConnectAct.continuePrint(data)) {
+                        EventBus.getDefault().post(PrintResultEvent(false, printContent))
+                    }
                 }
             }
         }
@@ -388,10 +391,9 @@ abstract class BaseActivity : AppCompatActivity() {
     /**
      * 打印
      */
-    protected fun print(json: String?): Int {
+    protected fun print(json: String?) {
         printContent = json
         printImplWithPermissionCheck(json)
-        return printResult
     }
 
     /**
