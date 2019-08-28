@@ -5,6 +5,7 @@ import android.bluetooth.BluetoothDevice
 import android.content.Intent
 import android.support.multidex.MultiDexApplication
 import android.text.TextUtils
+import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.Utils
 import com.lzy.okgo.OkGo
 import com.lzy.okgo.cache.CacheEntity
@@ -21,8 +22,6 @@ import com.wyq.base.printer.event.BluetoothStatusEvent
 import com.wyq.base.printer.one.Printer
 import com.wyq.base.printer.two.JQPrinter
 import com.wyq.base.printer.two.Printer_define
-import com.wyq.base.util.LogUtil
-import com.wyq.base.util.LoggerUtil
 import com.tencent.smtt.sdk.QbSdk
 import okhttp3.OkHttpClient
 import org.greenrobot.eventbus.EventBus
@@ -42,6 +41,10 @@ import javax.net.ssl.X509TrustManager
  * Date: 2019/1/15
  */
 open class BaseApplication : MultiDexApplication() {
+    companion object {
+        const val TAG = "tech_service"
+    }
+
     private var deviceAddress: String? = null
     private var printer: Printer? = null
     private var jQPrinter: JQPrinter? = null
@@ -87,6 +90,7 @@ open class BaseApplication : MultiDexApplication() {
         startService(Intent(this, BluetoothPairService::class.java))
 
         Utils.init(this)
+        LogUtils.getConfig().setLogSwitch(BuildConfig.DEBUG).setGlobalTag(TAG)
 
         initOkGo()
     }
@@ -113,7 +117,7 @@ open class BaseApplication : MultiDexApplication() {
         //----------------------------------------------------------------------------------------//
         val builder = OkHttpClient.Builder()
         // log相关
-        val loggingInterceptor = HttpLoggingInterceptor(LoggerUtil.TAG)
+        val loggingInterceptor = HttpLoggingInterceptor(TAG)
         loggingInterceptor.setPrintLevel(HttpLoggingInterceptor.Level.BODY) // log打印级别，决定了log显示的详细程度
         loggingInterceptor.setColorLevel(Level.INFO) // log颜色级别，决定了log在控制台显示的颜色
         builder.addInterceptor(loggingInterceptor) // 添加OkGo默认debug日志
@@ -205,7 +209,7 @@ open class BaseApplication : MultiDexApplication() {
             BluetoothAdapter.STATE_OFF // 蓝牙关闭
                 , BluetoothAdapter.STATE_DISCONNECTED // 蓝牙断开连接
             -> {
-                LogUtil.d("打印机已断开")
+                LogUtils.d("打印机已断开")
                 printer = null
                 jQPrinter?.close()
             }
@@ -217,7 +221,7 @@ open class BaseApplication : MultiDexApplication() {
         when (event.status) {
             BluetoothDevice.BOND_NONE // 解绑设备
             -> if (!TextUtils.isEmpty(event.address) && event.address == deviceAddress) {
-                LogUtil.d("打印机已解绑")
+                LogUtils.d("打印机已解绑")
                 printer = null
                 jQPrinter?.close()
                 deviceAddress = null

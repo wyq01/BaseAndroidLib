@@ -20,6 +20,7 @@ import android.widget.ImageButton
 import android.widget.TextView
 import com.blankj.utilcode.util.ImageUtils
 import com.blankj.utilcode.util.KeyboardUtils
+import com.blankj.utilcode.util.LogUtils
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import com.gyf.barlibrary.ImmersionBar
@@ -34,7 +35,6 @@ import com.wyq.base.printer.two.JQPrinter
 import com.wyq.base.printer.two.Printer_define
 import com.wyq.base.printer.two.esc.ESC
 import com.wyq.base.sign.util.BitmapUtil
-import com.wyq.base.util.LogUtil
 import com.wyq.base.util.ScreenRotateUtils
 import com.wyq.base.util.ToastUtil
 import com.wyq.base.util.click
@@ -77,10 +77,10 @@ abstract class BaseActivity : AppCompatActivity() {
         val notchScreenManager = NotchScreenManager.getInstance()
         notchScreenManager.setDisplayInNotch(this)
         notchScreenManager.getNotchInfo(this) { notchScreenInfo ->
-            LogUtil.d("Is this screen notch? " + notchScreenInfo.hasNotch)
+            LogUtils.d("Is this screen notch? " + notchScreenInfo.hasNotch)
             if (notchScreenInfo.hasNotch) {
                 for (rect in notchScreenInfo.notchRects) {
-                    LogUtil.d("notch screen Rect =  " + rect.toShortString())
+                    LogUtils.d("notch screen Rect =  " + rect.toShortString())
                     if (ScreenRotateUtils.screenIsLandscape(this)) {
                         notchHeight = rect.right
                         initNotchScreen()
@@ -335,7 +335,7 @@ abstract class BaseActivity : AppCompatActivity() {
         if (printer != null && printer.canPrint()) {
             try {
                 val list = Gson().fromJson(json, Array<PrintBean>::class.java)
-                LogUtil.d("开始打印")
+                LogUtils.d("开始打印")
                 for (item in list) {
                     when (item.type) {
                         BasePrint.Type.TEXT.value -> printText(item, printer)
@@ -506,7 +506,7 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     fun print(header: String?, title: String?, content: String?, stamp: String?, twice: Boolean) {
-        LogUtil.d("开始打印")
+        LogUtils.d("开始打印")
         val printer = (application as BaseApplication).getJQPrinter()
         if (printer != null && printer.canPrint()) {
             header?.let {

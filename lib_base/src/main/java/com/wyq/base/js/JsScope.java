@@ -3,7 +3,7 @@ package com.wyq.base.js;
 import android.app.Activity;
 import android.webkit.WebView;
 
-import com.wyq.base.util.LogUtil;
+import com.blankj.utilcode.util.LogUtils;
 
 import cn.pedant.SafeWebViewBridge.JsCallback;
 
@@ -71,7 +71,7 @@ public class JsScope {
      * 结束当前窗口
      */
     public static void closeWebView(WebView webView) {
-        LogUtil.d("closeWebView");
+        LogUtils.d("closeWebView");
         if (webView.getContext() instanceof Activity) {
             ((Activity) webView.getContext()).finish();
         }

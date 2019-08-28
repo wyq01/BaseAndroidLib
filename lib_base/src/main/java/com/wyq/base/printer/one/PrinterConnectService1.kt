@@ -6,11 +6,11 @@ import android.bluetooth.BluetoothSocket
 import android.content.Intent
 import android.os.IBinder
 import android.text.TextUtils
+import com.blankj.utilcode.util.LogUtils
+import com.wyq.base.BaseApplication
 import com.wyq.base.printer.BluetoothUtil
 import com.wyq.base.printer.event.BluetoothStatusEvent
 import com.wyq.base.printer.event.PrinterConnectEvent
-import com.wyq.base.util.LogUtil
-import com.wyq.base.BaseApplication
 import io.reactivex.Observable
 import io.reactivex.ObservableOnSubscribe
 import io.reactivex.Observer
@@ -73,7 +73,7 @@ class PrinterConnectService1 : Service() {
         if (bluetoothSocket != null) {
             if (bluetoothSocket?.remoteDevice?.address == deviceAddress) {
                 EventBus.getDefault().post(PrinterConnectEvent(PrinterConnectEvent.STATUS_CONNECTED))
-                LogUtil.d("打印机已连接")
+                LogUtils.d("打印机已连接")
             } else {
                 closeSocket()
                 connect(deviceAddress)
@@ -98,7 +98,7 @@ class PrinterConnectService1 : Service() {
                 }
                 override fun onNext(result: BluetoothSocket) {
                     try {
-                        LogUtil.d("打印机连接成功")
+                        LogUtils.d("打印机连接成功")
                         bluetoothSocket = result
                         (application as BaseApplication).setPrinter(Printer(bluetoothSocket?.outputStream, "GBK"))
                         (application as BaseApplication).setDeviceAddress(deviceAddress)
@@ -106,12 +106,12 @@ class PrinterConnectService1 : Service() {
                     } catch (e: IOException) {
                         e.printStackTrace()
                         EventBus.getDefault().post(PrinterConnectEvent(PrinterConnectEvent.STATUS_FAILED))
-                        LogUtil.d("打印机连接失败")
+                        LogUtils.d("打印机连接失败")
                     }
                 }
                 override fun onError(e: Throwable) {
                     EventBus.getDefault().post(PrinterConnectEvent(PrinterConnectEvent.STATUS_FAILED))
-                    LogUtil.d("打印机连接失败")
+                    LogUtils.d("打印机连接失败")
                 }
                 override fun onComplete() {}
             })

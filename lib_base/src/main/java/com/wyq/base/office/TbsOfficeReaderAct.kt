@@ -9,18 +9,18 @@ import android.os.Environment
 import android.provider.Settings
 import android.text.TextUtils
 import android.widget.RelativeLayout
+import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.lzy.okgo.OkGo
 import com.lzy.okgo.callback.FileCallback
 import com.lzy.okgo.model.Progress
 import com.lzy.okgo.model.Response
-import com.wyq.base.BuildConfig
-import com.wyq.base.R
-import com.wyq.base.util.LogUtil
-import com.wyq.base.util.ToastUtil
-import com.wyq.base.view.BaseDialog
 import com.tencent.smtt.sdk.TbsReaderView
 import com.wyq.base.BaseActivity
+import com.wyq.base.BuildConfig
+import com.wyq.base.R
+import com.wyq.base.util.ToastUtil
+import com.wyq.base.view.BaseDialog
 import kotlinx.android.synthetic.main.base_act_tbs_office_reader.*
 import permissions.dispatcher.*
 import java.io.File
@@ -130,10 +130,10 @@ class TbsOfficeReaderAct: BaseActivity(), TbsReaderView.ReaderCallback {
                     .tag(this)
                     .execute(object : FileCallback() {
                         override fun downloadProgress(progress: Progress) {
-                            LogUtil.d("downloadProgress " + progress.currentSize + "," + progress.totalSize)
+                            LogUtils.d("downloadProgress " + progress.currentSize + "," + progress.totalSize)
                         }
                         override fun onSuccess(response: Response<File>) {
-                            LogUtil.d("onSuccess")
+                            LogUtils.d("onSuccess")
                             val file = response.body()
 //                            ToastUtil.shortToast(this@TbsOfficeReaderAct, "文档下载完成，路径：${file.path}")
                             displayFile(file.path)

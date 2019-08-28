@@ -11,6 +11,7 @@ import android.hardware.SensorManager
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
+import com.blankj.utilcode.util.LogUtils
 
 /**
  * 重力感应处理工具类
@@ -41,7 +42,7 @@ class ScreenRotateUtils(context: Context) {
          * @return
          */
         fun getInstance(context: Context): ScreenRotateUtils {
-            LogUtil.d("getInstance")
+            LogUtils.d("getInstance")
             if (instance == null) {
                 instance = ScreenRotateUtils(context)
             }
@@ -163,7 +164,7 @@ class ScreenRotateUtils(context: Context) {
     }
 
     init {
-        LogUtil.d("init")
+        LogUtils.d("init")
         sm = context.getSystemService(Context.SENSOR_SERVICE) as SensorManager?
         sensor = sm!!.getDefaultSensor(Sensor.TYPE_GRAVITY)
         mHandler = object : Handler(Looper.getMainLooper()) {
@@ -175,16 +176,16 @@ class ScreenRotateUtils(context: Context) {
                      */
                     if (orientation in 45..135) {
                         mActivity!!.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE
-                        LogUtil.d("8 反向横屏 ${mActivity!!.requestedOrientation}")
+                        LogUtils.d("8 反向横屏 ${mActivity!!.requestedOrientation}")
                     } else if (orientation in 136..225) {
                         mActivity!!.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT
-                        LogUtil.d("9 反向竖屏 ${mActivity!!.requestedOrientation}")
+                        LogUtils.d("9 反向竖屏 ${mActivity!!.requestedOrientation}")
                     } else if (orientation in 226..315) {
                         mActivity!!.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
-                        LogUtil.d("0 正向横屏 ${mActivity!!.requestedOrientation}")
+                        LogUtils.d("0 正向横屏 ${mActivity!!.requestedOrientation}")
                     } else if (orientation in 316..360 || orientation in 0..44) {
                         mActivity!!.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-                        LogUtil.d("1 正向竖屏 ${mActivity!!.requestedOrientation}")
+                        LogUtils.d("1 正向竖屏 ${mActivity!!.requestedOrientation}")
                     }
                 }
             }

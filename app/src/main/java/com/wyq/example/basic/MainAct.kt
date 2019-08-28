@@ -1,12 +1,12 @@
 package com.wyq.example.basic
 
 import android.support.v7.widget.LinearLayoutManager
+import com.blankj.utilcode.util.LogUtils
 import com.wyq.example.R
 import com.wyq.example.basic.adapter.HistoryAdapter
 import com.wyq.example.basic.util.Urls
 import com.wyq.base.BaseActivity
 import com.wyq.base.printer.event.PrintResultEvent
-import com.wyq.base.util.LogUtil
 import com.wyq.base.util.ToastUtil
 import com.wyq.base.util.click
 import com.wyq.base.view.BaseDialog
@@ -109,7 +109,7 @@ class MainAct : BaseActivity() {
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onPrintResultEvent(event: PrintResultEvent) {
         if (event.success && this.localClassName == event.className) {
-            LogUtil.d("MainAct 打印成功")
+            LogUtils.d("MainAct 打印成功")
             ToastUtil.shortToast(this, event.content ?: "")
         }
     }

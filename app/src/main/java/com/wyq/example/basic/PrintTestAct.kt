@@ -3,6 +3,7 @@ package com.wyq.example.basic
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import com.blankj.utilcode.util.LogUtils
 import com.google.gson.Gson
 import com.wyq.base.BaseActivity
 import com.wyq.base.printer.PrinterConnectAct
@@ -10,7 +11,6 @@ import com.wyq.base.printer.bean.*
 import com.wyq.base.printer.event.PrintResultEvent
 import com.wyq.base.sign.SignActivity
 import com.wyq.base.sign.config.PenConfig
-import com.wyq.base.util.LogUtil
 import com.wyq.base.util.ToastUtil
 import com.wyq.base.util.click
 import com.wyq.example.R
@@ -240,7 +240,7 @@ class PrintTestAct : BaseActivity() {
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onPrintResultEvent(event: PrintResultEvent) {
         if (event.success && this.localClassName == event.className) {
-            LogUtil.d("PrintTestAct 打印成功")
+            LogUtils.d("PrintTestAct 打印成功")
             ToastUtil.shortToast(this, event.content ?: "")
         }
     }

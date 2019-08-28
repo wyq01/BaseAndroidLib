@@ -10,12 +10,12 @@ import android.text.TextUtils
 import android.webkit.*
 import cn.pedant.SafeWebViewBridge.InjectedChromeClient
 import cn.pedant.SafeWebViewBridge.JsCallback
+import com.blankj.utilcode.util.LogUtils
 import com.wyq.base.BaseActivity
 import com.wyq.base.R
 import com.wyq.base.printer.event.PrintResultEvent
 import com.wyq.base.sign.SignActivity
 import com.wyq.base.sign.config.PenConfig
-import com.wyq.base.util.LogUtil
 import com.wyq.base.util.ScreenRotateUtils
 import io.reactivex.Observable
 import io.reactivex.ObservableOnSubscribe
@@ -149,13 +149,13 @@ abstract class BaseWebActivity : BaseActivity() {
             }
 
             override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
-                LogUtil.d("shouldOverrideUrlLoading ${request.url}")
+                LogUtils.d("shouldOverrideUrlLoading ${request.url}")
                 // 解决重定向导致无法goback
                 return false
             }
 
             override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
-                LogUtil.d("shouldOverrideUrlLoading $url")
+                LogUtils.d("shouldOverrideUrlLoading $url")
                 // 解决重定向导致无法goback
                 return false
             }
@@ -165,10 +165,10 @@ abstract class BaseWebActivity : BaseActivity() {
                 if (TextUtils.isEmpty(homeUrl) && encodeUrl(url()) != url) {
                     homeUrl = url
                 }
-                LogUtil.d("onPageFinished:$url")
+                LogUtils.d("onPageFinished:$url")
             }
         }
-        LogUtil.d("url:${url()}")
+        LogUtils.d("url:${url()}")
         webView.loadUrl(encodeUrl(url()))
     }
 

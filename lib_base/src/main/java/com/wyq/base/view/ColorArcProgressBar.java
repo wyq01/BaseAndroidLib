@@ -14,9 +14,9 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.wyq.base.R;
 import com.wyq.base.util.DecimalFormatUtil;
-import com.wyq.base.util.LogUtil;
 import com.wyq.base.util.MeasureUtil;
 
 /**
@@ -205,7 +205,7 @@ public class ColorArcProgressBar extends View {
         sweepGradient = new SweepGradient(centerX, centerY, gradientColors, null);
         rotateMatrix = new Matrix();
 
-        LogUtil.d("centerX: " + centerX + ",centerY: " + centerY);
+        LogUtils.d("centerX: " + centerX + ",centerY: " + centerY);
     }
 
     @Override
@@ -254,7 +254,7 @@ public class ColorArcProgressBar extends View {
     }
 
     public void setProgress(float progress) {
-        LogUtil.d("progress:" + progress);
+        LogUtils.d("progress:" + progress);
         setCurrentValues(progress * maxValue);
     }
 

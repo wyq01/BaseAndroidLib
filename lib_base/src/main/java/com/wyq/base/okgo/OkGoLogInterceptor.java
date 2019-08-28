@@ -1,8 +1,8 @@
 package com.wyq.base.okgo;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.lzy.okgo.utils.IOUtils;
 import com.lzy.okgo.utils.OkLogger;
-import com.wyq.base.util.LoggerUtil;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -42,7 +42,7 @@ public class OkGoLogInterceptor implements Interceptor {
     }
 
     private void log(String message) {
-        LoggerUtil.d(message);
+        LogUtils.d(message);
     }
 
     @Override

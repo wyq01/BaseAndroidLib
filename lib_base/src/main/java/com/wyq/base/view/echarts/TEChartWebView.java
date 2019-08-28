@@ -10,9 +10,9 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.github.abel533.echarts.json.GsonOption;
 import com.wyq.base.util.EChartGsonUtil;
-import com.wyq.base.util.LogUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -110,7 +110,7 @@ public class TEChartWebView extends WebView {
 //        String optionString = option.toString();
         String optionString = EChartGsonUtil.format(option);
         String call = "javascript:refreshEchartsWithOption('" + optionString + "')";
-        LogUtil.d("call: " + call);
+        LogUtils.d("call: " + call);
         loadUrl(call);
     }
 
@@ -173,7 +173,7 @@ public class TEChartWebView extends WebView {
 
         @JavascriptInterface
         public void showDebugMessage(String message) {
-            if (isDebug) LogUtil.e(message);
+            if (isDebug) LogUtils.e(message);
         }
 
         /**
@@ -185,7 +185,7 @@ public class TEChartWebView extends WebView {
         public String getChartOptions() {
             if (dataSource != null) {
                 GsonOption option = dataSource.markChartOptions();
-                LogUtil.d(option.toString());
+                LogUtils.d(option.toString());
                 return option.toString();
             }
             return null;
@@ -197,7 +197,7 @@ public class TEChartWebView extends WebView {
          */
         @JavascriptInterface
         public void addEchartActionHandlerResponseResult(String params) {
-            LogUtil.e(params);
+            LogUtils.e(params);
             if (onAddEchartActionHandlerResponseResultListener != null) {
                 onAddEchartActionHandlerResponseResultListener.actionHandlerResponseResult(params);
             }
@@ -209,7 +209,7 @@ public class TEChartWebView extends WebView {
          */
         @JavascriptInterface
         public void removeEchartActionHandlerResponseResult(String params) {
-            LogUtil.e(params);
+            LogUtils.e(params);
         }
 
     }

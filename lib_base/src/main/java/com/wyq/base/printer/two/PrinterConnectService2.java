@@ -6,11 +6,11 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.text.TextUtils;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.wyq.base.BaseApplication;
 import com.wyq.base.printer.BluetoothUtil;
 import com.wyq.base.printer.event.BluetoothStatusEvent;
 import com.wyq.base.printer.event.PrinterConnectEvent;
-import com.wyq.base.util.LogUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -85,18 +85,18 @@ public class PrinterConnectService2 extends Service {
                     @Override
                     public void onNext(Boolean result) {
                         if (result) {
-                            LogUtil.INSTANCE.d("打印机连接成功");
+                            LogUtils.d("打印机连接成功");
                             ((BaseApplication) getApplication()).setDeviceAddress(deviceAddress);
                             EventBus.getDefault().post(new PrinterConnectEvent(PrinterConnectEvent.STATUS_SUCCESS));
                         } else {
                             EventBus.getDefault().post(new PrinterConnectEvent(PrinterConnectEvent.STATUS_FAILED));
-                            LogUtil.INSTANCE.d("打印机连接失败");
+                            LogUtils.d("打印机连接失败");
                         }
                     }
                     @Override
                     public void onError(Throwable e) {
                         EventBus.getDefault().post(new PrinterConnectEvent(PrinterConnectEvent.STATUS_FAILED));
-                        LogUtil.INSTANCE.d("打印机连接失败");
+                        LogUtils.d("打印机连接失败");
                     }
                     @Override
                     public void onComplete() {}

@@ -2,8 +2,8 @@ package com.wyq.example.basic
 
 import android.content.Context
 import android.content.Intent
+import com.blankj.utilcode.util.LogUtils
 import com.wyq.base.js.BaseWebActivity
-import com.wyq.base.util.LogUtil
 
 class WebViewAct : BaseWebActivity() {
 
@@ -21,7 +21,7 @@ class WebViewAct : BaseWebActivity() {
         super.initData(intent)
 
         url = intent.getStringExtra("url")
-        LogUtil.d("url:$url")
+        LogUtils.d("url:$url")
     }
 
     override fun url(): String {
