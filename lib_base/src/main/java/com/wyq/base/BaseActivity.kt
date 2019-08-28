@@ -346,19 +346,19 @@ abstract class BaseActivity : AppCompatActivity() {
                         BasePrint.Type.SIGNATURE.value -> printSignature(item, printer)
                     }
                 }
-                EventBus.getDefault().post(PrintResultEvent(true, printContent))
+                EventBus.getDefault().post(PrintResultEvent(true, printContent, this.localClassName))
             } catch (e1: IOException) {
                 e1.printStackTrace()
                 ToastUtil.shortToast(this, e1.message!!)
-                EventBus.getDefault().post(PrintResultEvent(false, printContent))
+                EventBus.getDefault().post(PrintResultEvent(false, printContent, this.localClassName))
             } catch (e2: JsonSyntaxException) {
                 e2.printStackTrace()
                 ToastUtil.shortToast(this, "json格式不正确")
-                EventBus.getDefault().post(PrintResultEvent(false, printContent))
+                EventBus.getDefault().post(PrintResultEvent(false, printContent, this.localClassName))
             } catch (e3: java.lang.NullPointerException) {
                 e3.printStackTrace()
                 ToastUtil.shortToast(this, e3.message!!)
-                EventBus.getDefault().post(PrintResultEvent(false, printContent))
+                EventBus.getDefault().post(PrintResultEvent(false, printContent, this.localClassName))
             }
         } else {
             (application as BaseApplication).clearDeviceAddress()
@@ -380,7 +380,7 @@ abstract class BaseActivity : AppCompatActivity() {
                     }
                 } else {
                     if (PrinterConnectAct.continuePrint(data)) {
-                        EventBus.getDefault().post(PrintResultEvent(false, printContent))
+                        EventBus.getDefault().post(PrintResultEvent(false, printContent, this.localClassName))
                     }
                 }
             }

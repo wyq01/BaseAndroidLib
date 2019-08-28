@@ -5,6 +5,8 @@ import com.wyq.example.R
 import com.wyq.example.basic.adapter.HistoryAdapter
 import com.wyq.example.basic.util.Urls
 import com.wyq.base.BaseActivity
+import com.wyq.base.printer.event.PrintResultEvent
+import com.wyq.base.util.LogUtil
 import com.wyq.base.util.ToastUtil
 import com.wyq.base.util.click
 import com.wyq.base.view.BaseDialog
@@ -15,6 +17,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.act_main.*
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 class MainAct : BaseActivity() {
 
@@ -100,6 +104,14 @@ class MainAct : BaseActivity() {
 
     override fun overStatusBar(): Boolean {
         return false
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onPrintResultEvent(event: PrintResultEvent) {
+        if (event.success && this.localClassName == event.className) {
+            LogUtil.d("MainAct 打印成功")
+            ToastUtil.shortToast(this, event.content ?: "")
+        }
     }
 
 }

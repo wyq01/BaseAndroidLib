@@ -134,7 +134,6 @@ class ScreenRotateUtils(context: Context) {
         mActivity = activity
         sm?.let {
             val result = it.registerListener(listener, sensor, SensorManager.SENSOR_DELAY_NORMAL)
-            LogUtil.d("注册监听${if (result) "成功" else "失败"}")
         }
     }
 
@@ -143,7 +142,6 @@ class ScreenRotateUtils(context: Context) {
      * 解除绑定切换横竖屏Activity的生命周期，在onPause方法中执行
      */
     fun unregisterSensorRotate() {
-        LogUtil.d("解除监听")
         sm?.unregisterListener(listener)
         mActivity = null  // 防止内存泄漏
     }

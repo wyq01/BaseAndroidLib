@@ -378,6 +378,7 @@ abstract class BaseWebActivity : BaseActivity() {
     fun onPrintResultEvent(event: PrintResultEvent) {
         try {
             jsCallback?.apply(event.success)
+            jsCallback = null
         } catch (e: JsCallback.JsCallbackException) {
             e.printStackTrace()
         }
