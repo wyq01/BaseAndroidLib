@@ -15,16 +15,13 @@ import com.bumptech.glide.request.RequestListener
  */
 object ImageLoader {
 
-    private const val URL_CONDITION = "http"
-
     fun load(context: Context, url: String?, @DrawableRes drawableId: Int, target: ImageView) {
         url?.let {
             if (TextUtils.isEmpty(it)) {
                 return
             }
-            val imgUrl = convertUrl(it)
             Glide.with(context)
-                .load(imgUrl)
+                .load(it)
                 .placeholder(drawableId)
                 .error(drawableId)
                 .into(target)
@@ -36,10 +33,8 @@ object ImageLoader {
             if (TextUtils.isEmpty(it)) {
                 return
             }
-            val imgUrl = convertUrl(it)
-//            LogUtil.d("加载的图片 $imgUrl")
             Glide.with(context)
-                .load(imgUrl)
+                .load(it)
                 .into(target)
         }
     }
@@ -49,10 +44,8 @@ object ImageLoader {
             if (TextUtils.isEmpty(it)) {
                 return
             }
-            val imgUrl = convertUrl(it)
-//            LogUtil.d("加载的图片 $imgUrl")
             Glide.with(context)
-                .load(imgUrl)
+                .load(it)
                 .placeholder(resId)
                 .error(resId)
                 .into(target)
@@ -64,9 +57,8 @@ object ImageLoader {
             if (TextUtils.isEmpty(it)) {
                 return
             }
-            val imgUrl = convertUrl(it)
             Glide.with(context)
-                .load(imgUrl)
+                .load(it)
                 .listener(l)
                 .into(target)
         }
@@ -77,16 +69,11 @@ object ImageLoader {
             if (TextUtils.isEmpty(it)) {
                 return
             }
-            val imgUrl = convertUrl(it)
             Glide.with(context)
-                .load(imgUrl)
+                .load(it)
                 .centerCrop()
                 .into(target)
         }
-    }
-
-    private fun convertUrl(url: String): String {
-        return url
     }
 
 }

@@ -76,20 +76,17 @@ class PrintTestAct : BaseActivity() {
 
     private fun test1() {
         list.clear()
-        val headerBean = TextPrint()
-        headerBean.text = header
-        headerBean.align = BasePrint.Align.CENTER.value
-        headerBean.textSize = BasePrint.TextSize.X32.value
-        headerBean.bold = true
+        val headerBean = TextPrint(header)
+            .align(BasePrint.Align.CENTER.value)
+            .textSize(BasePrint.TextSize.X32.value)
+            .bold(true)
 
-        val titleBean = TextPrint()
-        titleBean.text = title
-        titleBean.align = BasePrint.Align.CENTER.value
-        titleBean.textSize = BasePrint.TextSize.X24.value
-        titleBean.bold = true
+        val titleBean = TextPrint(title)
+            .align(BasePrint.Align.CENTER.value)
+            .textSize(BasePrint.TextSize.X24.value)
+            .bold(true)
 
-        val contentBean = TextPrint()
-        contentBean.text = content
+        val contentBean = TextPrint(content)
 
         list.add(BlankPrint(20))
         list.add(headerBean)
@@ -116,34 +113,28 @@ class PrintTestAct : BaseActivity() {
 
     private fun test2() {
         list.clear()
-        val headerBean = TextPrint()
-        headerBean.text = header
-        headerBean.align = BasePrint.Align.CENTER.value
-        headerBean.textSize = BasePrint.TextSize.X32.value
-        headerBean.bold = true
+        val headerBean = TextPrint(header)
+            .align(BasePrint.Align.CENTER.value)
+            .textSize(BasePrint.TextSize.X32.value)
+            .bold(true)
 
-        val titleBean = TextPrint()
-        titleBean.text = title
-        titleBean.align = BasePrint.Align.CENTER.value
-        titleBean.textSize = BasePrint.TextSize.X24.value
-        titleBean.bold = true
+        val titleBean = TextPrint(title)
+            .align(BasePrint.Align.CENTER.value)
+            .textSize(BasePrint.TextSize.X24.value)
+            .bold(true)
 
-        val contentBean = TextPrint()
-        contentBean.text = content
+        val contentBean = TextPrint(content)
 
-        val dateBean = TextPrint()
-        dateBean.text = date
-        dateBean.align = BasePrint.Align.RIGHT.value
+        val dateBean = TextPrint(date)
+            .align(BasePrint.Align.RIGHT.value)
 
         list.add(BlankPrint(20))
         list.add(headerBean)
-        list.add(EnterPrint())
         list.add(titleBean)
         list.add(BlankPrint(20))
         list.add(contentBean)
         list.add(BlankPrint(100))
         list.add(headerBean)
-        list.add(BlankPrint(10))
         list.add(titleBean)
         list.add(BlankPrint(20))
         list.add(contentBean)
@@ -153,13 +144,11 @@ class PrintTestAct : BaseActivity() {
 
         list.add(BlankPrint(50))
         list.add(headerBean)
-        list.add(EnterPrint())
         list.add(titleBean)
         list.add(BlankPrint(20))
         list.add(contentBean)
         list.add(BlankPrint(100))
         list.add(headerBean)
-        list.add(BlankPrint(10))
         list.add(titleBean)
         list.add(BlankPrint(20))
         list.add(contentBean)
@@ -173,25 +162,16 @@ class PrintTestAct : BaseActivity() {
 
     private fun test3() {
         list.clear()
-        val t1 = TextPrint()
-        t1.text = "苏州xxxx有限公司："
-        t1.bold = true
-        t1.textSize = BasePrint.TextSize.X32.value
-
-        val t2 = TextPrint()
-        t2.text = "因你公司违反了xxxx规定，现对你司进行如下处罚："
-
-        val t3 = TextPrint()
-        t3.text = "    从今日起至"
-
-        val t4 = TextPrint()
-        t4.text = "2020年1月1日"
-        t4.textSize = BasePrint.TextSize.X32.value
-        t4.bold = true
-        t4.underLine = true
-
-        val t5 = TextPrint()
-        t5.text = "不得开门营业，直到整改结束。"
+        val t1 = TextPrint("苏州xxxx有限公司：")
+            .textSize(BasePrint.TextSize.X32.value)
+            .bold(true)
+        val t2 = TextPrint("因你公司违反了xxxx规定，现对你司进行如下处罚：")
+        val t3 = TextPrint("    从今日起至")
+        val t4 = TextPrint("2020年1月1日")
+            .textSize(BasePrint.TextSize.X32.value)
+            .bold(true)
+            .underLine(true)
+        val t5 = TextPrint("不得开门营业，直到整改结束。")
 
         list.add(BlankPrint(20))
         list.add(t1)

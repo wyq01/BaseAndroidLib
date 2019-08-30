@@ -366,25 +366,6 @@ public class Text extends BaseESC {
         _port.write(text);
     }
 
-    /**
-     * @param align 对齐
-     * @param height 字体大小
-     * @param bold 加粗
-     * @param text 内容
-     * @throws IOException
-     */
-    public void print(Printer_define.ALIGN align, ESC.FONT_HEIGHT height, boolean bold, String text) throws IOException {
-        clearParams();
-        setAlign(align);
-        setFontHeight(height);
-        setBold(bold);
-        _port.write(text);
-        // 不是左对齐则换行
-        if (align != Printer_define.ALIGN.LEFT) {
-            enter();
-        }
-    }
-
     public void print(Printer_define.ALIGN align, ESC.FONT_HEIGHT height, boolean bold, boolean underLine, String text) throws IOException {
         clearParams();
         setAlign(align);

@@ -402,10 +402,6 @@ abstract class BaseActivity : AppCompatActivity() {
     private fun printText(bean: PrintBean, printer: JQPrinter) {
         bean.text?.let {
             printer.esc.text.print(bean.revertAlign(), bean.revertTextSize(), bean.bold, bean.underLine, bean.text)
-            // 右对齐、中对齐默认打印换行
-            if (bean.align == BasePrint.Align.RIGHT.value || bean.align == BasePrint.Align.CENTER.value) {
-                printEnter(printer)
-            }
         } ?: let {
             throw NullPointerException("类型为${bean.type}，text不可为空")
         }
