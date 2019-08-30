@@ -5,9 +5,9 @@ import android.support.v4.view.PagerAdapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.bumptech.glide.Glide
 import com.github.chrisbanes.photoview.PhotoView
 import com.wyq.base.R
-import com.wyq.base.util.ImageLoader
 import com.wyq.base.view.LoadingLayout
 
 class PhotoViewAdapter(var context: Context, var data: ArrayList<String>) : PagerAdapter() {
@@ -38,7 +38,10 @@ class PhotoViewAdapter(var context: Context, var data: ArrayList<String>) : Page
             onFinishListener?.onFinish()
         }
         loadingLayout.showContent()
-        ImageLoader.load(context, data[position], photoView)
+//        ImageLoader.load(context, data[position], photoView)
+        Glide.with(context)
+            .load(data[position])
+            .into(photoView)
 //        Glide.with(context)
 //            .load(data[position])
 //            .listener(object : RequestListener<String, GlideDrawable> {

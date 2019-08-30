@@ -7,6 +7,7 @@ import com.wyq.example.basic.adapter.HistoryAdapter
 import com.wyq.example.basic.util.Urls
 import com.wyq.base.BaseActivity
 import com.wyq.base.printer.event.PrintResultEvent
+import com.wyq.base.qrcode.QRCodeAct
 import com.wyq.base.util.ToastUtil
 import com.wyq.base.util.click
 import com.wyq.base.view.BaseDialog
@@ -69,7 +70,8 @@ class MainAct : BaseActivity() {
             changeScreenOrientation()
         }
         webTestBtn.click {
-            WebViewAct.startActivity(this, "file:///android_asset/web_test.html")
+            QRCodeAct.startActivityForResult(this)
+//            WebViewAct.startActivity(this, "file:///android_asset/web_test.html")
         }
 
         updateHistory()
