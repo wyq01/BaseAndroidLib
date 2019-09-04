@@ -8,6 +8,7 @@ class SignPrint(var signTip: String?, var signPath: String?) : BasePrint(BasePri
     var textSize: Int = BasePrint.TextSize.X24.value // 字体大小，默认为24
     var underLine: Boolean = false // 是否带下划线
     var bold: Boolean = false // 是否加粗
+    var showSignTip: Boolean = true // 是否打印提示
 
     public fun textSize(textSize: Int): SignPrint {
         this.textSize = textSize
@@ -21,6 +22,11 @@ class SignPrint(var signTip: String?, var signPath: String?) : BasePrint(BasePri
 
     public fun bold(bold: Boolean): SignPrint {
         this.bold = bold
+        return this
+    }
+
+    public fun showSignTip(showSignTip: Boolean): SignPrint {
+        this.showSignTip = showSignTip
         return this
     }
 

@@ -15,6 +15,7 @@ class PrintBean {
 
     var signTip: String? = null // 签名前面的提示
     var signPath: String? = null // 签名图片路径
+    var showSignTip: Boolean = true // 是否打印提示
 
     var stamp: String? = null // 印章
 

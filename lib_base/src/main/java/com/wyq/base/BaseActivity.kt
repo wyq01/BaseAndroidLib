@@ -480,9 +480,11 @@ abstract class BaseActivity : AppCompatActivity() {
         } ?: let {
             throw NullPointerException("类型为${bean.type}，imgPath不可为空")
         }
-        bean.signTip?.let {
-            printer.esc.text.print(0, signBmHeight - bean.getTextSizeHeight() / 4, bean.revertTextSize(), bean.bold, bean.underLine, it)
-            printEnter(printer)
+        if (bean.showSignTip) {
+            bean.signTip?.let {
+                printer.esc.text.print(0, signBmHeight - bean.getTextSizeHeight() / 4, bean.revertTextSize(), bean.bold, bean.underLine, it)
+                printEnter(printer)
+            }
         }
     }
 
