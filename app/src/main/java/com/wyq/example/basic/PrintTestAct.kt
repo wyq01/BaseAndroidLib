@@ -205,9 +205,10 @@ class PrintTestAct : BaseActivity() {
                     data?.let {
                         val path = it.getStringExtra(PenConfig.SAVE_PATH)
                         val signBean = SignPrint("打印人员签名", path)
-                        signBean.textSize = BasePrint.TextSize.X32.value
-                        signBean.bold = true
-                        signBean.underLine = true
+                            .textSize(BasePrint.TextSize.X32.value)
+                            .bold(true)
+                            .underLine(true)
+                            .showSignTip(false)
                         list.add(signBean)
                         list.add(BlankPrint(50))
                         initJson()

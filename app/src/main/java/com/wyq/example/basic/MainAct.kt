@@ -70,8 +70,8 @@ class MainAct : BaseActivity() {
             changeScreenOrientation()
         }
         webTestBtn.click {
-            QRCodeAct.startActivityForResult(this)
-//            WebViewAct.startActivity(this, "file:///android_asset/web_test.html")
+//            QRCodeAct.startActivityForResult(this)
+            WebViewAct.startActivity(this, "file:///android_asset/web_test.html")
         }
 
         updateHistory()
