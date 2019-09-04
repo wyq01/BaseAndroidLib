@@ -11,6 +11,7 @@ import android.text.TextUtils
 import android.view.View
 import com.gyf.barlibrary.ImmersionBar
 import com.king.zxing.CaptureActivity
+import com.king.zxing.Intents
 import com.king.zxing.util.CodeUtils
 import com.wyq.base.BuildConfig
 import com.wyq.base.R
@@ -152,27 +153,28 @@ class QRCodeAct : CaptureActivity() {
         onRequestPermissionsResult(requestCode, grantResults)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
                 RequestCode.REQUEST_PHOTO -> {
-                    val list = Matisse.obtainPathResult(data)
-                    val photo = list[0]
-                    Observable.create(ObservableOnSubscribe<String> { emitter ->
-                                val result = CodeUtils.parseCode(photo)
-                                if (!TextUtils.isEmpty(result)) {
-                                    emitter.onNext(result)
-                                } else {
-                                    emitter.onError(Throwable(""))
-                                }
-                            }).subscribeOn(Schedulers.io())
+                    data?.let {
+                        val list = Matisse.obtainPathResult(it)
+                        val photo = list[0]
+                        Observable.create(ObservableOnSubscribe<String> { emitter ->
+                            val result = CodeUtils.parseCode(photo)
+                            if (!TextUtils.isEmpty(result)) {
+                                emitter.onNext(result)
+                            } else {
+                                emitter.onError(Throwable(""))
+                            }
+                        }).subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(object : Observer<String> {
                                 override fun onSubscribe(d: Disposable) {}
                                 override fun onNext(result: String) {
                                     val intent = Intent()
-                                    intent.putExtra(CaptureActivity.KEY_RESULT, result)
+                                    intent.putExtra(Intents.Scan.RESULT, result)
                                     setResult(Activity.RESULT_OK, intent)
                                     finish()
                                 }
@@ -181,6 +183,10 @@ class QRCodeAct : CaptureActivity() {
                                 }
                                 override fun onComplete() {}
                             })
+                    } ?: let {
+                        setResult(Activity.RESULT_CANCELED)
+                        finish()
+                    }
                 }
             }
         }
