@@ -114,7 +114,7 @@ class PrinterConnectAct : BaseActivity() {
             ItemDivider(
                 this,
                 1,
-                resources.getColor(R.color.light_divider)
+                resources.getColor(R.color.base_divider)
             )
         )
         printerAdapter = PrinterAdapter(this, sourceData)

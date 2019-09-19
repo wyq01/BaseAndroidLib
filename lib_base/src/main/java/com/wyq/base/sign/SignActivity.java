@@ -160,9 +160,9 @@ public class SignActivity extends BaseActivity implements View.OnClickListener, 
 
         Drawable drawable = DrawableCompat.wrap(Objects.requireNonNull(ContextCompat.getDrawable(this, R.drawable.base_ic_delete_black_24dp)));
         if (!mPaintView.isEmpty()) {
-            DrawableCompat.setTint(drawable, ContextCompat.getColor(this, R.color.btn_common_normal));
+            DrawableCompat.setTint(drawable, ContextCompat.getColor(this, R.color.base_btn_common_normal));
         } else {
-            DrawableCompat.setTint(drawable, ContextCompat.getColor(this, R.color.btn_common_disable));
+            DrawableCompat.setTint(drawable, ContextCompat.getColor(this, R.color.base_btn_common_disable));
         }
         mClearIv.setImageDrawable(drawable);
 
@@ -435,9 +435,9 @@ public class SignActivity extends BaseActivity implements View.OnClickListener, 
 //		mUndoView.setImage(R.drawable.sign_ic_undo, mPaintView.canUndo() ? PenConfig.THEME_COLOR : Color.LTGRAY);
         Drawable drawable = DrawableCompat.wrap(Objects.requireNonNull(ContextCompat.getDrawable(this, R.drawable.base_ic_delete_black_24dp)));
         if (!mPaintView.isEmpty()) {
-            DrawableCompat.setTint(drawable, ContextCompat.getColor(this, R.color.btn_common_normal));
+            DrawableCompat.setTint(drawable, ContextCompat.getColor(this, R.color.base_btn_common_normal));
         } else {
-            DrawableCompat.setTint(drawable, ContextCompat.getColor(this, R.color.btn_common_disable));
+            DrawableCompat.setTint(drawable, ContextCompat.getColor(this, R.color.base_btn_common_disable));
         }
         mClearIv.setImageDrawable(drawable);
 //		mClearView.setImage(R.drawable.sign_ic_clear, !mPaintView.isNull() ? PenConfig.THEME_COLOR : Color.LTGRAY);

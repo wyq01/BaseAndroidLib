@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/dp_45"
-    android:background="@color/toolbar">
+    android:background="@color/base_theme">
 
     <ImageButton
         android:id="@+id/backBtn"

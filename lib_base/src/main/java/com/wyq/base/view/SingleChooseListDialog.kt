@@ -75,7 +75,7 @@ class SingleChooseListDialog private constructor(
             ItemDivider(
                 context,
                 1,
-                context.resources.getColor(R.color.light_divider)
+                context.resources.getColor(R.color.base_divider)
             )
         )
         data?.let {

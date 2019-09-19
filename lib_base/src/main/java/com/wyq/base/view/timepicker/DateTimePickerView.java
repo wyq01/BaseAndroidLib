@@ -144,11 +144,11 @@ public class DateTimePickerView extends LinearLayout implements NumberPickerView
             } else if (attr == R.styleable.DatePickerView_solarThemeColor) {
                 mThemeColorG = a.getColor(attr, DEFAULT_GREGORIAN_COLOR);
             }
-            mThemeColorG = context.getResources().getColor(R.color.toolbar);
+            mThemeColorG = context.getResources().getColor(R.color.base_theme);
             if (attr == R.styleable.DatePickerView_lunarThemeColor) {
                 mThemeColorL = a.getColor(attr, DEFAULT_LUNAR_COLOR);
             }
-            mThemeColorL = context.getResources().getColor(R.color.toolbar);
+            mThemeColorL = context.getResources().getColor(R.color.base_theme);
             if (attr == R.styleable.DatePickerView_normalTextColor) {
                 mNormalTextColor = a.getColor(attr, DEFAULT_NORMAL_TEXT_COLOR);
             }

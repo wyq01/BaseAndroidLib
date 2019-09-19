@@ -18,4 +18,6 @@
 
 	<color name="egyptian_blue">#193D9C</color>
 
+	<color name="base_theme">@android:color/holo_blue_dark</color>
+	<color name="upgrade_theme">@color/base_theme</color>
 </resources>

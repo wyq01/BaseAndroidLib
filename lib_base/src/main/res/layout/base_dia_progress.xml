@@ -11,7 +11,7 @@
         style="@style/Base.Widget.AppCompat.ProgressBar"
         android:progress="20"
         android:max="100"
-        android:indeterminateTint="@color/theme"
+        android:indeterminateTint="@color/base_theme"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true" />
@@ -31,7 +31,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/dp_5"
         android:text="@string/loading_msg"
-        android:textColor="@color/text_tip"
+        android:textColor="@color/base_text_tip"
         android:textSize="@dimen/dp_14" />
 
 </RelativeLayout>

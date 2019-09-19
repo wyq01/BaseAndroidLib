@@ -1,42 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--********************* 公共颜色 *********************-->
-    <color name="map_filter_red">#F44336</color>
-    <color name="map_filter_pink">#E91E63</color>
-    <color name="map_filter_purple">#9C27B0</color>
-    <color name="map_filter_deep_purple">#673AB7</color>
-    <color name="map_filter_blue">#2196F3</color>
-    <color name="map_filter_light_blue">#03A9F4</color>
-    <color name="map_filter_cyan">#00BCD4</color>
-    <color name="map_filter_green">#4CAF50</color>
-    <color name="map_filter_light_green">#8BC34A</color>
-    <color name="map_filter_lime">#CDDC39</color>
-    <color name="map_filter_yellow">#FFEB3B</color>
-    <color name="map_filter_amber">#FFC107</color>
-    <color name="map_filter_orange">#FF9800</color>
-    <color name="map_filter_deep_orange">#FF5722</color>
-    <color name="map_filter_brown">#795548</color>
-    <color name="map_filter_gray">#9E9E9E</color>
-    <color name="map_filter_blue_gray">#607D8B</color>
+    <color name="base_red">#F44336</color>
+    <color name="base_pink">#E91E63</color>
+    <color name="base_purple">#9C27B0</color>
+    <color name="base_deep_purple">#673AB7</color>
+    <color name="base_blue">#2196F3</color>
+    <color name="base_light_blue">#03A9F4</color>
+    <color name="base_cyan">#00BCD4</color>
+    <color name="base_green">#4CAF50</color>
+    <color name="base_light_green">#8BC34A</color>
+    <color name="base_lime">#CDDC39</color>
+    <color name="base_yellow">#FFEB3B</color>
+    <color name="base_amber">#FFC107</color>
+    <color name="base_orange">#FF9800</color>
+    <color name="base_deep_orange">#FF5722</color>
+    <color name="base_brown">#795548</color>
+    <color name="base_gray">#9E9E9E</color>
+    <color name="base_blue_gray">#607D8B</color>
     <!--********************* 公共颜色 *********************-->
 
-    <color name="theme">#3183FB</color>
-    <color name="transparent">#00000000</color>
-    <color name="toolbar">#3183FB</color>
-    <color name="background">#F5F5F5</color>
-    <color name="btn_common_normal">#3183FB</color>
-    <color name="btn_common_disable">#B4B4B4</color>
-    <color name="btn_common_half_transparent">#803183FB</color>
-    <color name="btn_supervise_normal">#D6D7D7</color>
-    <color name="btn_supervise_selected">#3183FB</color>
+    <color name="base_theme">#3183FB</color>
+    <color name="base_transparent">#00000000</color>
+    <color name="base_background">#F5F5F5</color>
+    <color name="base_btn_common_normal">#3183FB</color>
+    <color name="base_btn_common_disable">#B4B4B4</color>
+    <color name="base_btn_common_half_transparent">#803183FB</color>
+    <color name="base_btn_supervise_normal">#D6D7D7</color>
 
-    <color name="light_divider">#dadada</color>
+    <color name="base_divider">#dadada</color>
 
-    <color name="text_main">#454545</color>
-    <color name="text_tip">#747474</color>
-    <color name="text_hint">#ABABAB</color>
+    <color name="base_text_main">#454545</color>
+    <color name="base_text_tip">#747474</color>
+    <color name="base_text_hint">#ABABAB</color>
 
-    <color name="colorPrimary">@color/toolbar</color>
-    <color name="colorPrimaryDark">@color/toolbar</color>
-    <color name="colorAccent">@color/toolbar</color>
+    <color name="colorPrimary">@color/base_theme</color>
+    <color name="colorPrimaryDark">@color/base_theme</color>
+    <color name="colorAccent">@color/base_theme</color>
 </resources>

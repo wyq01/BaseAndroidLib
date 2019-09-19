@@ -1,17 +1,18 @@
 package com.wyq.example.basic
 
+import android.os.Handler
 import android.support.v7.widget.LinearLayoutManager
 import com.blankj.utilcode.util.LogUtils
-import com.wyq.example.R
-import com.wyq.example.basic.adapter.HistoryAdapter
-import com.wyq.example.basic.util.Urls
+import com.ts.upgrade.UpgradeUtils
 import com.wyq.base.BaseActivity
 import com.wyq.base.printer.event.PrintResultEvent
-import com.wyq.base.qrcode.QRCodeAct
 import com.wyq.base.util.ToastUtil
 import com.wyq.base.util.click
 import com.wyq.base.view.BaseDialog
 import com.wyq.base.view.VerticalDividerWithoutTB
+import com.wyq.example.R
+import com.wyq.example.basic.adapter.HistoryAdapter
+import com.wyq.example.basic.util.Urls
 import io.reactivex.Observable
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -38,7 +39,7 @@ class MainAct : BaseActivity() {
             VerticalDividerWithoutTB(
                 this,
                 1,
-                resources.getColor(R.color.light_divider)
+                resources.getColor(R.color.base_divider)
             )
         )
         historyRv.adapter = historyAdapter
@@ -72,6 +73,10 @@ class MainAct : BaseActivity() {
         webTestBtn.click {
 //            QRCodeAct.startActivityForResult(this)
             WebViewAct.startActivity(this, "file:///android_asset/web_test.html")
+        }
+
+        upgradeBtn.click {
+            UpgradeAct.startActivity(this)
         }
 
         updateHistory()

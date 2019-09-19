@@ -23,7 +23,7 @@ def bintrayApikey = properties.getProperty("bintray.apikey")
 def bintrayRepo = properties.getProperty("bintray.repo")
 
 group projectGroup
-version version_name
+version base_version_name
 
 task sourcesJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs

@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/dp_15"
-            android:textColor="@color/text_tip"
+            android:textColor="@color/base_text_tip"
             android:textSize="@dimen/dp_16" />
 
         <ImageView
@@ -36,7 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_1"
             android:layout_alignParentBottom="true"
-            android:background="@color/light_divider" />
+            android:background="@color/base_divider" />
     </RelativeLayout>
 
     <com.wyq.base.view.MaxHeightRecyclerView

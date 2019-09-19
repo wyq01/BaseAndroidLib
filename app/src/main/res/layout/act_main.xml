@@ -114,12 +114,26 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@id/printBtn" />
 
+    <com.wyq.base.view.CommonShapeButton
+        android:id="@+id/upgradeBtn"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_36"
+        android:layout_marginBottom="@dimen/dp_10"
+        android:text="更新测试"
+        android:textColor="@color/white"
+        android:textSize="@dimen/dp_14"
+        app:csb_activeEnable="true"
+        app:csb_cornerRadius="@dimen/dp_4"
+        app:layout_constraintBottom_toTopOf="@id/printBtn"
+        app:layout_constraintLeft_toLeftOf="@id/changeScreenOrientationBtn"
+        app:layout_constraintRight_toRightOf="@id/clearBtn" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/historyRv"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="@dimen/dp_10"
-        app:layout_constraintBottom_toTopOf="@id/printBtn"
+        app:layout_constraintBottom_toTopOf="@id/upgradeBtn"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/enterBtn" />

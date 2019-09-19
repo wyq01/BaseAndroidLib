@@ -18,17 +18,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="选择时间"
-            android:textColor="@color/toolbar"
+            android:textColor="@color/base_theme"
             android:textSize="@dimen/dp_16" />
 
         <com.wyq.base.view.timepicker.DateTimePickerView
             android:id="@+id/dateTimePickerView"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_200"
-            app:lunarThemeColor="@color/toolbar"
+            app:lunarThemeColor="@color/base_theme"
             app:normalTextColor="#FF777777"
             app:scrollAnimation="true"
-            app:solarThemeColor="@color/toolbar" />
+            app:solarThemeColor="@color/base_theme" />
     </LinearLayout>
 
     <LinearLayout
@@ -57,7 +57,7 @@
             android:layout_marginRight="@dimen/dp_16"
             android:background="?attr/selectableItemBackground"
             android:text="@string/button_cancel"
-            android:textColor="@color/toolbar" />
+            android:textColor="@color/base_theme" />
 
         <Button
             android:id="@+id/confirmBtn"
@@ -66,7 +66,7 @@
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackground"
             android:text="@string/button_confirm"
-            android:textColor="@color/toolbar" />
+            android:textColor="@color/base_theme" />
     </LinearLayout>
 
 </LinearLayout>

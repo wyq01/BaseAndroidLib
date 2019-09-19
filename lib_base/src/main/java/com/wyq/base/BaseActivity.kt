@@ -77,10 +77,8 @@ abstract class BaseActivity : AppCompatActivity() {
         val notchScreenManager = NotchScreenManager.getInstance()
         notchScreenManager.setDisplayInNotch(this)
         notchScreenManager.getNotchInfo(this) { notchScreenInfo ->
-            LogUtils.d("Is this screen notch? " + notchScreenInfo.hasNotch)
             if (notchScreenInfo.hasNotch) {
                 for (rect in notchScreenInfo.notchRects) {
-                    LogUtils.d("notch screen Rect =  " + rect.toShortString())
                     if (ScreenRotateUtils.screenIsLandscape(this)) {
                         notchHeight = rect.right
                         initNotchScreen()
@@ -103,7 +101,7 @@ abstract class BaseActivity : AppCompatActivity() {
         if (!overStatusBar()) {
             paddingView?.let {
                 mImmersionBar?.statusBarView(it)
-                    ?.statusBarColor(R.color.theme)
+                    ?.statusBarColor(R.color.base_theme)
             }
         } else {
             paddingView?.let {

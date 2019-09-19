@@ -13,13 +13,13 @@
 		android:id="@+id/viewfinder_view"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		app:cornerColor="@color/theme"
-		app:frameColor="@color/theme"
+		app:cornerColor="@color/base_theme"
+		app:frameColor="@color/base_theme"
 		app:labelText="@string/scan_tip"
 		app:labelTextLocation="bottom"
 		app:labelTextSize="@dimen/dp_14"
-		app:laserColor="@color/theme"
-		app:resultPointColor="@color/theme" />
+		app:laserColor="@color/base_theme"
+		app:resultPointColor="@color/base_theme" />
 
 	<ImageView
 		android:id="@+id/lightBtn"

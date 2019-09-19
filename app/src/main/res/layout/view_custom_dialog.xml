@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/dp_15"
+    android:paddingTop="@dimen/dp_10"
+    android:paddingRight="@dimen/dp_15"
+    android:paddingBottom="@dimen/dp_10">
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/infoView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxHeight="@dimen/dp_100">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/versionTv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="版本：1.0.3"
+                android:textColor="#747474"
+                android:textSize="13dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/fileSizeTv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_5"
+                android:text="包大小：18.2M"
+                android:textColor="#747474"
+                android:textSize="13dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/versionTv" />
+
+            <TextView
+                android:id="@+id/upgradeTimeTv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_5"
+                android:text="更新时间：2019-09-20 14:30:23"
+                android:textColor="#747474"
+                android:textSize="13dp"
+                app:layout_constraintLeft_toLeftOf="@id/versionTv"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/fileSizeTv" />
+
+            <TextView
+                android:id="@+id/upgradeTip"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_15"
+                android:text="更新内容："
+                android:textColor="#333333"
+                android:textSize="15dp"
+                app:layout_constraintLeft_toLeftOf="@id/versionTv"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/upgradeTimeTv" />
+
+            <TextView
+                android:id="@+id/upgradeMsgTv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_5"
+                android:text="1.修复了bug\n2.增加了功能"
+                android:textColor="#333333"
+                android:textSize="15dp"
+                app:layout_constraintLeft_toLeftOf="@id/versionTv"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/upgradeTip" />
+        </android.support.constraint.ConstraintLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+    <ProgressBar
+        android:id="@+id/pb"
+        style="@android:style/Widget.Material.Light.ProgressBar.Horizontal"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp_2"
+        android:layout_marginTop="@dimen/dp_15"
+        android:max="100"
+        android:progress="40"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/infoView" />
+
+</android.support.constraint.ConstraintLayout>

@@ -163,15 +163,15 @@ public class BaseDialog {
             dialog.show();
             Button positiveBtn = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
             if (positiveBtn != null) {
-                positiveBtn.setTextColor(context.getResources().getColor(R.color.toolbar));
+                positiveBtn.setTextColor(context.getResources().getColor(R.color.base_theme));
             }
             Button negativeBtn = dialog.getButton(AlertDialog.BUTTON_NEGATIVE);
             if (negativeBtn != null) {
-                negativeBtn.setTextColor(context.getResources().getColor(R.color.toolbar));
+                negativeBtn.setTextColor(context.getResources().getColor(R.color.base_theme));
             }
             Button neutralBtn = dialog.getButton(AlertDialog.BUTTON_NEUTRAL);
             if (neutralBtn != null) {
-                neutralBtn.setTextColor(context.getResources().getColor(R.color.toolbar));
+                neutralBtn.setTextColor(context.getResources().getColor(R.color.base_theme));
             }
             return dialog;
         }
