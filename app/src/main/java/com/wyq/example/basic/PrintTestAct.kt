@@ -78,11 +78,11 @@ class PrintTestAct : BaseActivity() {
     private fun test1() {
         list.clear()
         val headerBean = TextPrint("苏州市姑苏区市场监督管理局")
-            .textSize(BasePrint.TextSize.X24.value)
+            .textSizeX24()
             .alignCenter()
             .bold(true)
         val titleBean = TextPrint("责令整改通知书")
-            .textSize(BasePrint.TextSize.X32.value)
+            .textSizeX32()
             .alignCenter()
             .bold(true)
         val numberBean = TextPrint("市监〔1296〕号")
@@ -128,7 +128,7 @@ class PrintTestAct : BaseActivity() {
         val phoneBean = TextPrint("0512-66666666")
             .underLine(true)
         val dateBean = TextPrint(DateFormatUtil.format(DateFormatUtil.yyyyYMYdR))
-            .align(BasePrint.Align.RIGHT.value)
+            .alignRight()
 
         list.add(BlankPrint(80))
         list.add(headerBean)
@@ -208,19 +208,19 @@ class PrintTestAct : BaseActivity() {
     private fun test2() {
         list.clear()
         val headerBean = TextPrint(header)
-            .align(BasePrint.Align.CENTER.value)
-            .textSize(BasePrint.TextSize.X32.value)
+            .alignCenter()
+            .textSizeX32()
             .bold(true)
 
         val titleBean = TextPrint(title)
-            .align(BasePrint.Align.CENTER.value)
-            .textSize(BasePrint.TextSize.X24.value)
+            .alignCenter()
+            .textSizeX24()
             .bold(true)
 
         val contentBean = TextPrint(content)
 
         val dateBean = TextPrint(date)
-            .align(BasePrint.Align.RIGHT.value)
+            .alignRight()
 
         list.add(BlankPrint(20))
         list.add(headerBean)
@@ -257,12 +257,12 @@ class PrintTestAct : BaseActivity() {
     private fun test3() {
         list.clear()
         val t1 = TextPrint("苏州xxxx有限公司：")
-            .textSize(BasePrint.TextSize.X32.value)
+            .textSizeX32()
             .bold(true)
         val t2 = TextPrint("因你公司违反了xxxx规定，现对你司进行如下处罚：")
         val t3 = TextPrint("    从今日起至")
         val t4 = TextPrint("2020年1月1日")
-            .textSize(BasePrint.TextSize.X32.value)
+            .textSizeX32()
             .bold(true)
             .underLine(true)
         val t5 = TextPrint("不得开门营业，直到整改结束。")

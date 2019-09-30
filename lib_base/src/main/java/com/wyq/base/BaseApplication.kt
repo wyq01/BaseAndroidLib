@@ -90,7 +90,7 @@ open class BaseApplication : MultiDexApplication() {
         startService(Intent(this, BluetoothPairService::class.java))
 
         Utils.init(this)
-        LogUtils.getConfig().setLogSwitch(BuildConfig.DEBUG).setGlobalTag(TAG)
+        LogUtils.getConfig().setLogSwitch(BuildConfig.DEBUG).globalTag = TAG
 
         initOkGo()
     }
