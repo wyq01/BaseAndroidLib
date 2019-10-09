@@ -22,6 +22,7 @@ class PrintBean {
     var text: String? = null // 打印内容
     var underLine: Boolean = false // 是否带下划线
     var bold: Boolean = false // 是否加粗
+    var enter: Boolean = false // 是否换行
     var textSize: Int = BasePrint.TextSize.X24.value // 字体大小
     var align: String = BasePrint.Align.LEFT.value // 对齐方式
 

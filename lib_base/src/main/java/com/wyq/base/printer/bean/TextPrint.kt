@@ -8,6 +8,7 @@ class TextPrint(var text: String?) : BasePrint(BasePrint.Type.TEXT.value) {
     private var textSize: Int = BasePrint.TextSize.X24.value // 字体大小，默认为24
     private var underLine: Boolean = false // 是否带下划线
     private var bold: Boolean = false // 是否加粗
+    private var enter: Boolean = false // 是否换行
     private var align: String = BasePrint.Align.LEFT.value // 对齐方式
 
     public fun textSizeX16(): TextPrint {
@@ -42,6 +43,11 @@ class TextPrint(var text: String?) : BasePrint(BasePrint.Type.TEXT.value) {
 
     public fun bold(): TextPrint {
         this.bold = true
+        return this
+    }
+
+    public fun enter(): TextPrint {
+        this.enter = true
         return this
     }
 
