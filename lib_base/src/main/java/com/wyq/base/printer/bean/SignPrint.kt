@@ -10,11 +10,6 @@ class SignPrint(var signTip: String?, var signPath: String?) : BasePrint(BasePri
     private var bold: Boolean = false // 是否加粗
     private var showSignTip: Boolean = true // 是否打印提示
 
-    public fun textSize(textSize: Int): SignPrint {
-        this.textSize = textSize
-        return this
-    }
-
     public fun textSizeX16(): SignPrint {
         this.textSize = BasePrint.TextSize.X16.value
         return this
@@ -40,18 +35,18 @@ class SignPrint(var signTip: String?, var signPath: String?) : BasePrint(BasePri
         return this
     }
 
-    public fun underLine(underLine: Boolean): SignPrint {
-        this.underLine = underLine
+    public fun underLine(): SignPrint {
+        this.underLine = true
         return this
     }
 
-    public fun bold(bold: Boolean): SignPrint {
-        this.bold = bold
+    public fun bold(): SignPrint {
+        this.bold = true
         return this
     }
 
-    public fun showSignTip(showSignTip: Boolean): SignPrint {
-        this.showSignTip = showSignTip
+    public fun hideSignTip(): SignPrint {
+        this.showSignTip = false
         return this
     }
 
