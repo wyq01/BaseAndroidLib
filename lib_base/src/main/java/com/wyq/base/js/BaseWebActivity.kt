@@ -36,6 +36,7 @@ import java.net.URLEncoder
 abstract class BaseWebActivity : BaseActivity() {
 
     protected abstract fun url(): String
+    protected var mWebView: WebView? = null
 
     companion object {
         const val RESULT_CODE_FILE_CHOOSE = 1
@@ -67,6 +68,7 @@ abstract class BaseWebActivity : BaseActivity() {
         ws.javaScriptEnabled = true
         ws.setAppCacheEnabled(false)
 
+        this.mWebView = webView
         webView.webChromeClient = CustomChromeClient("plus", JsScope::class.java)
         webView.webViewClient = object : WebViewClient() {
             /**

@@ -64,6 +64,8 @@ abstract class BaseActivity : AppCompatActivity() {
     protected var rightTv: TextView? = null
     private var loadingLayout: LoadingLayout? = null
 
+    private var layoutContainer: FrameLayout? = null
+
     private var uiLoadIsFinished = false // UI加载是否完成
 
     private var notchHeight = -1 // 刘海高度
@@ -254,12 +256,12 @@ abstract class BaseActivity : AppCompatActivity() {
                     retryLoad()
                 }
             }
-            val container = rootView.findViewById<FrameLayout>(R.id.layoutContainer)
+            layoutContainer = rootView.findViewById<FrameLayout>(R.id.layoutContainer)
             val params = FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.MATCH_PARENT,
                 FrameLayout.LayoutParams.MATCH_PARENT
             )
-            container.addView(content, params)
+            layoutContainer?.addView(content, params)
 
             val backBtn = content.findViewById<ImageButton>(R.id.backBtn)
             backBtn?.click {
@@ -271,6 +273,11 @@ abstract class BaseActivity : AppCompatActivity() {
             rightTv = content.findViewById(R.id.rightTv)
         }
         return rootView
+    }
+
+    /** 设置根布局透明 */
+    protected fun setBackgroundTransparent() {
+        layoutContainer?.setBackgroundColor(resources.getColor(android.R.color.transparent))
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
