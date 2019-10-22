@@ -1,6 +1,5 @@
 package com.wyq.base.qrcode
 
-import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.hardware.Camera
@@ -9,6 +8,7 @@ import android.os.Bundle
 import android.provider.Settings
 import android.text.TextUtils
 import android.view.View
+import com.blankj.utilcode.util.PermissionUtils
 import com.gyf.barlibrary.ImmersionBar
 import com.king.zxing.CaptureActivity
 import com.king.zxing.Intents
@@ -19,6 +19,8 @@ import com.wyq.base.constant.RequestCode
 import com.wyq.base.util.ToastUtil
 import com.wyq.base.util.click
 import com.wyq.base.view.BaseDialog
+import com.yanzhenjie.permission.AndPermission
+import com.yanzhenjie.permission.runtime.Permission
 import com.zhihu.matisse.Matisse
 import com.zhihu.matisse.MimeType
 import com.zhihu.matisse.engine.impl.GlideEngine
@@ -30,22 +32,17 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.base_act_qrcode.*
-import permissions.dispatcher.*
 
 /**
  * Created by wyq
  * Date: 2019/1/14
  */
-@RuntimePermissions
 class QRCodeAct : CaptureActivity() {
 
     companion object {
         @JvmStatic
         fun startActivityForResult(activity: Activity) {
-            startActivityForResult(
-                activity,
-                RequestCode.REQUEST_SCAN
-            )
+            startActivityForResult(activity, RequestCode.REQUEST_SCAN)
         }
         @JvmStatic
         fun startActivityForResult(activity: Activity, requestCode: Int) {
@@ -87,7 +84,7 @@ class QRCodeAct : CaptureActivity() {
         }
 
         rightBtn.click {
-            albumWithPermissionCheck()
+            album()
         }
     }
 
@@ -105,52 +102,58 @@ class QRCodeAct : CaptureActivity() {
         camera.parameters = parameters
     }
 
-    @NeedsPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
-    internal fun album() {
-        Matisse.from(this)
-                .choose(MimeType.of(MimeType.JPEG, MimeType.PNG))
-                .theme(R.style.Matisse_Dracula)
-                .countable(false)
-                .capture(true)
-                .captureStrategy(CaptureStrategy(true, BuildConfig.APPLICATION_ID + ".fileprovider"))
-                .maxSelectable(1)
-                .imageEngine(GlideEngine())
-                .forResult(RequestCode.REQUEST_PHOTO)
-    }
-
-    @OnShowRationale(Manifest.permission.READ_EXTERNAL_STORAGE)
-    internal fun showRationaleForAlbum(request: PermissionRequest) {
-        BaseDialog.Builder(this)
-                .setPositiveButton(R.string.button_allow) { _, _ -> request.proceed() }
-                .setNegativeButton(R.string.button_deny) { _, _ -> request.cancel() }
-                .setCancelable(false)
-                .setMessage(R.string.base_permission_rationale)
-                .show()
-    }
-
-    @OnPermissionDenied(Manifest.permission.READ_EXTERNAL_STORAGE)
-    internal fun showDeniedForAlbum() {
-        ToastUtil.shortToast(this@QRCodeAct, R.string.base_permission_denied)
-    }
-
-    @OnNeverAskAgain(Manifest.permission.READ_EXTERNAL_STORAGE)
-    internal fun showNeverAskForAlbum() {
-        BaseDialog.Builder(this)
-                .setPositiveButton(R.string.button_ok) { _, _ ->
-                    val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-                    val uri = Uri.fromParts("package", BuildConfig.APPLICATION_ID, null)
-                    intent.data = uri
-                    startActivity(intent)
+    private fun album() {
+        AndPermission.with(this)
+            .runtime()
+            .permission(Permission.Group.STORAGE)
+            .onGranted {
+                var selfPermission = true
+                for (item in it) {
+                    if (!PermissionUtils.isGranted(item)) {
+                        selfPermission = false
+                        break
+                    }
                 }
-                .setNegativeButton(R.string.button_cancel, null)
-                .setCancelable(false)
-                .setMessage(R.string.base_permission_setting)
-                .show()
-    }
-
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        onRequestPermissionsResult(requestCode, grantResults)
+                if (selfPermission) {
+                    Matisse.from(this)
+                        .choose(MimeType.of(MimeType.JPEG, MimeType.PNG))
+                        .theme(R.style.Matisse_Dracula)
+                        .countable(false)
+                        .capture(true)
+                        .captureStrategy(CaptureStrategy(true, BuildConfig.APPLICATION_ID + ".fileprovider"))
+                        .maxSelectable(1)
+                        .imageEngine(GlideEngine())
+                        .forResult(RequestCode.REQUEST_PHOTO)
+                } else {
+                    ToastUtil.shortToast(this, R.string.base_permission_denied)
+                }
+            }
+            .rationale { _, _, executor ->
+                BaseDialog.Builder(this)
+                    .setPositiveButton(R.string.button_allow) { _, _ -> executor.execute() }
+                    .setNegativeButton(R.string.button_deny) { _, _ -> executor.cancel() }
+                    .setCancelable(false)
+                    .setMessage(R.string.base_permission_rationale)
+                    .show()
+            }
+            .onDenied {
+                if (AndPermission.hasAlwaysDeniedPermission(this, it)) {
+                    BaseDialog.Builder(this)
+                        .setPositiveButton(R.string.button_ok) { _, _ ->
+                            val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                            val uri = Uri.fromParts("package", BuildConfig.APPLICATION_ID, null)
+                            intent.data = uri
+                            startActivity(intent)
+                        }
+                        .setNegativeButton(R.string.button_cancel, null)
+                        .setCancelable(false)
+                        .setMessage(R.string.base_permission_setting)
+                        .show()
+                } else {
+                    ToastUtil.shortToast(this, R.string.base_permission_denied)
+                }
+            }
+            .start()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

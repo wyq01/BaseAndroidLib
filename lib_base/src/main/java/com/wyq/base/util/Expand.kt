@@ -41,7 +41,7 @@ fun String?.isNotNull(): Boolean {
 
 fun View.click(action: (View) -> Unit) {
     RxView.clicks(this)
-        .throttleFirst(com.wyq.base.util.ClickUtil.MIN_DELAY_TIME, TimeUnit.MILLISECONDS)
+        .throttleFirst(ClickUtil.MIN_DELAY_TIME, TimeUnit.MILLISECONDS)
         .subscribe {
             action(this)
         }

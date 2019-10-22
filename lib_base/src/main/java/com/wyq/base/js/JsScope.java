@@ -119,26 +119,4 @@ public class JsScope {
         activity.print(json, jsCallback);
     }
 
-    /*************************** 旧版分割线 *****************************/
-    @Deprecated
-    public static void print(WebView webView, String header, String title, String content, JsCallback jsCallback) {
-        print(webView, header, title, content, "", false, jsCallback);
-    }
-
-    @Deprecated
-    public static void print(WebView webView, String header, String title, String content, String stamp, JsCallback jsCallback) {
-        print(webView, header, title, content, stamp, false, jsCallback);
-    }
-
-    @Deprecated
-    public static void print(WebView webView, String header, String title, String content, boolean twice, JsCallback jsCallback) {
-        print(webView, header, title, content, "", twice, jsCallback);
-    }
-
-    @Deprecated
-    public static void print(WebView webView, String header, String title, String content, String stamp, boolean twice, JsCallback jsCallback) {
-        BaseWebActivity activity = (BaseWebActivity) webView.getContext();
-        activity.print(header, title, content, stamp, twice, jsCallback);
-    }
-
 }

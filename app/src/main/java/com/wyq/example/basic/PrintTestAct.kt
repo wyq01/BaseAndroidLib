@@ -40,11 +40,6 @@ class PrintTestAct : BaseActivity() {
     override fun initViews() {
         super.initViews()
 
-        oldTv.setText("header = $header\ntitle = $title\ncontent = $content\nstamp = $stamp\ntwice = $twice")
-        oldPrintBtn.click {
-            print(header, title, content, stamp, twice)
-        }
-
         initJson()
 
         print1Btn.click {

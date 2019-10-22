@@ -1,9 +1,6 @@
 package com.wyq.base
 
-import android.content.Context
 import android.os.Bundle
-import android.support.annotation.LayoutRes
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,7 +17,7 @@ import org.greenrobot.eventbus.ThreadMode
 /**
  * 懒加载fragment
  */
-abstract class BaseFragment : Fragment() {
+abstract class BaseFragment : BaseAbstractFragment() {
     /**
      * 是否可见状态
      */
@@ -50,7 +47,6 @@ abstract class BaseFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        LogUtil.d("fm onCreate")
 
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this)
@@ -58,8 +54,7 @@ abstract class BaseFragment : Fragment() {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onBaseEvent(event: BaseEvent) {
-    }
+    fun onBaseEvent(event: BaseEvent) {}
 
     override fun onDestroy() {
         super.onDestroy()
@@ -74,7 +69,6 @@ abstract class BaseFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-//        LogUtil.d("fm onCreateView")
         initData(arguments)
         isFirstLoad = true
         rootView = customContentView(inflater.inflate(R.layout.base_fm_base, null), inflater)
@@ -83,14 +77,8 @@ abstract class BaseFragment : Fragment() {
         return rootView
     }
 
-    override fun onAttach(context: Context?) {
-        super.onAttach(context)
-//        LogUtil.d("fm onAttach")
-    }
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-//        LogUtil.d("fm onActivityCreated")
         isViewInit = true
         initViews(rootView)
         if (isUiVisible) {
@@ -99,7 +87,6 @@ abstract class BaseFragment : Fragment() {
     }
 
     private fun customContentView(rootView: View, inflater: LayoutInflater): View {
-//        LogUtil.d("fm customContentView")
         val contentView = inflater.inflate(initLayout(), null)
         if (contentView != null) {
             loadingLayout = contentView.findViewById(R.id.loadingLayout)
@@ -128,7 +115,6 @@ abstract class BaseFragment : Fragment() {
      */
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         super.setUserVisibleHint(isVisibleToUser)
-//        LogUtil.d("fm setUserVisibleHint $isVisibleToUser")
         if (isVisibleToUser) {
             isUiVisible = true
             if (isViewInit)
@@ -148,7 +134,6 @@ abstract class BaseFragment : Fragment() {
      */
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
-//        LogUtil.d("fm onHiddenChanged $hidden")
         if (!hidden) {
             isUiVisible = true
             if (isViewInit)
@@ -160,14 +145,11 @@ abstract class BaseFragment : Fragment() {
         }
     }
 
-    protected open fun onVisible() {
-//        LogUtil.d("fm onVisible")
+    override fun onVisible() {
         lazyLoad()
     }
 
-    protected open fun onInvisible() {
-//        LogUtil.d("fm onInvisible")
-    }
+    override fun onInvisible() {}
 
     /**
      * 要实现延迟加载Fragment内容,需要在 onCreateView
@@ -180,10 +162,6 @@ abstract class BaseFragment : Fragment() {
         getData()
         isFirstLoad = false
     }
-
-    /** 布局 */
-    @LayoutRes
-    protected abstract fun initLayout(): Int
 
     /** 设置根布局透明 */
     protected fun setBackgroundTransparent() {
@@ -214,18 +192,5 @@ abstract class BaseFragment : Fragment() {
 
     /** 重新加载数据 */
     protected open fun retryLoad() {}
-
-    /** 初始化数据 */
-    protected open fun initData(arguments: Bundle?) {}
-
-    /** 初始化ui */
-    protected open fun initViews(view: View) {
-//        LogUtil.d("fm initViews")
-    }
-
-    /** 获取数据 */
-    protected open fun getData() {
-//        LogUtil.d("fm getData")
-    }
 
 }

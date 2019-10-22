@@ -1,6 +1,5 @@
 package com.wyq.base.office
 
-import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -10,6 +9,7 @@ import android.provider.Settings
 import android.text.TextUtils
 import android.widget.RelativeLayout
 import com.blankj.utilcode.util.LogUtils
+import com.blankj.utilcode.util.PermissionUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.lzy.okgo.OkGo
 import com.lzy.okgo.callback.FileCallback
@@ -21,19 +21,15 @@ import com.wyq.base.BuildConfig
 import com.wyq.base.R
 import com.wyq.base.util.ToastUtil
 import com.wyq.base.view.BaseDialog
+import com.yanzhenjie.permission.AndPermission
+import com.yanzhenjie.permission.runtime.Permission
 import kotlinx.android.synthetic.main.base_act_tbs_office_reader.*
-import permissions.dispatcher.*
 import java.io.File
 
 /**
  * 腾讯tbs加载本地文档
  */
-@RuntimePermissions
 class TbsOfficeReaderAct: BaseActivity(), TbsReaderView.ReaderCallback {
-
-    override fun onCallBackAction(p0: Int?, p1: Any?, p2: Any?) {
-
-    }
 
     companion object {
         fun startActivity(context: Context, title: String, url: String) {
@@ -52,16 +48,88 @@ class TbsOfficeReaderAct: BaseActivity(), TbsReaderView.ReaderCallback {
     override fun initData(intent: Intent) {
         super.initData(intent)
 
-        title = intent.getStringExtra("title")
+        name = intent.getStringExtra("title")
         url = intent.getStringExtra("url")
     }
 
     override fun initViews() {
         super.initViews()
 
-        titleTv?.text = title
+        titleTv?.text = name
 
-        loadWithPermissionCheck()
+        load()
+    }
+
+    private fun load() {
+        AndPermission.with(this)
+            .runtime()
+            .permission(Permission.Group.STORAGE)
+            .onGranted {
+                var selfPermission = true
+                for (item in it) {
+                    if (!PermissionUtils.isGranted(item)) {
+                        selfPermission = false
+                        break
+                    }
+                }
+                if (selfPermission) {
+                    download()
+                } else {
+                    ToastUtil.shortToast(this, R.string.base_permission_denied)
+                }
+            }
+            .rationale { _, _, executor ->
+                BaseDialog.Builder(this)
+                    .setPositiveButton(R.string.button_allow) { _, _ -> executor.execute() }
+                    .setNegativeButton(R.string.button_deny) { _, _ -> executor.cancel() }
+                    .setCancelable(false)
+                    .setMessage(R.string.base_permission_rationale)
+                    .show()
+            }
+            .onDenied {
+                if (AndPermission.hasAlwaysDeniedPermission(this, it)) {
+                    BaseDialog.Builder(this)
+                        .setPositiveButton(R.string.button_ok) { _, _ ->
+                            val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                            val uri = Uri.fromParts("package", BuildConfig.APPLICATION_ID, null)
+                            intent.data = uri
+                            startActivity(intent)
+                        }
+                        .setNegativeButton(R.string.button_cancel, null)
+                        .setCancelable(false)
+                        .setMessage(R.string.base_permission_setting)
+                        .show()
+                } else {
+                    ToastUtil.shortToast(this, R.string.base_permission_denied)
+                }
+            }
+            .start()
+    }
+
+    private fun download() {
+        url?.let {
+            if (it.startsWith("http")) {
+                OkGo.get<File>(it)
+                    .tag(this)
+                    .execute(object : FileCallback() {
+                        override fun downloadProgress(progress: Progress) {
+                            LogUtils.d("downloadProgress " + progress.currentSize + "," + progress.totalSize)
+                        }
+                        override fun onSuccess(response: Response<File>) {
+                            LogUtils.d("onSuccess")
+                            val file = response.body()
+                            displayFile(file.path)
+                        }
+                    })
+            } else {
+                val file = File(it)
+                if (!file.exists()) {
+                    ToastUtils.showShort("文件不存在")
+                    return
+                }
+                displayFile(it)
+            }
+        }
     }
 
     private val tbsReaderTemp = Environment.getExternalStorageDirectory().toString() + "/TbsReaderTemp"
@@ -74,7 +142,7 @@ class TbsOfficeReaderAct: BaseActivity(), TbsReaderView.ReaderCallback {
                 RelativeLayout.LayoutParams.MATCH_PARENT
             )
         )
-        //增加下面一句解决没有TbsReaderTemp文件夹存在导致加载文件失败
+        // 增加下面一句解决没有TbsReaderTemp文件夹存在导致加载文件失败
         val bsReaderTempFile = File(tbsReaderTemp)
         if (!bsReaderTempFile.exists()) {
             val mkdir = bsReaderTempFile.mkdir()
@@ -122,66 +190,6 @@ class TbsOfficeReaderAct: BaseActivity(), TbsReaderView.ReaderCallback {
         tbsReaderView?.onStop()
     }
 
-    @NeedsPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-    fun load() {
-        url?.let {
-            if (it.startsWith("http")) {
-                OkGo.get<File>(it)
-                    .tag(this)
-                    .execute(object : FileCallback() {
-                        override fun downloadProgress(progress: Progress) {
-                            LogUtils.d("downloadProgress " + progress.currentSize + "," + progress.totalSize)
-                        }
-                        override fun onSuccess(response: Response<File>) {
-                            LogUtils.d("onSuccess")
-                            val file = response.body()
-//                            ToastUtil.shortToast(this@TbsOfficeReaderAct, "文档下载完成，路径：${file.path}")
-                            displayFile(file.path)
-                        }
-                    })
-            } else {
-                val file = File(it)
-                if (!file.exists()) {
-                    ToastUtils.showShort("文件不存在")
-                    return
-                }
-                displayFile(it)
-            }
-        }
-    }
+    override fun onCallBackAction(p0: Int?, p1: Any?, p2: Any?) {}
 
-    @OnShowRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-    fun showRationaleForLoad(request: PermissionRequest) {
-        BaseDialog.Builder(this)
-            .setPositiveButton(R.string.button_allow) { _, _ -> request.proceed() }
-            .setNegativeButton(R.string.button_deny) { _, _ -> request.cancel() }
-            .setCancelable(false)
-            .setMessage(R.string.base_permission_rationale)
-            .show()
-    }
-
-    @OnPermissionDenied(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-    fun showDeniedForLoad() {
-        ToastUtil.shortToast(this, R.string.base_permission_denied)
-    }
-
-    @OnNeverAskAgain(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-    fun showNeverAskForLoad() {
-        BaseDialog.Builder(this)
-            .setPositiveButton(R.string.button_ok) { _, _ ->
-                val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-                val uri = Uri.fromParts("package", BuildConfig.APPLICATION_ID, null)
-                intent.data = uri
-                startActivity(intent)
-            }
-            .setNegativeButton(R.string.button_cancel, null)
-            .setCancelable(false)
-            .setMessage(R.string.base_permission_setting)
-            .show()
-    }
-
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        onRequestPermissionsResult(requestCode, grantResults)
-    }
 }

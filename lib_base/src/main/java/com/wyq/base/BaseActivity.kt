@@ -1,6 +1,5 @@
 package com.wyq.base
 
-import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.ActivityInfo
@@ -10,8 +9,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.provider.Settings
-import android.support.annotation.LayoutRes
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.AppCompatImageButton
 import android.text.TextUtils
 import android.view.View
@@ -21,6 +18,7 @@ import android.widget.TextView
 import com.blankj.utilcode.util.ImageUtils
 import com.blankj.utilcode.util.KeyboardUtils
 import com.blankj.utilcode.util.LogUtils
+import com.blankj.utilcode.util.PermissionUtils
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import com.gyf.barlibrary.ImmersionBar
@@ -32,7 +30,6 @@ import com.wyq.base.printer.bean.BasePrint
 import com.wyq.base.printer.bean.PrintBean
 import com.wyq.base.printer.event.PrintResultEvent
 import com.wyq.base.printer.two.JQPrinter
-import com.wyq.base.printer.two.Printer_define
 import com.wyq.base.printer.two.esc.ESC
 import com.wyq.base.sign.util.BitmapUtil
 import com.wyq.base.util.ScreenRotateUtils
@@ -40,17 +37,17 @@ import com.wyq.base.util.ToastUtil
 import com.wyq.base.util.click
 import com.wyq.base.view.BaseDialog
 import com.wyq.base.view.LoadingLayout
+import com.yanzhenjie.permission.AndPermission
+import com.yanzhenjie.permission.runtime.Permission
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
-import permissions.dispatcher.*
 import java.io.IOException
 
 /**
  * 基础activity
  */
-@RuntimePermissions
-abstract class BaseActivity : AppCompatActivity() {
+abstract class BaseActivity : BaseAbstractActivity() {
 
     companion object {
         const val SIGNATURE_WIDTH = 150
@@ -175,12 +172,6 @@ abstract class BaseActivity : AppCompatActivity() {
     }
 
     /**
-     * 布局
-     */
-    @LayoutRes
-    protected abstract fun initLayout(): Int
-
-    /**
      * 显示空页面
      */
     protected fun showEmpty() {
@@ -219,26 +210,6 @@ abstract class BaseActivity : AppCompatActivity() {
      * 重新加载数据
      */
     protected open fun retryLoad() {}
-
-    /**
-     * 初始化数据
-     */
-    protected open fun initData(intent: Intent) {}
-
-    /**
-     * 初始化ui
-     */
-    protected open fun initViews() {}
-
-    /**
-     * 懒初始化ui
-     */
-    protected open fun lazyInitViews() {}
-
-    /**
-     * 获取数据
-     */
-    protected open fun getData() {}
 
     /**
      * 是否覆盖状态栏
@@ -299,43 +270,82 @@ abstract class BaseActivity : AppCompatActivity() {
         Handler().postDelayed({ finish() }, time)
     }
 
-    @OnShowRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-    internal fun showRationaleForScan(request: PermissionRequest) {
-        BaseDialog.Builder(this)
-            .setPositiveButton(R.string.button_allow) { _, _ -> request.proceed() }
-            .setNegativeButton(R.string.button_deny) { _, _ -> request.cancel() }
-            .setCancelable(false)
-            .setMessage(R.string.base_permission_rationale)
-            .show()
-    }
-
-    @OnPermissionDenied(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-    internal fun showDeniedForScan() {
-        ToastUtil.shortToast(this, R.string.base_permission_denied)
-    }
-
-    @OnNeverAskAgain(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-    internal fun showNeverAskForScan() {
-        BaseDialog.Builder(this)
-            .setPositiveButton(R.string.button_ok) { _, _ ->
-                val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-                val uri = Uri.fromParts("package", BuildConfig.APPLICATION_ID, null)
-                intent.data = uri
-                startActivity(intent)
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when(requestCode) {
+            RequestCode.REQUEST_PRINTER_CONNECT -> {
+                if (resultCode == Activity.RESULT_OK) {
+                    data?.let {
+                        if (PrinterConnectAct.continuePrint(data)) {
+                            Handler().postDelayed({
+                                print(printContent)
+                            }, 300)
+                        }
+                    }
+                } else {
+                    if (PrinterConnectAct.continuePrint(data)) {
+                        EventBus.getDefault().post(PrintResultEvent(false, printContent, this.localClassName))
+                    }
+                }
             }
-            .setNegativeButton(R.string.button_cancel, null)
-            .setCancelable(false)
-            .setMessage(R.string.base_permission_setting)
-            .show()
+        }
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        onRequestPermissionsResult(requestCode, grantResults)
+    private var printContent: String? = null
+    /**
+     * 打印
+     */
+    protected fun print(json: String?) {
+        printContent = json
+        AndPermission.with(this)
+            .runtime()
+            .permission(Permission.Group.STORAGE)
+            .onGranted {
+                var selfPermission = true
+                for (item in it) {
+                    if (!PermissionUtils.isGranted(item)) {
+                        selfPermission = false
+                        break
+                    }
+                }
+                if (selfPermission) {
+                    printImpl(json)
+                } else {
+                    ToastUtil.shortToast(this, R.string.base_permission_denied)
+                }
+            }
+            .rationale { _, _, executor ->
+                BaseDialog.Builder(this)
+                    .setPositiveButton(R.string.button_allow) { _, _ -> executor.execute() }
+                    .setNegativeButton(R.string.button_deny) { _, _ -> executor.cancel() }
+                    .setCancelable(false)
+                    .setMessage(R.string.base_permission_rationale)
+                    .show()
+            }
+            .onDenied {
+                if (AndPermission.hasAlwaysDeniedPermission(this, it)) {
+                    BaseDialog.Builder(this)
+                        .setPositiveButton(R.string.button_ok) { _, _ ->
+                            val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                            val uri = Uri.fromParts("package", BuildConfig.APPLICATION_ID, null)
+                            intent.data = uri
+                            startActivity(intent)
+                        }
+                        .setNegativeButton(R.string.button_cancel, null)
+                        .setCancelable(false)
+                        .setMessage(R.string.base_permission_setting)
+                        .show()
+                } else {
+                    ToastUtil.shortToast(this, R.string.base_permission_denied)
+                }
+            }
+            .start()
     }
 
-    @NeedsPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-    internal fun printImpl(json: String?) {
+    /**
+     * 开始打印
+     */
+    private fun printImpl(json: String?) {
         val printer = (application as BaseApplication).getJQPrinter()
         if (printer != null && printer.canPrint()) {
             try {
@@ -369,36 +379,6 @@ abstract class BaseActivity : AppCompatActivity() {
             (application as BaseApplication).clearDeviceAddress()
             PrinterConnectAct.startActivity(this, true)
         }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        when(requestCode) {
-            RequestCode.REQUEST_PRINTER_CONNECT -> {
-                if (resultCode == Activity.RESULT_OK) {
-                    data?.let {
-                        if (PrinterConnectAct.continuePrint(data)) {
-                            Handler().postDelayed({
-                                print(printContent)
-                            }, 300)
-                        }
-                    }
-                } else {
-                    if (PrinterConnectAct.continuePrint(data)) {
-                        EventBus.getDefault().post(PrintResultEvent(false, printContent, this.localClassName))
-                    }
-                }
-            }
-        }
-    }
-
-    private var printContent: String? = null
-    /**
-     * 打印
-     */
-    protected fun print(json: String?) {
-        printContent = json
-        printImplWithPermissionCheck(json)
     }
 
     /**
@@ -511,91 +491,4 @@ abstract class BaseActivity : AppCompatActivity() {
         return ScreenRotateUtils.screenIsLandscape(this)
     }
 
-    fun print(header: String?, title: String?, content: String?, stamp: String?, twice: Boolean) {
-        LogUtils.d("开始打印")
-        val printer = (application as BaseApplication).getJQPrinter()
-        if (printer != null && printer.canPrint()) {
-            header?.let {
-                printer.esc.text.printOut(Printer_define.ALIGN.CENTER, ESC.FONT_HEIGHT.x32, true, ESC.TEXT_ENLARGE.NORMAL, it)
-                printer.esc.feedEnter()
-            }
-
-            title?.let {
-                printer.esc.text.printOut(Printer_define.ALIGN.CENTER, ESC.FONT_HEIGHT.x24, true, ESC.TEXT_ENLARGE.NORMAL, it)
-                printer.esc.feedDots(20)
-                printer.esc.feedEnter()
-            }
-
-            content?.let {
-                printer.esc.text.printOut(it)
-                printer.esc.feedDots(50)
-            }
-
-            stamp?.let {
-                if (it.isNotEmpty()) {
-                    printer.esc.text.setBold(false)
-                    val rectStartX = 125
-                    val rect = BitmapUtil.zoomImg(ImageUtils.getBitmap(
-                        R.drawable.base_ic_stamp_rect), 320)
-                    printer.esc.image.drawOut(rectStartX, 0, rect)
-                    val startX = rectStartX + 16
-                    printer.esc.text.drawOut(startX + 0, (rect.height * 0.7f).toInt(), ESC.FONT_HEIGHT.x32, ESC.TEXT_ENLARGE.NORMAL, "姑苏区“四类行业”")
-                    printer.esc.text.drawOut(startX + 80, (rect.height * 0.42f).toInt(), ESC.FONT_HEIGHT.x32, ESC.TEXT_ENLARGE.NORMAL, "整治专班")
-                    printer.esc.text.drawOut(startX + 144 - it.length * 12, (rect.height * 0.1f).toInt(), ESC.FONT_HEIGHT.x24, ESC.TEXT_ENLARGE.NORMAL, it)
-                }
-            }
-
-            printer.esc.feedEnter()
-            printer.esc.feedDots(50)
-
-            if (twice) {
-                // 下划线
-                val lines = arrayOfNulls<ESC.LINE_POINT>(1)
-                lines[0] = ESC.LINE_POINT(0, 575)
-                printer.esc.text.setBold(false)
-                printer.esc.text.printOut("请沿此处撕开")
-                for (i in 0..3) {
-                    printer.esc.graphic.linedrawOut(lines)
-                }
-                printer.esc.feedDots(20)
-                printer.esc.feedEnter()
-
-                header?.let {
-                    printer.esc.text.printOut(Printer_define.ALIGN.CENTER, ESC.FONT_HEIGHT.x32, true, ESC.TEXT_ENLARGE.NORMAL, it)
-                    printer.esc.feedEnter()
-                }
-
-                title?.let {
-                    printer.esc.text.printOut(Printer_define.ALIGN.CENTER, ESC.FONT_HEIGHT.x24, true, ESC.TEXT_ENLARGE.NORMAL, it)
-                    printer.esc.feedDots(20)
-                    printer.esc.feedEnter()
-                }
-
-                content?.let {
-                    printer.esc.text.printOut(it)
-                    printer.esc.feedDots(50)
-                }
-
-                stamp?.let {
-                    if (it.isNotEmpty()) {
-                        printer.esc.text.setBold(false)
-                        val rectStartX = 125
-                        val rect = BitmapUtil.zoomImg(ImageUtils.getBitmap(
-                            R.drawable.base_ic_stamp_rect), 320)
-                        printer.esc.image.drawOut(rectStartX, 0, rect)
-                        val startX = rectStartX + 16
-                        printer.esc.text.drawOut(startX + 0, (rect.height * 0.7f).toInt(), ESC.FONT_HEIGHT.x32, ESC.TEXT_ENLARGE.NORMAL, "姑苏区“四类行业”")
-                        printer.esc.text.drawOut(startX + 80, (rect.height * 0.42f).toInt(), ESC.FONT_HEIGHT.x32, ESC.TEXT_ENLARGE.NORMAL, "整治专班")
-                        printer.esc.text.drawOut(startX + 144 - it.length * 12, (rect.height * 0.1f).toInt(), ESC.FONT_HEIGHT.x24, ESC.TEXT_ENLARGE.NORMAL, it)
-                    }
-                }
-
-                printer.esc.feedEnter()
-                printer.esc.feedDots(50)
-            }
-        } else {
-            (application as BaseApplication).clearDeviceAddress()
-            PrinterConnectAct.startActivity(this)
-        }
-    }
 }

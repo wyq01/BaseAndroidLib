@@ -1,6 +1,5 @@
 package com.wyq.base.sign;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -14,7 +13,6 @@ import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.Settings;
-import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.CardView;
@@ -26,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.blankj.utilcode.util.PermissionUtils;
 import com.wyq.base.BaseActivity;
 import com.wyq.base.BuildConfig;
 import com.wyq.base.R;
@@ -38,22 +37,16 @@ import com.wyq.base.sign.view.PaintSettingWindow;
 import com.wyq.base.sign.view.PaintView;
 import com.wyq.base.util.ToastUtil;
 import com.wyq.base.view.BaseDialog;
+import com.yanzhenjie.permission.AndPermission;
+import com.yanzhenjie.permission.runtime.Permission;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
-import permissions.dispatcher.NeedsPermission;
-import permissions.dispatcher.OnNeverAskAgain;
-import permissions.dispatcher.OnPermissionDenied;
-import permissions.dispatcher.OnShowRationale;
-import permissions.dispatcher.PermissionRequest;
-import permissions.dispatcher.RuntimePermissions;
-
 /**
  * 空白手写画板
  */
-@RuntimePermissions
 public class SignActivity extends BaseActivity implements View.OnClickListener, PaintView.StepCallback {
 
     public static final int REQUEST_SIGN = 1001;
@@ -271,7 +264,7 @@ public class SignActivity extends BaseActivity implements View.OnClickListener, 
             mPaintView.reset();
         } else if (i == R.id.rightTv) {
             if (!mPaintView.isEmpty()) {
-                SignActivityPermissionsDispatcher.saveWithPermissionCheck(this);
+                save();
             } else {
                 setResult(RESULT_CANCELED);
                 finish();
@@ -356,8 +349,53 @@ public class SignActivity extends BaseActivity implements View.OnClickListener, 
         }
     };
 
-    @NeedsPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-    void save() {
+    private void save() {
+        AndPermission.with(this)
+                .runtime()
+                .permission(Permission.Group.STORAGE)
+                .onGranted(granted -> {
+                    boolean selfPermission = true;
+                    for (String item : granted) {
+                        if (!PermissionUtils.isGranted(item)) {
+                            selfPermission = false;
+                            break;
+                        }
+                    }
+                    if (selfPermission) {
+                        saveImpl();
+                    } else {
+                        ToastUtil.shortToast(this, R.string.base_permission_denied);
+                    }
+                })
+                .rationale((context, data, executor) -> {
+                    new BaseDialog.Builder(this)
+                            .setPositiveButton(R.string.button_allow, (dialog, which) -> executor.execute())
+                            .setNegativeButton(R.string.button_cancel, (dialog, which) -> executor.cancel())
+                            .setCancelable(false)
+                            .setMessage(R.string.base_permission_rationale)
+                            .show();
+                })
+                .onDenied(denied -> {
+                    if (AndPermission.hasAlwaysDeniedPermission(this, denied)) {
+                        new BaseDialog.Builder(this)
+                                .setPositiveButton(R.string.button_ok, (dialog, which) -> {
+                                    Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                                    Uri uri = Uri.fromParts("package", BuildConfig.APPLICATION_ID, null);
+                                    intent.setData(uri);
+                                    startActivity(intent);
+                                })
+                                .setNegativeButton(R.string.button_cancel, null)
+                                .setCancelable(false)
+                                .setMessage(R.string.base_permission_setting)
+                                .show();
+                    } else {
+                        ToastUtil.shortToast(this, R.string.base_permission_denied);
+                    }
+                })
+                .start();
+    }
+
+    private void saveImpl() {
         if (mPaintView.isEmpty()) {
             Toast.makeText(getApplicationContext(), "没有写入任何文字", Toast.LENGTH_SHORT).show();
             return;
@@ -387,39 +425,6 @@ public class SignActivity extends BaseActivity implements View.OnClickListener, 
                 }
             } catch (Exception e) {}
         }).start();
-    }
-
-    @OnShowRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-    void showRationaleForScan(final PermissionRequest request) {
-        new BaseDialog.Builder(this).setMessage(R.string.base_permission_rationale)
-                .setCancelable(false)
-                .setNegativeButton(R.string.button_deny, (dialog, which) -> request.cancel())
-                .setPositiveButton(R.string.button_allow, (dialog, which) -> request.proceed()).create().show();
-    }
-
-    @OnPermissionDenied(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-    void showDeniedForScan() {
-        ToastUtil.shortToast(this, R.string.base_permission_denied);
-    }
-
-    @OnNeverAskAgain(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-    void showNeverAskForScan() {
-        new BaseDialog.Builder(this)
-                .setMessage(R.string.base_permission_setting)
-                .setCancelable(false)
-                .setNegativeButton(R.string.button_cancel, null)
-                .setPositiveButton(R.string.button_confirm, (dialog, which) -> {
-                    Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                    Uri uri = Uri.fromParts("package", BuildConfig.APPLICATION_ID, null);
-                    intent.setData(uri);
-                    startActivity(intent);
-                }).create().show();
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        SignActivityPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
     }
 
     /**

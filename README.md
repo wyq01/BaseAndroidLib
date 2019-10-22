@@ -56,6 +56,7 @@ implementation 'com.ts.lib_dimens:lib_dimens:1.0.0' // dimens资源
 | underLine   | boolean | 是否带下划线         | true,false，默认为false                           | text,signature      |
 | bold        | boolean | 是否加粗           | true,false，默认为false                           | text,signature      |
 | align       | String  | 对齐方式           | left,right,center，默认为left                     | text      |
+| enter       | boolean | 是否换行           | true,false 默认为false                            | text      |
 | blankHeight | Int     | 空白高度           | 不可为负，默认为0                                     | blank     |
 | lineTip     | String  | 切割线提示          | 任意字符串，默认为：请沿此处撕开                              | line      |
 | stamp       | String  | 印章             | 任意字符串，为空不打印（打印格式需要单独适配，不需要则不要使用），默认为null      | stamp     |
@@ -70,6 +71,7 @@ implementation 'com.ts.lib_dimens:lib_dimens:1.0.0' // dimens资源
 <body>
 
 <script>
+    var count = 0
     function toggleScreenOrientation() {
         window.plus.toggleScreenOrientation();
         document.getElementById("change").innerHTML = "已切换屏幕方向"
@@ -84,46 +86,39 @@ implementation 'com.ts.lib_dimens:lib_dimens:1.0.0' // dimens资源
             document.getElementById("sign").innerHTML = "签名文件路径为：" + string
         });
     }
-    function oldPrint() {
-        window.plus.print("header", "title", "content", "stamp", false, function(bool) {
-            document.getElementById("print").innerHTML = bool
-        });
-    }
     function print() {
         window.plus.print('[{"blankHeight":20,"type":"blank"},{"align":"left","bold":true,"text":"苏州xxxx有限公司：","textSize":2,"underLine":false,"type":"text"},{"blankHeight":20,"type":"blank"},{"align":"left","bold":false,"text":"因你公司违反了xxxx规定，现对你司进行如下处罚：","textSize":1,"underLine":false,"type":"text"},{"blankHeight":20,"type":"blank"},{"align":"left","bold":false,"text":" 从今日起至","textSize":1,"underLine":false,"type":"text"},{"align":"left","bold":true,"text":"2020年1月1日","textSize":2,"underLine":true,"type":"text"},{"align":"left","bold":false,"text":"不得开门营业，直到整改结束。","textSize":1,"underLine":false,"type":"text"},{"blankHeight":100,"type":"blank"}]', function(bool) {
-            document.getElementById("print2").innerHTML = bool
+            if (bool) {
+                document.getElementById("print").innerHTML = "打印成功" + (count++)
+            }
         });
     }
     function enableSensorRotate(sensorRotate) {
         window.plus.enableSensorRotate(sensorRotate);
     }
 </script>
-    <button type="button" onclick="toggleScreenOrientation()">
-        切换屏幕方向
-    </button>
-    <p id="change"></p>
-    <button type="button" onclick="screenIsLandscape()">
-        屏幕是否为横屏
-    </button>
-    <p id="screen"></p>
-    <button type="button" onclick="sign()">
-        手写签名
-    </button>
-    <p id="sign"></p>
-    <button type="button" onclick="oldPrint()">
-        旧版打印
-    </button>
-    <p id="print"></p>
-    <button type="button" onclick="print()">
-        新版打印
-    </button>
-    <p id="print2"></p>
-    <button type="button" onclick="enableSensorRotate(true)">
-        打开重力感应
-    </button>
-    <button type="button" onclick="enableSensorRotate(false)">
-        关闭重力感应
-    </button>
+<button type="button" onclick="toggleScreenOrientation()">
+    切换屏幕方向
+</button>
+<p id="change"></p>
+<button type="button" onclick="screenIsLandscape()">
+    屏幕是否为横屏
+</button>
+<p id="screen"></p>
+<button type="button" onclick="sign()">
+    手写签名
+</button>
+<p id="sign"></p>
+<button type="button" onclick="print()">
+    打印
+</button>
+<p id="print"></p>
+<button type="button" onclick="enableSensorRotate(true)">
+    打开重力感应
+</button>
+<button type="button" onclick="enableSensorRotate(false)">
+    关闭重力感应
+</button>
 </body>
 </html>
 ```

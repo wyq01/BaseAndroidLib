@@ -331,42 +331,6 @@ abstract class BaseWebActivity : BaseActivity() {
 
     /********************** 以下为交互方法 *********************/
     private var jsCallback: JsCallback? = null
-    /**
-     * 打印
-     */
-    @Deprecated("旧版打印，已弃用")
-    fun print(header: String?, title: String?, content: String?, stamp: String?, twice: Boolean, jsCallback: JsCallback) {
-        Observable.create(ObservableOnSubscribe<Boolean> { emitter ->
-            var printResult = false
-            try {
-                print(header, title, content, stamp, twice)
-                printResult = true
-            } catch (e: Exception) {
-                e.printStackTrace()
-            } finally {
-                emitter.onNext(printResult)
-            }
-        }).subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object : Observer<Boolean> {
-                override fun onSubscribe(d: Disposable) {}
-                override fun onNext(result: Boolean) {
-                    try {
-                        jsCallback.apply(result)
-                    } catch (e: JsCallback.JsCallbackException) {
-                        e.printStackTrace()
-                    }
-                }
-                override fun onError(e: Throwable) {
-                    try {
-                        jsCallback.apply(false)
-                    } catch (e: JsCallback.JsCallbackException) {
-                        e.printStackTrace()
-                    }
-                }
-                override fun onComplete() {}
-            })
-    }
 
     /**
      * 打印

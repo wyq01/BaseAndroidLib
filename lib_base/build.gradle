@@ -75,10 +75,7 @@ dependencies {
     implementation 'com.blankj:utilcode:1.25.9' // 工具包
     implementation 'com.zhihu.android:matisse:0.5.2-beta4' // 图片选择
     implementation 'com.github.chrisbanes:PhotoView:2.1.3' // 图片手势缩放
-    implementation('com.github.hotchemi:permissionsdispatcher:2.4.0') { // 运行时权限
-        exclude module: "support-v13"
-    }
-    kapt 'com.github.hotchemi:permissionsdispatcher-processor:3.2.0' // 运行时权限
+    implementation 'com.yanzhenjie.permission:support:2.0.1' // 权限处理
     implementation 'cn.carbswang.android:NumberPickerView:1.1.0' // 滚动控件
     implementation 'com.github.promeg:tinypinyin:1.0.0' // 汉字转拼音
     implementation 'com.king.zxing:zxing-lite:1.0.5' // 二维码扫描
