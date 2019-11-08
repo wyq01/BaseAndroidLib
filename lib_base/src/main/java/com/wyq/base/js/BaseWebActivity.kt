@@ -7,28 +7,33 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.text.TextUtils
+import android.util.Log
 import android.webkit.*
 import cn.pedant.SafeWebViewBridge.InjectedChromeClient
 import cn.pedant.SafeWebViewBridge.JsCallback
 import com.blankj.utilcode.util.LogUtils
+import com.google.gson.Gson
+import com.lzy.okgo.OkGo
+import com.lzy.okgo.callback.StringCallback
+import com.lzy.okgo.model.Progress
+import com.lzy.okgo.model.Response
 import com.wyq.base.BaseActivity
 import com.wyq.base.R
 import com.wyq.base.printer.event.PrintResultEvent
 import com.wyq.base.sign.SignActivity
 import com.wyq.base.sign.config.PenConfig
 import com.wyq.base.util.ScreenRotateUtils
-import io.reactivex.Observable
-import io.reactivex.ObservableOnSubscribe
-import io.reactivex.Observer
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
+import com.wyq.base.util.applyJson
 import kotlinx.android.synthetic.main.base_act_web.*
+import okhttp3.OkHttpClient
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import org.json.JSONObject
+import java.io.File
 import java.io.IOException
 import java.io.UnsupportedEncodingException
 import java.net.URLEncoder
+import java.util.concurrent.TimeUnit
 
 /**
  * 基础js交互页
@@ -329,15 +334,20 @@ abstract class BaseWebActivity : BaseActivity() {
         return false
     }
 
-    /********************** 以下为交互方法 *********************/
-    private var jsCallback: JsCallback? = null
+    /**
+     * 注册重力感应监听
+     */
+    override fun onResume() {
+        super.onResume()
+        ScreenRotateUtils.getInstance(this).registerSensorRotate(this)
+    }
 
     /**
-     * 打印
+     * 解除重力感应监听
      */
-    fun print(json: String?, jsCallback: JsCallback) {
-        this.jsCallback = jsCallback
-        print(json)
+    override fun onPause() {
+        super.onPause()
+        ScreenRotateUtils.getInstance(this).unregisterSensorRotate()
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -348,6 +358,17 @@ abstract class BaseWebActivity : BaseActivity() {
         } catch (e: JsCallback.JsCallbackException) {
             e.printStackTrace()
         }
+    }
+
+    /********************** 以下为交互方法 *********************/
+    private var jsCallback: JsCallback? = null
+
+    /**
+     * 打印
+     */
+    fun print(json: String?, jsCallback: JsCallback) {
+        this.jsCallback = jsCallback
+        print(json)
     }
 
     /**
@@ -377,22 +398,6 @@ abstract class BaseWebActivity : BaseActivity() {
     }
 
     /**
-     * 注册重力感应监听
-     */
-    override fun onResume() {
-        super.onResume()
-        ScreenRotateUtils.getInstance(this).registerSensorRotate(this)
-    }
-
-    /**
-     * 解除重力感应监听
-     */
-    override fun onPause() {
-        super.onPause()
-        ScreenRotateUtils.getInstance(this).unregisterSensorRotate()
-    }
-
-    /**
      * 打开或关闭重力感应
      */
     fun enableSensorRotate(sensorRotate: Boolean) {
@@ -402,6 +407,67 @@ abstract class BaseWebActivity : BaseActivity() {
 //            ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 //        }
         ScreenRotateUtils.getInstance(this).enableSensorRotate(sensorRotate)
+    }
+
+    fun singleUpload(path: String, url: String, timeout: Long, jsCallback: JsCallback) {
+        if (TextUtils.isEmpty(path)) {
+            uploadResult(-1, "图片路径不能为空", null, jsCallback)
+            return
+        }
+        val file = File(path)
+        if (!file.exists()) {
+            uploadResult(-1, "图片不存在", null, jsCallback)
+            return
+        }
+        jsCallback.setPermanent(true)
+        OkGo.post<String>(url)
+            .client(OkHttpClient.Builder().connectTimeout(timeout, TimeUnit.MILLISECONDS).build())
+            .tag(this@BaseWebActivity)
+            .params("file", file)
+            .execute(object : StringCallback() {
+                override fun onSuccess(response: Response<String>?) {
+                    response?.let {
+                        uploadResult(1, "", it.body(), jsCallback)
+                    }
+                }
+                override fun onError(response: Response<String>?) {
+                    super.onError(response)
+                    response?.let {
+                        uploadResult(-1, it.exception.message, null, jsCallback)
+                    }
+                }
+                override fun uploadProgress(progress: Progress?) {
+                    super.uploadProgress(progress)
+                    progress?.let {
+                        uploadResult(0, "", Gson().toJson(progress), jsCallback)
+                    }
+                }
+            })
+    }
+
+    fun cancelUpload() {
+        OkGo.getInstance().cancelTag(this@BaseWebActivity)
+    }
+
+    private fun uploadResult(code: Int, message: String?, data: String?, jsCallback: JsCallback) {
+        val json = JSONObject()
+        json.put("code", code)
+        message?.let {
+            json.put("message", it)
+        } ?: let {
+            json.put("message", "")
+        }
+        data?.let {
+            json.put("data", JSONObject(it))
+        } ?: let {
+            json.put("data", JSONObject())
+        }
+        Log.i("techservice", json.toString())
+        try {
+            jsCallback.applyJson(json.toString())
+        } catch (e: JsCallback.JsCallbackException) {
+            e.printStackTrace()
+        }
     }
 
 }

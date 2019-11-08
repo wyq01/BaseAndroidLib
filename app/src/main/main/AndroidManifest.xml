@@ -31,14 +31,12 @@
 
         <activity
             android:name=".basic.WebViewAct"
-            android:theme="@style/AppTheme.Transparent"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".basic.UpgradeAct"
-            android:theme="@style/AppTheme.Transparent"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_name"
             android:screenOrientation="portrait"

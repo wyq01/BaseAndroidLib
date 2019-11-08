@@ -73,7 +73,8 @@ class MainAct : BaseActivity() {
         webTestBtn.click {
 //            QRCodeAct.startActivityForResult(this)
 //            WebViewAct.startActivity(this, "https://2fmlee.axshare.com/#g=1&p=%E5%9B%9B%E7%B1%BB%E8%A1%8C%E4%B8%9A%E8%81%94%E5%90%88%E8%A1%8C%E6%94%BF%E6%8C%87%E5%AF%BC%E6%9C%8D%E5%8A%A1%E5%B9%B3%E5%8F%B0%EF%BC%88app%EF%BC%89")
-            WebViewAct.startActivity(this, "file:///android_asset/demo.html")
+//            WebViewAct.startActivity(this, "file:///android_asset/demo.html")
+            WebViewAct.startActivity(this, "file:///android_asset/web_test.html")
         }
 
         upgradeBtn.click {

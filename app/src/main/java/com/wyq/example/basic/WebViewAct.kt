@@ -20,10 +20,6 @@ class WebViewAct : BaseWebActivity() {
     override fun initViews() {
         super.initViews()
 
-        mImmersionBar?.statusBarColor(android.R.color.transparent)
-            ?.init()
-        setBackgroundTransparent()
-
         mWebView?.setBackgroundColor(0) // 设置背景色
         mWebView?.background?.alpha = 0
     }

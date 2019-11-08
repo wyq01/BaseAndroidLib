@@ -119,4 +119,14 @@ public class JsScope {
         activity.print(json, jsCallback);
     }
 
+    public static void singleUpload(WebView webView, String path, String url, long timeout, JsCallback jsCallback) {
+        BaseWebActivity activity = (BaseWebActivity) webView.getContext();
+        activity.singleUpload(path, url, timeout, jsCallback);
+    }
+
+    public static void cancelUpload(WebView webView) {
+        BaseWebActivity activity = (BaseWebActivity) webView.getContext();
+        activity.cancelUpload();
+    }
+
 }
