@@ -31,7 +31,7 @@
     }
 
     function singleUpload() {
-        window.plus.singleUpload(path, "http://118.178.18.114:8080/SJJ/appFoodOrg/uploadFile.action?fileName=test.jpg", 2000, function(string) {
+        window.plus.singleUpload(path, "http://47.101.48.215:18084/file/upload", 2000, function(string) {
             var obj = JSON.parse(string);
             switch (obj.code) {
                 case -1:
@@ -41,7 +41,7 @@
                     document.getElementById("progress").innerHTML = obj.data.currentSize + "/" + obj.data.totalSize
                     break;
                 case 1:
-                    document.getElementById("status").innerHTML = obj.data.path
+                    document.getElementById("status").innerHTML = obj.data
                     break;
             }
         });

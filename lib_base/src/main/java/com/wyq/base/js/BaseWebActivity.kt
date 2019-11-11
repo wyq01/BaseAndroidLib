@@ -28,6 +28,7 @@ import kotlinx.android.synthetic.main.base_act_web.*
 import okhttp3.OkHttpClient
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import org.json.JSONException
 import org.json.JSONObject
 import java.io.File
 import java.io.IOException
@@ -458,7 +459,11 @@ abstract class BaseWebActivity : BaseActivity() {
             json.put("message", "")
         }
         data?.let {
-            json.put("data", JSONObject(it))
+            try {
+                json.put("data", JSONObject(it))
+            } catch (e: JSONException) {
+                json.put("data", data)
+            }
         } ?: let {
             json.put("data", JSONObject())
         }
