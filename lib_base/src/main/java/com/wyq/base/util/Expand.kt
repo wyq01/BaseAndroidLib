@@ -8,14 +8,12 @@ import cn.pedant.SafeWebViewBridge.JsCallback
 import com.jakewharton.rxbinding2.view.RxView
 import java.lang.ref.SoftReference
 import java.util.concurrent.TimeUnit
-import kotlin.reflect.KCallable
 
 object Expand
 
 fun String?.subString(): String {
     return subString(6)
 }
-
 
 fun String?.subString(count: Int): String {
     return if (this == null) {

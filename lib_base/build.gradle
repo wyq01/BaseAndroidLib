@@ -55,37 +55,36 @@ android {
 }
 
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'com.android.support:multidex:1.0.3'
-    implementation "com.android.support:design:${support_library_version}"
-    implementation "com.android.support:recyclerview-v7:${support_library_version}"
-    implementation "com.android.support:appcompat-v7:${support_library_version}"
-    implementation "com.android.support:cardview-v7:${support_library_version}"
-    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    api fileTree(include: ['*.jar'], dir: 'libs')
+    api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    api 'com.android.support:multidex:1.0.3'
+    api "com.android.support:design:${support_library_version}"
+    api "com.android.support:recyclerview-v7:${support_library_version}"
+    api "com.android.support:appcompat-v7:${support_library_version}"
+    api "com.android.support:cardview-v7:${support_library_version}"
+    api 'com.android.support.constraint:constraint-layout:1.1.3'
 
-    implementation 'io.reactivex.rxjava2:rxjava:2.2.8' // 线程调度
-    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1' // 线程调度
-    implementation 'com.lzy.net:okgo:3.0.4' // 网络访问
-    implementation 'org.greenrobot:eventbus:3.1.1' // 事件总线
-    implementation 'com.orhanobut:logger:2.1.1' // 日志
-    implementation 'com.google.code.gson:gson:2.7' // json解析
-    implementation 'com.gyf.barlibrary:barlibrary:2.3.0' // 状态栏
-    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.46' // recyclerView adapter
-    implementation 'com.blankj:utilcode:1.25.9' // 工具包
-    implementation 'com.zhihu.android:matisse:0.5.2-beta4' // 图片选择
-    implementation 'com.github.chrisbanes:PhotoView:2.1.3' // 图片手势缩放
-    implementation 'com.yanzhenjie.permission:support:2.0.1' // 权限处理
-    implementation 'cn.carbswang.android:NumberPickerView:1.1.0' // 滚动控件
-    implementation 'com.github.promeg:tinypinyin:1.0.0' // 汉字转拼音
-    implementation 'com.king.zxing:zxing-lite:1.0.5' // 二维码扫描
-    implementation 'cn.pedant.safewebviewbridge:library:1.4'// js交互
-    implementation 'com.github.abel533:ECharts:3.0.0.6' // echarts
-    implementation 'com.github.smarxpan:NotchScreenTool:0.0.1'// 刘海屏适配
-    implementation 'com.jakewharton.rxbinding2:rxbinding:2.2.0' // rxbinding
-    implementation 'com.github.bumptech.glide:glide:3.7.0' // 图片加载
-    implementation 'com.ts.lib_dimens:lib_dimens:1.0.0' // dimens资源
-
+    api 'io.reactivex.rxjava2:rxjava:2.2.8' // 线程调度
+    api 'io.reactivex.rxjava2:rxandroid:2.1.1' // 线程调度
+    api 'com.lzy.net:okgo:3.0.4' // 网络访问
+    api 'org.greenrobot:eventbus:3.1.1' // 事件总线
+    api 'com.orhanobut:logger:2.1.1' // 日志
+    api 'com.google.code.gson:gson:2.7' // json解析
+    api 'com.gyf.barlibrary:barlibrary:2.3.0' // 状态栏
+    api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.46' // recyclerView adapter
+    api 'com.blankj:utilcode:1.25.9' // 工具包
+    api 'com.zhihu.android:matisse:0.5.2-beta4' // 图片选择
+    api 'com.github.chrisbanes:PhotoView:2.1.3' // 图片手势缩放
+    api 'com.yanzhenjie.permission:support:2.0.1' // 权限处理
+    api 'cn.carbswang.android:NumberPickerView:1.1.0' // 滚动控件
+    api 'com.github.promeg:tinypinyin:1.0.0' // 汉字转拼音
+    api 'com.king.zxing:zxing-lite:1.0.5' // 二维码扫描
+    api 'cn.pedant.safewebviewbridge:library:1.4'// js交互
+    api 'com.github.abel533:ECharts:3.0.0.6' // echarts
+    api 'com.github.smarxpan:NotchScreenTool:0.0.1'// 刘海屏适配
+    api 'com.jakewharton.rxbinding2:rxbinding:2.2.0' // rxbinding
+    api 'com.github.bumptech.glide:glide:3.7.0' // 图片加载
+    api 'com.ts.lib_dimens:lib_dimens:1.0.0' // dimens资源
 }
 
 configurations.all {
