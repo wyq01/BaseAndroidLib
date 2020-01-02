@@ -84,7 +84,7 @@ dependencies {
     api 'com.github.smarxpan:NotchScreenTool:0.0.1'// 刘海屏适配
     api 'com.jakewharton.rxbinding2:rxbinding:2.2.0' // rxbinding
     api 'com.github.bumptech.glide:glide:3.7.0' // 图片加载
-    api 'com.ts.lib_dimens:lib_dimens:1.0.0' // dimens资源
+    api 'com.wyq.dimens:lib_dimens:1.0.0' // dimens资源
 }
 
 configurations.all {
