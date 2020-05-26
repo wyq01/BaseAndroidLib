@@ -11,7 +11,8 @@ open class BasePrint(var type: String) {
         BLANK("blank"),
         ENTER("enter"),
         STAMP("stamp"),
-        SIGNATURE("signature")
+        SIGNATURE("signature"),
+        QRCODE("qrcode")
     }
 
     enum class TextSize(var value: Int) {

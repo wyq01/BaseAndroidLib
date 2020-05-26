@@ -1,6 +1,8 @@
 package com.wyq.example.app
 
 import com.wyq.base.BaseApplication
+//import com.wyq.base.constant.BlueToothConnectWay
+//import com.wyq.base.printer.PrintConfig
 
 /**
  * Created by wyq
@@ -10,5 +12,7 @@ class TSApplication : BaseApplication() {
 
     override fun onCreate() {
         super.onCreate()
+
+//        PrintConfig.blueToothConnectWay = BlueToothConnectWay.TYPE_ESC
     }
 }

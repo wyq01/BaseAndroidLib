@@ -90,7 +90,7 @@
 
         <service android:name=".printer.one.PrinterConnectService1" />
         <service android:name=".printer.BluetoothPairService" />
-        <service android:name=".printer.two.PrinterConnectService2" />
+        <service android:name=".printer.jqPrinter.PrinterConnectService" />
 
         <receiver android:name=".printer.receiver.BluetoothReceiver">
             <intent-filter>

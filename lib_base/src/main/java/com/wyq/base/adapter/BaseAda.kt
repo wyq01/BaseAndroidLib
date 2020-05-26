@@ -36,7 +36,7 @@ abstract class BaseAda<T, K : BaseViewHolder> : BaseQuickAdapter<T, K> {
 
     fun updateItem(position: Int, item: T) {
         data[position] = item
-        notifyItemChanged(position)
+        notifyItemChanged(headerLayoutCount + position)
     }
 
     init {

@@ -1,10 +1,15 @@
 package com.wyq.base.printer.bean
 
+import com.wyq.base.BaseActivity
+
 /**
  * 签名
  */
-class SignPrint(var signTip: String?, var signPath: String?) : BasePrint(BasePrint.Type.SIGNATURE.value) {
-    constructor(imgPath: String?): this(null, imgPath)
+class SignPrint(var signTip: String?, var signPath: String?, var signWidth: Int) : BasePrint(BasePrint.Type.SIGNATURE.value) {
+    constructor(signPath: String?): this(null, signPath, BaseActivity.SIGNATURE_WIDTH)
+    constructor(signTip: String?, signPath: String?): this(signTip, signPath, BaseActivity.SIGNATURE_WIDTH)
+    constructor(signPath: String?, signWidth: Int): this(null, signPath, signWidth)
+
     private var textSize: Int = BasePrint.TextSize.X24.value // 字体大小，默认为24
     private var underLine: Boolean = false // 是否带下划线
     private var bold: Boolean = false // 是否加粗

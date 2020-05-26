@@ -10,21 +10,20 @@ import android.support.v4.content.ContextCompat
 import android.support.v4.graphics.drawable.DrawableCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
+import com.chad.library.adapter.base.BaseQuickAdapter
 import com.wyq.base.BaseActivity
+import com.wyq.base.BaseApplication
+import com.wyq.base.BuildConfig
+import com.wyq.base.R
+import com.wyq.base.constant.RequestCode
 import com.wyq.base.printer.event.BluetoothBindEvent
 import com.wyq.base.printer.event.BluetoothStatusEvent
 import com.wyq.base.printer.event.PrinterConnectEvent
-import com.wyq.base.printer.one.PrinterConnectService1
-import com.wyq.base.printer.two.PrinterConnectService2
-import com.wyq.base.constant.RequestCode
+import com.wyq.base.printer.jqPrinter.PrinterConnectService
+import com.wyq.base.util.ToastUtil
+import com.wyq.base.util.click
 import com.wyq.base.view.ItemDivider
 import com.wyq.base.view.ProgressDialog
-import com.chad.library.adapter.base.BaseQuickAdapter
-import com.wyq.base.BuildConfig
-import com.wyq.base.R
-import com.wyq.base.util.click
-import com.wyq.base.BaseApplication
-import com.wyq.base.util.ToastUtil
 import io.reactivex.Observable
 import io.reactivex.ObservableOnSubscribe
 import io.reactivex.Observer
@@ -69,21 +68,7 @@ class PrinterConnectAct : BaseActivity() {
 
     private var continuePrint = false
 
-    // 此处用于切换蓝牙连接方式
     private val isConnect: Boolean
-        get() = if (PrintTest.PRINT_ONE) {
-            isConnect1
-        } else {
-            isConnect2
-        }
-
-    private val isConnect1: Boolean
-        get() {
-            val printer = (application as BaseApplication).getPrinter()
-            return printer != null
-        }
-
-    private val isConnect2: Boolean
         get() {
             val printer = (application as BaseApplication).getJQPrinter()
             return printer?.isOpen ?: false
@@ -132,7 +117,7 @@ class PrinterConnectAct : BaseActivity() {
             startActivity(Intent(Settings.ACTION_BLUETOOTH_SETTINGS))
         }
         rightBtn?.click {
-            PrintTest.testPrint(this)
+            PrintConfig.testPrint(this)
         }
     }
 
@@ -244,22 +229,11 @@ class PrinterConnectAct : BaseActivity() {
     }
 
     private fun connect(address: String?) {
-        // 此处用于切换蓝牙连接方式
-        if (PrintTest.PRINT_ONE) {
-            startService1(address)
-        } else {
-            startService2(address)
-        }
+        startService(address)
     }
 
-    private fun startService1(address: String?) {
-        val intent = Intent(this@PrinterConnectAct, PrinterConnectService1::class.java)
-        intent.putExtra(BluetoothUtil.BLUETOOTH_ADDRESS, address)
-        startService(intent)
-    }
-
-    private fun startService2(address: String?) {
-        val intent = Intent(this@PrinterConnectAct, PrinterConnectService2::class.java)
+    private fun startService(address: String?) {
+        val intent = Intent(this@PrinterConnectAct, PrinterConnectService::class.java)
         intent.putExtra(BluetoothUtil.BLUETOOTH_ADDRESS, address)
         startService(intent)
     }

@@ -9,6 +9,21 @@ androidExtensions {
 }
 
 android {
+    signingConfigs {
+        debug {
+            storeFile file("keystore/techservice.jks")
+            storePassword "ts888888"
+            keyAlias "techservice"
+            keyPassword "ts888888"
+        }
+        release {
+            storeFile file("keystore/techservice.jks")
+            storePassword "ts888888"
+            keyAlias "techservice"
+            keyPassword "ts888888"
+        }
+    }
+
     compileSdkVersion compile_sdk_version
     buildToolsVersion build_tools_version
     defaultConfig {
@@ -26,27 +41,14 @@ android {
 
         flavorDimensions "version"
 
+        // 配置默认版本
+//        buildConfigField("int", "VERSION_TYPE", version_dev)
+
         ndk {
-            //选择要添加的对应 cpu 类型的 .so 库。
-            abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'
-            // 还可以添加 'mips', 'mips64'
+            abiFilters "armeabi", "armeabi-v7a", "x86"
         }
     }
 
-    signingConfigs {
-        debug {
-            storeFile file("keystore/techservice.jks")
-            storePassword "ts888888"
-            keyAlias "techservice"
-            keyPassword "ts888888"
-        }
-        release {
-            storeFile file("keystore/techservice.jks")
-            storePassword "ts888888"
-            keyAlias "techservice"
-            keyPassword "ts888888"
-        }
-    }
     buildTypes {
         debug {
             debuggable true
@@ -136,7 +138,6 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
     implementation project(':lib_base')
-    implementation 'com.ts.lib_upgrade:lib_upgrade:0.1' // 应用内更新
     implementation 'com.kyleduo.switchbutton:library:2.0.0' // switchbutton
     implementation 'com.flyco.tablayout:FlycoTabLayout_Lib:2.2.0@aar' // 选项卡
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-14' // 下拉刷新框架
@@ -151,6 +152,9 @@ dependencies {
 //    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0' // js交互框架
 //    implementation 'com.github.huangyanbin:SmartTable:2.2.0' // 表格
 //    implementation 'com.github.yalantis:ucrop:2.2.2' // 裁剪图片
+
+//    implementation 'com.wyq.lib_base:lib_base:1.2.6' // 基础库
+    implementation 'com.ts.lib_upgrade:lib_upgrade:1.0.5' // 更新库
 }
 
 configurations.all {

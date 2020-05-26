@@ -39,7 +39,7 @@ abstract class BaseMultiItemAda<T : MultiItemEntity, K : BaseViewHolder> :
 
     fun updateItem(position: Int, item: T) {
         data[position] = item
-        notifyItemChanged(position)
+        notifyItemChanged(headerLayoutCount + position)
     }
 
     init {

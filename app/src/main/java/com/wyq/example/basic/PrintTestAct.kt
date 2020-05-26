@@ -3,7 +3,14 @@ package com.wyq.example.basic
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
+import android.os.Environment
+import android.provider.Settings
+import com.blankj.utilcode.util.ImageUtils
 import com.blankj.utilcode.util.LogUtils
+import com.blankj.utilcode.util.PermissionUtils
 import com.google.gson.Gson
 import com.wyq.base.BaseActivity
 import com.wyq.base.printer.PrinterConnectAct
@@ -14,10 +21,15 @@ import com.wyq.base.sign.config.PenConfig
 import com.wyq.base.util.DateFormatUtil
 import com.wyq.base.util.ToastUtil
 import com.wyq.base.util.click
+import com.wyq.base.view.BaseDialog
+import com.wyq.example.BuildConfig
 import com.wyq.example.R
+import com.yanzhenjie.permission.AndPermission
+import com.yanzhenjie.permission.runtime.Permission
 import kotlinx.android.synthetic.main.act_print_test.*
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import java.io.File
 
 class PrintTestAct : BaseActivity() {
 
@@ -125,79 +137,84 @@ class PrintTestAct : BaseActivity() {
         val dateBean = TextPrint(DateFormatUtil.format(DateFormatUtil.yyyyYMYdR))
             .alignRight()
 
-        list.add(BlankPrint(80))
-        list.add(headerBean)
-        list.add(titleBean)
-        list.add(numberBean)
-        list.add(BlankPrint(50))
-        list.add(unitBean)
-        list.add(EnterPrint())
-        list.add(tip1)
-        list.add(problemBean)
-        list.add(tip2)
-        list.add(provisionBean)
-        list.add(tip3)
-        list.add(lawBean)
-        list.add(tip4)
-        list.add(changeTimeBean)
-        list.add(tip5)
-        list.add(provisionBean2)
-        list.add(tip6)
-        list.add(handleBean)
-        list.add(tip7)
-        list.add(changeContentBean)
-        list.add(tip8)
-        list.add(cityBean)
-        list.add(tip10)
-        list.add(unit1Bean)
-        list.add(tip11)
-        list.add(unit2Bean)
-        list.add(tip12)
-        list.add(EnterPrint())
-        list.add(tip13)
-        list.add(phoneBean)
-        list.add(EnterPrint())
-        list.add(dateBean)
-        list.add(BlankPrint(50))
-
-        list.add(LinePrint())
-
-        list.add(BlankPrint(80))
-        list.add(headerBean)
-        list.add(titleBean)
-        list.add(numberBean)
-        list.add(BlankPrint(50))
-        list.add(unitBean)
-        list.add(EnterPrint())
-        list.add(tip1)
-        list.add(problemBean)
-        list.add(tip2)
-        list.add(provisionBean)
-        list.add(tip3)
-        list.add(lawBean)
-        list.add(tip4)
-        list.add(changeTimeBean)
-        list.add(tip5)
-        list.add(provisionBean2)
-        list.add(tip6)
-        list.add(handleBean)
-        list.add(tip7)
-        list.add(changeContentBean)
-        list.add(tip8)
-        list.add(cityBean)
-        list.add(tip10)
-        list.add(unit1Bean)
-        list.add(tip11)
-        list.add(unit2Bean)
-        list.add(tip12)
-        list.add(EnterPrint())
-        list.add(tip13)
-        list.add(phoneBean)
-        list.add(EnterPrint())
-        list.add(dateBean)
-        list.add(BlankPrint(50))
-
+        val qrCodeBean = QRCodePrint("https://mp.weixin.qq.com/a/~bYtB15o49VRY79R_kx3HOw~~")
+            .alignCenter()
+        list.add(qrCodeBean)
         initJson()
+
+//        list.add(BlankPrint(80))
+//        list.add(headerBean)
+//        list.add(titleBean)
+//        list.add(numberBean)
+//        list.add(BlankPrint(50))
+//        list.add(unitBean)
+//        list.add(EnterPrint())
+//        list.add(tip1)
+//        list.add(problemBean)
+//        list.add(tip2)
+//        list.add(provisionBean)
+//        list.add(tip3)
+//        list.add(lawBean)
+//        list.add(tip4)
+//        list.add(changeTimeBean)
+//        list.add(tip5)
+//        list.add(provisionBean2)
+//        list.add(tip6)
+//        list.add(handleBean)
+//        list.add(tip7)
+//        list.add(changeContentBean)
+//        list.add(tip8)
+//        list.add(cityBean)
+//        list.add(tip10)
+//        list.add(unit1Bean)
+//        list.add(tip11)
+//        list.add(unit2Bean)
+//        list.add(tip12)
+//        list.add(EnterPrint())
+//        list.add(tip13)
+//        list.add(phoneBean)
+//        list.add(EnterPrint())
+//        list.add(dateBean)
+//        list.add(BlankPrint(50))
+//
+//        list.add(LinePrint())
+//
+//        list.add(BlankPrint(80))
+//        list.add(headerBean)
+//        list.add(titleBean)
+//        list.add(numberBean)
+//        list.add(BlankPrint(50))
+//        list.add(unitBean)
+//        list.add(EnterPrint())
+//        list.add(tip1)
+//        list.add(problemBean)
+//        list.add(tip2)
+//        list.add(provisionBean)
+//        list.add(tip3)
+//        list.add(lawBean)
+//        list.add(tip4)
+//        list.add(changeTimeBean)
+//        list.add(tip5)
+//        list.add(provisionBean2)
+//        list.add(tip6)
+//        list.add(handleBean)
+//        list.add(tip7)
+//        list.add(changeContentBean)
+//        list.add(tip8)
+//        list.add(cityBean)
+//        list.add(tip10)
+//        list.add(unit1Bean)
+//        list.add(tip11)
+//        list.add(unit2Bean)
+//        list.add(tip12)
+//        list.add(EnterPrint())
+//        list.add(tip13)
+//        list.add(phoneBean)
+//        list.add(EnterPrint())
+//        list.add(dateBean)
+//        list.add(BlankPrint(50))
+//        list.add(qrCodeBean)
+//        initJson()
     }
 
     private fun test2() {

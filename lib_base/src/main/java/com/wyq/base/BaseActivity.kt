@@ -29,8 +29,8 @@ import com.wyq.base.printer.PrinterConnectAct
 import com.wyq.base.printer.bean.BasePrint
 import com.wyq.base.printer.bean.PrintBean
 import com.wyq.base.printer.event.PrintResultEvent
-import com.wyq.base.printer.two.JQPrinter
-import com.wyq.base.printer.two.esc.ESC
+import com.wyq.base.printer.jqPrinter.JQPrinter
+import com.wyq.base.printer.jqPrinter.esc.ESC
 import com.wyq.base.sign.util.BitmapUtil
 import com.wyq.base.util.ScreenRotateUtils
 import com.wyq.base.util.ToastUtil
@@ -359,6 +359,7 @@ abstract class BaseActivity : BaseAbstractActivity() {
                         BasePrint.Type.ENTER.value -> printEnter(printer)
                         BasePrint.Type.STAMP.value -> printStamp(item, printer)
                         BasePrint.Type.SIGNATURE.value -> printSignature(item, printer)
+                        BasePrint.Type.QRCODE.value -> printQRCode(item, printer)
                     }
                 }
                 EventBus.getDefault().post(PrintResultEvent(true, printContent, this.localClassName))
@@ -459,9 +460,7 @@ abstract class BaseActivity : BaseAbstractActivity() {
         bean.signPath?.let {
             val signBm = BitmapFactory.decodeFile(it)
             if (signBm != null) {
-                val bm = BitmapUtil.zoomImg(signBm,
-                    SIGNATURE_WIDTH
-                )
+                val bm = BitmapUtil.zoomImg(signBm, bean.signWidth)
                 signBmHeight = bm.height / 2
                 printer.esc.image.drawBitmap((bean.signTip?.length ?: 0) * bean.getTextSizeHeight() + (if (TextUtils.isEmpty(bean.signTip)) 0 else 10), 0, bm)
             }
@@ -473,6 +472,23 @@ abstract class BaseActivity : BaseAbstractActivity() {
                 printer.esc.text.print(0, signBmHeight - bean.getTextSizeHeight() / 4, bean.revertTextSize(), bean.bold, bean.underLine, it)
                 printEnter(printer)
             }
+        }
+    }
+
+    /**
+     * 打印二维码
+     */
+    private fun printQRCode(bean: PrintBean, printer: JQPrinter) {
+        bean.text?.let {
+            when(bean.align) {
+                BasePrint.Align.CENTER.value, BasePrint.Align.RIGHT.value ->
+                    printer.esc.barcode.printQRCode(bean.revertAlign(), ESC.BAR_UNIT.x4, 0, 2, it)
+                else ->
+                    printer.esc.barcode.printQRCode(bean.startX, bean.startY, ESC.BAR_UNIT.x4, 0, 2, it)
+            }
+            printEnter(printer)
+        } ?: let {
+            throw NullPointerException("类型为${bean.type}，text不可为空")
         }
     }
 

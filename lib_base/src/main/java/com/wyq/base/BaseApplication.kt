@@ -19,9 +19,8 @@ import com.lzy.okgo.model.HttpParams
 import com.wyq.base.printer.BluetoothPairService
 import com.wyq.base.printer.event.BluetoothBindEvent
 import com.wyq.base.printer.event.BluetoothStatusEvent
-import com.wyq.base.printer.one.Printer
-import com.wyq.base.printer.two.JQPrinter
-import com.wyq.base.printer.two.Printer_define
+import com.wyq.base.printer.jqPrinter.JQPrinter
+import com.wyq.base.printer.jqPrinter.Printer_define
 import com.tencent.smtt.sdk.QbSdk
 import okhttp3.OkHttpClient
 import org.greenrobot.eventbus.EventBus
@@ -46,7 +45,6 @@ open class BaseApplication : MultiDexApplication() {
     }
 
     private var deviceAddress: String? = null
-    private var printer: Printer? = null
     private var jQPrinter: JQPrinter? = null
 
     fun getDeviceAddress(): String? {
@@ -59,14 +57,6 @@ open class BaseApplication : MultiDexApplication() {
 
     fun setDeviceAddress(deviceAddress: String?) {
         this.deviceAddress = deviceAddress ?: ""
-    }
-
-    fun getPrinter(): Printer? {
-        return printer
-    }
-
-    fun setPrinter(printer: Printer?) {
-        this.printer = printer
     }
 
     fun getJQPrinter(): JQPrinter? {
@@ -98,7 +88,6 @@ open class BaseApplication : MultiDexApplication() {
     override fun onTerminate() {
         super.onTerminate()
 
-        printer = null
         deviceAddress = null
 
         if (EventBus.getDefault().isRegistered(this)) {
@@ -210,7 +199,6 @@ open class BaseApplication : MultiDexApplication() {
                 , BluetoothAdapter.STATE_DISCONNECTED // 蓝牙断开连接
             -> {
                 LogUtils.d("打印机已断开")
-                printer = null
                 jQPrinter?.close()
             }
         }
@@ -222,7 +210,6 @@ open class BaseApplication : MultiDexApplication() {
             BluetoothDevice.BOND_NONE // 解绑设备
             -> if (!TextUtils.isEmpty(event.address) && event.address == deviceAddress) {
                 LogUtils.d("打印机已解绑")
-                printer = null
                 jQPrinter?.close()
                 deviceAddress = null
             }
