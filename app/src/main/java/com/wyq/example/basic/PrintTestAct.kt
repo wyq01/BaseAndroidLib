@@ -3,16 +3,10 @@ package com.wyq.example.basic
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.net.Uri
-import android.os.Environment
-import android.provider.Settings
-import com.blankj.utilcode.util.ImageUtils
 import com.blankj.utilcode.util.LogUtils
-import com.blankj.utilcode.util.PermissionUtils
 import com.google.gson.Gson
 import com.wyq.base.BaseActivity
+import com.wyq.base.constant.RequestCode
 import com.wyq.base.printer.PrinterConnectAct
 import com.wyq.base.printer.bean.*
 import com.wyq.base.printer.event.PrintResultEvent
@@ -21,15 +15,10 @@ import com.wyq.base.sign.config.PenConfig
 import com.wyq.base.util.DateFormatUtil
 import com.wyq.base.util.ToastUtil
 import com.wyq.base.util.click
-import com.wyq.base.view.BaseDialog
-import com.wyq.example.BuildConfig
 import com.wyq.example.R
-import com.yanzhenjie.permission.AndPermission
-import com.yanzhenjie.permission.runtime.Permission
 import kotlinx.android.synthetic.main.act_print_test.*
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
-import java.io.File
 
 class PrintTestAct : BaseActivity() {
 
@@ -307,7 +296,7 @@ class PrintTestAct : BaseActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
-                SignActivity.REQUEST_SIGN -> {
+                RequestCode.REQUEST_SIGN -> {
                     data?.let {
                         val path = it.getStringExtra(PenConfig.SAVE_PATH)
                         val signBean = SignPrint("打印人员签名", path)

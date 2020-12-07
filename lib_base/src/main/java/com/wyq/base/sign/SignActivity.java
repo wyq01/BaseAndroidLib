@@ -28,6 +28,7 @@ import com.blankj.utilcode.util.PermissionUtils;
 import com.wyq.base.BaseActivity;
 import com.wyq.base.BuildConfig;
 import com.wyq.base.R;
+import com.wyq.base.constant.RequestCode;
 import com.wyq.base.sign.config.PenConfig;
 import com.wyq.base.sign.util.BitmapUtil;
 import com.wyq.base.sign.util.DisplayUtil;
@@ -48,8 +49,6 @@ import java.util.Objects;
  * 空白手写画板
  */
 public class SignActivity extends BaseActivity implements View.OnClickListener, PaintView.StepCallback {
-
-    public static final int REQUEST_SIGN = 1001;
 
     public static final int CANVAS_MAX_WIDTH = 3000; // 画布最大宽度
     public static final int CANVAS_MAX_HEIGHT = 3000; // 画布最大高度
@@ -81,7 +80,7 @@ public class SignActivity extends BaseActivity implements View.OnClickListener, 
     private String mInitPath;
 
     public static void startActivityForResult(Activity activity) {
-        startActivityForResult(activity, REQUEST_SIGN);
+        startActivityForResult(activity, RequestCode.REQUEST_SIGN);
     }
 
     public static void startActivityForResult(Activity activity, int requestCode) {

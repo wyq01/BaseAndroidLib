@@ -30,8 +30,14 @@
         window.plus.enableSensorRotate(sensorRotate);
     }
 
-    function singleUpload() {
-        window.plus.singleUpload(path, "http://47.101.48.215:18084/file/upload", 2000, function(string) {
+    function album() {
+        window.plus.album(true, function(string) {
+            singleUpload(string)
+        });
+    }
+
+    function singleUpload(path) {
+        window.plus.singleUpload(path, "http://192.168.50.217:8081/api/auto/upload", 4000, function(string) {
             var obj = JSON.parse(string);
             switch (obj.code) {
                 case -1:
@@ -41,7 +47,7 @@
                     document.getElementById("progress").innerHTML = obj.data.currentSize + "/" + obj.data.totalSize
                     break;
                 case 1:
-                    document.getElementById("status").innerHTML = obj.data
+                    document.getElementById("status").innerHTML = JSON.stringify(obj.data)
                     break;
             }
         });
@@ -59,7 +65,7 @@
     手写签名
 </button>
 <p id="sign"></p>
-<button type="button" onclick="singleUpload()">
+<button type="button" onclick="album()">
     上传
 </button>
 <p id="progress"></p>

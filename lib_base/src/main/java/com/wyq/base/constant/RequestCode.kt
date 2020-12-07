@@ -8,4 +8,5 @@ object RequestCode {
     const val REQUEST_FILE = 1005 // 文件
     const val REQUEST_CAMERA = 1006 // 相机
     const val REQUEST_PRINTER_CONNECT = 1007 // 打印机连接
+    const val REQUEST_SIGN = 1008 // 签名
 }

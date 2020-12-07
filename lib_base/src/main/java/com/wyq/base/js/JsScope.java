@@ -119,6 +119,15 @@ public class JsScope {
         activity.print(json, jsCallback);
     }
 
+    public static void album(WebView webView, JsCallback jsCallback) {
+        album(webView, true, jsCallback);
+    }
+
+    public static void album(WebView webView, boolean needCapture, JsCallback jsCallback) {
+        BaseWebActivity activity = (BaseWebActivity) webView.getContext();
+        activity.album(needCapture, jsCallback);
+    }
+
     public static void singleUpload(WebView webView, String path, String url, long timeout, JsCallback jsCallback) {
         BaseWebActivity activity = (BaseWebActivity) webView.getContext();
         activity.singleUpload(path, url, timeout, jsCallback);

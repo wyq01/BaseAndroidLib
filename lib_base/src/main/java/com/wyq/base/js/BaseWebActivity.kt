@@ -6,24 +6,36 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
+import android.provider.Settings
 import android.text.TextUtils
 import android.util.Log
 import android.webkit.*
 import cn.pedant.SafeWebViewBridge.InjectedChromeClient
 import cn.pedant.SafeWebViewBridge.JsCallback
 import com.blankj.utilcode.util.LogUtils
+import com.blankj.utilcode.util.PermissionUtils
 import com.google.gson.Gson
 import com.lzy.okgo.OkGo
 import com.lzy.okgo.callback.StringCallback
 import com.lzy.okgo.model.Progress
 import com.lzy.okgo.model.Response
 import com.wyq.base.BaseActivity
+import com.wyq.base.BuildConfig
 import com.wyq.base.R
+import com.wyq.base.constant.RequestCode
 import com.wyq.base.printer.event.PrintResultEvent
 import com.wyq.base.sign.SignActivity
 import com.wyq.base.sign.config.PenConfig
 import com.wyq.base.util.ScreenRotateUtils
+import com.wyq.base.util.ToastUtil
 import com.wyq.base.util.applyJson
+import com.wyq.base.view.BaseDialog
+import com.yanzhenjie.permission.AndPermission
+import com.yanzhenjie.permission.runtime.Permission
+import com.zhihu.matisse.Matisse
+import com.zhihu.matisse.MimeType
+import com.zhihu.matisse.engine.impl.GlideEngine
+import com.zhihu.matisse.internal.entity.CaptureStrategy
 import kotlinx.android.synthetic.main.base_act_web.*
 import okhttp3.OkHttpClient
 import org.greenrobot.eventbus.Subscribe
@@ -45,7 +57,6 @@ abstract class BaseWebActivity : BaseActivity() {
     protected var mWebView: WebView? = null
 
     companion object {
-        const val RESULT_CODE_FILE_CHOOSE = 1
     }
 
     private var mUploadMessage: ValueCallback<Uri>? = null
@@ -183,7 +194,7 @@ abstract class BaseWebActivity : BaseActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         when(requestCode) {
-            RESULT_CODE_FILE_CHOOSE -> {
+            RequestCode.REQUEST_FILE -> {
                 if (null == mUploadMessage && null == mUploadCallbackAboveL) return
                 val result = if (data == null || resultCode != Activity.RESULT_OK) null else data.data
                 if (mUploadCallbackAboveL != null) {
@@ -193,7 +204,7 @@ abstract class BaseWebActivity : BaseActivity() {
                     mUploadMessage = null
                 }
             }
-            SignActivity.REQUEST_SIGN -> {
+            RequestCode.REQUEST_SIGN -> {
                 if (resultCode == Activity.RESULT_OK) {
                     data?.let { d ->
                         val path = d.getStringExtra(PenConfig.SAVE_PATH)
@@ -207,12 +218,33 @@ abstract class BaseWebActivity : BaseActivity() {
                     }
                 }
             }
+            RequestCode.REQUEST_PHOTO -> {
+                data?.let {
+                    val list = Matisse.obtainPathResult(it)
+                    val photo = list[0]
+                    jsCallback?.let { j ->
+                        try {
+                            j.apply(photo)
+                        } catch (e: JsCallback.JsCallbackException) {
+                            e.printStackTrace()
+                        }
+                    }
+                } ?: let {
+                    jsCallback?.let { j ->
+                        try {
+                            j.apply("")
+                        } catch (e: JsCallback.JsCallbackException) {
+                            e.printStackTrace()
+                        }
+                    }
+                }
+            }
         }
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private fun onActivityResultAboveL(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode != RESULT_CODE_FILE_CHOOSE || mUploadCallbackAboveL == null) {
+        if (requestCode != RequestCode.REQUEST_FILE || mUploadCallbackAboveL == null) {
             return
         }
         val results = ArrayList<Uri>()
@@ -257,10 +289,7 @@ abstract class BaseWebActivity : BaseActivity() {
             val i = Intent(Intent.ACTION_GET_CONTENT)
             i.addCategory(Intent.CATEGORY_OPENABLE)
             i.type = "*/*"
-            this@BaseWebActivity.startActivityForResult(
-                Intent.createChooser(i, "File Chooser"),
-                RESULT_CODE_FILE_CHOOSE
-            )
+            this@BaseWebActivity.startActivityForResult(Intent.createChooser(i, "File Chooser"), RequestCode.REQUEST_FILE)
         }
 
         // For Android 3.0+
@@ -269,10 +298,7 @@ abstract class BaseWebActivity : BaseActivity() {
             val i = Intent(Intent.ACTION_GET_CONTENT)
             i.addCategory(Intent.CATEGORY_OPENABLE)
             i.type = "*/*"
-            this@BaseWebActivity.startActivityForResult(
-                Intent.createChooser(i, "File Browser"),
-                RESULT_CODE_FILE_CHOOSE
-            )
+            this@BaseWebActivity.startActivityForResult(Intent.createChooser(i, "File Browser"), RequestCode.REQUEST_FILE)
         }
 
         //For Android 4.1
@@ -281,10 +307,7 @@ abstract class BaseWebActivity : BaseActivity() {
             val i = Intent(Intent.ACTION_GET_CONTENT)
             i.addCategory(Intent.CATEGORY_OPENABLE)
             i.type = "*/*"
-            this@BaseWebActivity.startActivityForResult(
-                Intent.createChooser(i, "File Browser"),
-                RESULT_CODE_FILE_CHOOSE
-            )
+            this@BaseWebActivity.startActivityForResult(Intent.createChooser(i, "File Browser"), RequestCode.REQUEST_FILE)
         }
 
         // For Android 5.0+
@@ -293,10 +316,7 @@ abstract class BaseWebActivity : BaseActivity() {
             val i = Intent(Intent.ACTION_GET_CONTENT)
             i.addCategory(Intent.CATEGORY_OPENABLE)
             i.type = "*/*"
-            this@BaseWebActivity.startActivityForResult(
-                Intent.createChooser(i, "File Browser"),
-                RESULT_CODE_FILE_CHOOSE
-            )
+            this@BaseWebActivity.startActivityForResult(Intent.createChooser(i, "File Browser"), RequestCode.REQUEST_FILE)
             return true
         }
     }
@@ -408,6 +428,60 @@ abstract class BaseWebActivity : BaseActivity() {
 //            ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 //        }
         ScreenRotateUtils.getInstance(this).enableSensorRotate(sensorRotate)
+    }
+
+    fun album(needCapture: Boolean = true, jsCallback: JsCallback) {
+        this.jsCallback = jsCallback
+        AndPermission.with(this)
+            .runtime()
+            .permission(Permission.Group.STORAGE, Permission.Group.CAMERA)
+            .onGranted {
+                var selfPermission = true
+                for (item in it) {
+                    if (!PermissionUtils.isGranted(item)) {
+                        selfPermission = false
+                        break
+                    }
+                }
+                if (selfPermission) {
+                    Matisse.from(this)
+                        .choose(MimeType.of(MimeType.JPEG, MimeType.PNG))
+                        .theme(R.style.Matisse_Dracula)
+                        .countable(false)
+                        .capture(needCapture)
+                        .captureStrategy(CaptureStrategy(true, this.packageName + ".fileprovider"))
+                        .maxSelectable(1)
+                        .imageEngine(GlideEngine())
+                        .forResult(RequestCode.REQUEST_PHOTO)
+                } else {
+                    ToastUtil.shortToast(this, R.string.base_permission_denied)
+                }
+            }
+            .rationale { _, _, executor ->
+                BaseDialog.Builder(this)
+                    .setPositiveButton(R.string.button_allow) { _, _ -> executor.execute() }
+                    .setNegativeButton(R.string.button_deny) { _, _ -> executor.cancel() }
+                    .setCancelable(false)
+                    .setMessage(R.string.base_permission_rationale)
+                    .show()
+            }
+            .onDenied {
+                if (AndPermission.hasAlwaysDeniedPermission(this, it)) {
+                    BaseDialog.Builder(this)
+                        .setPositiveButton(R.string.button_ok) { _, _ ->
+                            val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                            val uri = Uri.fromParts("package", BuildConfig.APPLICATION_ID, null)
+                            intent.data = uri
+                            startActivity(intent)
+                        }
+                        .setNegativeButton(R.string.button_cancel, null)
+                        .setCancelable(false)
+                        .setMessage(R.string.base_permission_setting)
+                        .show()
+                } else {
+                    ToastUtil.shortToast(this, R.string.base_permission_denied)
+                }
+            }.start()
     }
 
     fun singleUpload(path: String, url: String, timeout: Long, jsCallback: JsCallback) {
