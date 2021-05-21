@@ -39,7 +39,7 @@
             android:background="@color/base_divider" />
     </RelativeLayout>
 
-    <com.wyq.base.view.MaxHeightRecyclerView
+    <com.ts.base.view.MaxHeightRecyclerView
         android:id="@+id/filterRv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

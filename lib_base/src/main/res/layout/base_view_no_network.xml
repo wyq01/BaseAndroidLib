@@ -46,7 +46,7 @@
         app:layout_constraintTop_toBottomOf="@id/tipTv"
         app:layout_constraintVertical_chainStyle="packed" />
 
-    <com.wyq.base.view.CommonShapeButton
+    <com.ts.base.view.CommonShapeButton
         android:id="@+id/reloadBtn"
         android:layout_width="@dimen/dp_200"
         android:layout_height="@dimen/dp_36"

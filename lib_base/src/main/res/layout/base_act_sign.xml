@@ -20,7 +20,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/header">
 
-        <com.wyq.base.sign.view.PaintView
+        <com.ts.base.sign.view.PaintView
             android:id="@+id/paintView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

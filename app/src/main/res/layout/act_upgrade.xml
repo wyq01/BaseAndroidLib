@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.wyq.base.view.CommonShapeButton
+    <com.ts.base.view.CommonShapeButton
         android:id="@+id/checkUpgradeBtn"
         android:layout_width="@dimen/dp_100"
         android:layout_height="@dimen/dp_35"

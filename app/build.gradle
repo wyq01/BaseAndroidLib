@@ -27,7 +27,7 @@ android {
     compileSdkVersion compile_sdk_version
     buildToolsVersion build_tools_version
     defaultConfig {
-        applicationId "com.wyq.example"
+        applicationId "com.ts.example"
         minSdkVersion min_sdk_version
         targetSdkVersion target_sdk_version
         versionCode app_version_code
@@ -83,7 +83,7 @@ android {
     productFlavors {
         base {
             dimension "version"
-            applicationId "com.wyq.example.webApp"
+            applicationId "com.ts.example.webApp"
             resValue "string", "app_name", "WebApp标准壳"
             manifestPlaceholders = [
                     app_icon : "@drawable/ic_launcher",
@@ -138,6 +138,7 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
     implementation project(':lib_base')
+//    implementation 'com.ts.base:base:1.3.3' // 基础库
     implementation 'com.kyleduo.switchbutton:library:2.0.0' // switchbutton
     implementation 'com.flyco.tablayout:FlycoTabLayout_Lib:2.2.0@aar' // 选项卡
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-14' // 下拉刷新框架
@@ -153,7 +154,6 @@ dependencies {
 //    implementation 'com.github.huangyanbin:SmartTable:2.2.0' // 表格
 //    implementation 'com.github.yalantis:ucrop:2.2.2' // 裁剪图片
 
-//    implementation 'com.wyq.lib_base:lib_base:1.2.6' // 基础库
     implementation 'com.ts.lib_upgrade:lib_upgrade:1.0.5' // 更新库
 }
 

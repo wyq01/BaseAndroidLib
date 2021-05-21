@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.wyq.base.view.LoadingLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.ts.base.view.LoadingLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/loadingLayout"
     android:layout_width="match_parent"
@@ -9,8 +9,8 @@
     app:layout_constraintRight_toRightOf="parent"
     app:layout_constraintTop_toTopOf="parent">
 
-    <com.github.chrisbanes.photoview.PhotoView xmlns:android="http://schemas.android.com/apk/res/android"
+    <com.github.chrisbanes.photoview.PhotoView
         android:id="@+id/photoView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-</com.wyq.base.view.LoadingLayout>
+</com.ts.base.view.LoadingLayout>

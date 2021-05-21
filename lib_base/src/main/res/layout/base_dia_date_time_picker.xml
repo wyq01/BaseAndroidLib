@@ -21,7 +21,7 @@
             android:textColor="@color/base_theme"
             android:textSize="@dimen/dp_16" />
 
-        <com.wyq.base.view.timepicker.DateTimePickerView
+        <com.ts.base.view.timepicker.DateTimePickerView
             android:id="@+id/dateTimePickerView"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_200"

@@ -1,0 +1,42 @@
+apply plugin: 'maven'
+
+// load properties
+Properties properties = new Properties()
+File projectPropertiesFile = project.file("codeup_project.properties")
+if (projectPropertiesFile.exists()) {
+    properties.load(projectPropertiesFile.newDataInputStream())
+}
+
+def MAVEN_SNAPSHOT_URL = properties.getProperty("MAVEN_SNAPSHOT_URL")
+def MAVEN_URL = properties.getProperty("MAVEN_URL")
+def NEXUS_USERNAME = properties.getProperty("NEXUS_USERNAME")
+def NEXUS_PASSWORD = properties.getProperty("NEXUS_PASSWORD")
+def NEXUS_VERSION = properties.getProperty("NEXUS_VERSION")
+def ARTIFACT_ID = properties.getProperty("ARTIFACT_ID")
+def GROUP_ID = properties.getProperty("GROUP_ID")
+def TYPE = properties.getProperty("TYPE")
+def DESCRIPTION = properties.getProperty("DESCRIPTION")
+
+uploadArchives {
+    configuration = configurations.archives
+    repositories {
+        mavenDeployer {
+            snapshotRepository(url: MAVEN_SNAPSHOT_URL) {
+                authentication(userName: NEXUS_USERNAME, password: NEXUS_PASSWORD)
+            }
+            repository(url: MAVEN_URL) {
+                authentication(userName: NEXUS_USERNAME, password: NEXUS_PASSWORD)
+            }
+            pom.project {
+                version base_version_name
+                artifactId ARTIFACT_ID
+                groupId GROUP_ID
+                packaging TYPE
+                description DESCRIPTION
+            }
+        }
+    }
+}
+//artifacts {
+//    archives file('app-release.aar')
+//}

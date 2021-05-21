@@ -103,5 +103,5 @@ configurations.all {
     resolutionStrategy.cacheDynamicVersionsFor 0, 'seconds'
 }
 
-// jcenter_publish
-apply from: "jcenter_publish.gradle"
+// publish
+apply from: "codeup_publish.gradle"

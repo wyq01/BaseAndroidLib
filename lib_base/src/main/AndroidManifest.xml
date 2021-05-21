@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.wyq.base">
+    package="com.ts.base">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
@@ -64,7 +64,7 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".sign.SignActivity"
+            android:name="com.ts.base.sign.SignActivity"
             android:configChanges="screenSize|orientation|keyboard|keyboardHidden"
             android:screenOrientation="landscape"/>
         <activity
@@ -88,9 +88,8 @@
                 android:resource="@xml/file_paths_public" />
         </provider>
 
-        <service android:name=".printer.one.PrinterConnectService1" />
         <service android:name=".printer.BluetoothPairService" />
-        <service android:name=".printer.jqPrinter.PrinterConnectService" />
+        <service android:name="com.ts.base.printer.jqPrinter.PrinterConnectService" />
 
         <receiver android:name=".printer.receiver.BluetoothReceiver">
             <intent-filter>
