@@ -22,6 +22,15 @@ buildscript {
 }
 
 allprojects {
+    Properties properties = new Properties()
+    File projectPropertiesFile = project.file("codeup_project.properties")
+    if (projectPropertiesFile.exists()) {
+        properties.load(projectPropertiesFile.newDataInputStream())
+    }
+
+    def NEXUS_USERNAME = properties.getProperty("NEXUS_USERNAME")
+    def NEXUS_PASSWORD = properties.getProperty("NEXUS_PASSWORD")
+
     repositories {
         google()
         jcenter()
@@ -30,14 +39,20 @@ allprojects {
         maven {
             url 'https://maven.aliyun.com/repository/public'
         }
-
-//        // jiang maven
-//        maven {
-//            url 'http://120.78.167.182:8081/repository/slack-snapshot/'
-//        }
-//        maven {
-//            url 'http://120.78.167.182:8081/repository/slack-release/'
-//        }
+        maven {
+            credentials {
+                username NEXUS_USERNAME
+                password NEXUS_PASSWORD
+            }
+            url 'https://packages.aliyun.com/maven/repository/2017546-release-Dczwza/'
+        }
+        maven {
+            credentials {
+                username NEXUS_USERNAME
+                password NEXUS_PASSWORD
+            }
+            url 'https://packages.aliyun.com/maven/repository/2017546-snapshot-lydKFe/'
+        }
     }
 
     // jcenter配置
