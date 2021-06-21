@@ -3,17 +3,16 @@ package com.ts.base.view
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.SimpleItemAnimator
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.SimpleItemAnimator
 import com.chad.library.adapter.base.BaseQuickAdapter
-import com.chad.library.adapter.base.BaseViewHolder
-
+import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.ts.base.R
 
 /**
@@ -40,7 +39,7 @@ class SingleChooseListDialog private constructor(
         fun onClick(position: Int)
     }
 
-    internal inner class FilterAdapter(data: List<String>, private var checkPos: Int) :
+    internal inner class FilterAdapter(data: MutableList<String>, private var checkPos: Int) :
         BaseQuickAdapter<String, FilterAdapter.ViewHolder>(R.layout.base_ada_list_dialog, data) {
 
         fun updateCheckPos(checkPos: Int) {
@@ -79,12 +78,11 @@ class SingleChooseListDialog private constructor(
             )
         )
         data?.let {
-            val filterAdapter = FilterAdapter(it, checkPos)
+            val filterAdapter = FilterAdapter(it.toMutableList(), checkPos)
             filterRv.adapter = filterAdapter
             // 解决notifyItemChanged闪烁问题
             (filterRv.itemAnimator as SimpleItemAnimator).supportsChangeAnimations = false
-            filterAdapter.onItemClickListener =
-                BaseQuickAdapter.OnItemClickListener { _, _, position ->
+            filterAdapter.setOnItemClickListener { _, _, position ->
                     onItemClickListener?.onClick(position)
                     checkPos = position
                     filterAdapter.updateCheckPos(position)

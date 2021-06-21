@@ -3,8 +3,8 @@ package com.ts.base
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.content.Intent
-import android.support.multidex.MultiDexApplication
 import android.text.TextUtils
+import androidx.multidex.MultiDexApplication
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.Utils
 import com.lzy.okgo.OkGo

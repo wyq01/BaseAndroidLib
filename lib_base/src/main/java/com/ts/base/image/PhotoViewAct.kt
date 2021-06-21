@@ -2,12 +2,12 @@ package com.ts.base.image
 
 import android.content.Context
 import android.content.Intent
-import android.support.v4.view.ViewPager
 import android.view.View
-import com.ts.base.BaseActivity
+import androidx.viewpager.widget.ViewPager
 import com.ts.base.R
+import com.ts.base.activity.BaseActivity
 import kotlinx.android.synthetic.main.base_act_photo_view.*
-import java.util.ArrayList
+import java.util.*
 
 class PhotoViewAct : BaseActivity() {
 

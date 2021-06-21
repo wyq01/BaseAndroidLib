@@ -1,6 +1,6 @@
 package com.ts.base.printer.bean
 
-import com.ts.base.BaseActivity
+import com.ts.base.activity.BaseActivity
 import com.ts.base.printer.jqPrinter.Printer_define
 import com.ts.base.printer.jqPrinter.esc.ESC
 

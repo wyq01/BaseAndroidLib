@@ -137,8 +137,8 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
-//    implementation project(':lib_base')
-    implementation 'com.ts.base:base:1.3.3' // 基础库
+    implementation project(':lib_base')
+//    implementation 'com.ts.base:base:1.3.3' // 基础库
     implementation 'com.kyleduo.switchbutton:library:2.0.0' // switchbutton
     implementation 'com.flyco.tablayout:FlycoTabLayout_Lib:2.2.0@aar' // 选项卡
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-14' // 下拉刷新框架

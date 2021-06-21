@@ -16,9 +16,10 @@ import com.lzy.okgo.callback.FileCallback
 import com.lzy.okgo.model.Progress
 import com.lzy.okgo.model.Response
 import com.tencent.smtt.sdk.TbsReaderView
-import com.ts.base.BaseActivity
+import com.ts.base.activity.IBaseActivity
 import com.ts.base.BuildConfig
 import com.ts.base.R
+import com.ts.base.activity.BaseActivity
 import com.ts.base.util.ToastUtil
 import com.ts.base.view.BaseDialog
 import com.yanzhenjie.permission.AndPermission

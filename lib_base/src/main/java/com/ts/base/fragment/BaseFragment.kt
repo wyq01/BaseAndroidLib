@@ -1,4 +1,4 @@
-package com.ts.base
+package com.ts.base.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,6 +8,7 @@ import android.widget.FrameLayout
 import android.widget.ImageButton
 import android.widget.TextView
 import com.blankj.utilcode.util.KeyboardUtils
+import com.ts.base.R
 import com.ts.base.event.BaseEvent
 import com.ts.base.view.LoadingLayout
 import org.greenrobot.eventbus.EventBus
@@ -17,7 +18,7 @@ import org.greenrobot.eventbus.ThreadMode
 /**
  * 懒加载fragment
  */
-abstract class BaseFragment : BaseAbstractFragment() {
+abstract class BaseFragment : IBaseFragment() {
     /**
      * 是否可见状态
      */

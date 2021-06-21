@@ -5,14 +5,14 @@ import android.content.Context
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.ts.base.adapter.BaseAda
 import com.ts.base.R
-import com.chad.library.adapter.base.BaseViewHolder
 
 /**
  * Created by ts
  */
-class PrinterAdapter(context: Context, sourceData: List<BluetoothDevice>?) :
+class PrinterAdapter(context: Context, sourceData: MutableList<BluetoothDevice>?) :
     BaseAda<BluetoothDevice, PrinterAdapter.ViewHolder>(context, R.layout.base_ada_printer, sourceData) {
 
     private var deviceAddress: String? = null

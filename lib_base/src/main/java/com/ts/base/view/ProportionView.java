@@ -1,12 +1,13 @@
 package com.ts.base.view;
 
 import android.content.Context;
-import android.support.v4.widget.ViewDragHelper;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.widget.FrameLayout;
+
+import androidx.customview.widget.ViewDragHelper;
 
 public class ProportionView extends FrameLayout {
     // 屏幕宽高

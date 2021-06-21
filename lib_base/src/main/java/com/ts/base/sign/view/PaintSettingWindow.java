@@ -12,7 +12,6 @@ import android.widget.PopupWindow;
 
 import com.ts.base.sign.config.PenConfig;
 import com.ts.base.R;
-import com.ts.base.sign.config.PenConfig;
 
 /**
  * 画笔设置窗口

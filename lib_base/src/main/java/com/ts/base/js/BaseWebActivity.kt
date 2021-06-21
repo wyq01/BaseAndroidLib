@@ -19,9 +19,9 @@ import com.lzy.okgo.OkGo
 import com.lzy.okgo.callback.StringCallback
 import com.lzy.okgo.model.Progress
 import com.lzy.okgo.model.Response
-import com.ts.base.BaseActivity
 import com.ts.base.BuildConfig
 import com.ts.base.R
+import com.ts.base.activity.BaseActivity
 import com.ts.base.constant.RequestCode
 import com.ts.base.printer.event.PrintResultEvent
 import com.ts.base.sign.SignActivity

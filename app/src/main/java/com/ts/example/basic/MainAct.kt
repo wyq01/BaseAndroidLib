@@ -1,8 +1,8 @@
 package com.ts.example.basic
 
-import android.support.v7.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.blankj.utilcode.util.LogUtils
-import com.ts.base.BaseActivity
+import com.ts.base.activity.BaseActivity
 import com.ts.base.printer.event.PrintResultEvent
 import com.ts.base.util.ToastUtil
 import com.ts.base.util.click
@@ -102,7 +102,7 @@ class MainAct : BaseActivity() {
 
                     override fun onNext(urls: List<String>) {
                         historyAdapter?.showEmpty()
-                        historyAdapter?.setNewData(urls)
+                        historyAdapter?.setNewData(urls.toMutableList())
                     }
 
                     override fun onError(e: Throwable) {

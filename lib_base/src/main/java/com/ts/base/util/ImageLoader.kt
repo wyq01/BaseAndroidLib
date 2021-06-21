@@ -1,9 +1,9 @@
 package com.ts.base.util
 
 import android.content.Context
-import android.support.annotation.DrawableRes
 import android.text.TextUtils
 import android.widget.ImageView
+import androidx.annotation.DrawableRes
 
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.GlideDrawable

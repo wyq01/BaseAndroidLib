@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import com.ts.base.R
 import com.ts.base.view.CommonShapeButton
 import com.chad.library.adapter.base.BaseQuickAdapter
-import com.chad.library.adapter.base.BaseViewHolder
+import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.ts.base.util.ClickUtil
 import com.ts.base.util.click
 
@@ -14,7 +14,11 @@ import com.ts.base.util.click
  * Created by ts
  * Date: 2019/1/14
  */
-abstract class BaseAda<T, K : BaseViewHolder> : BaseQuickAdapter<T, K> {
+abstract class BaseAda<T, K : BaseViewHolder>(
+    var mContext: Context,
+    layoutResId: Int,
+    data: MutableList<T>?
+) : BaseQuickAdapter<T, K>(layoutResId, data) {
     interface OnReloadListener {
         fun onReload()
     }
@@ -31,7 +35,6 @@ abstract class BaseAda<T, K : BaseViewHolder> : BaseQuickAdapter<T, K> {
         }
     }
 
-    private var context: Context? = null
     private var onReloadListener: OnReloadListener? = null
 
     fun updateItem(position: Int, item: T) {
@@ -40,47 +43,34 @@ abstract class BaseAda<T, K : BaseViewHolder> : BaseQuickAdapter<T, K> {
     }
 
     init {
-        onItemClickListener = OnItemClickListener { _, _, _ ->
+        showLoading()
+
+        setOnItemClickListener { _, _, _ ->
             if (ClickUtil.isFastClick()) {
-                return@OnItemClickListener
+                return@setOnItemClickListener
             }
         }
-    }
-
-    private constructor(layoutResId: Int, data: List<T>?) : super(layoutResId, data)
-
-    constructor(context: Context?, layoutResId: Int, data: List<T>?) : super(layoutResId, data) {
-        this.context = context
-        showLoading()
     }
 
     fun showLoading() {
-        context?.let {
-            emptyView = LayoutInflater.from(it).inflate(R.layout.base_view_loading, null)
-        }
+        setEmptyView(LayoutInflater.from(mContext).inflate(R.layout.base_view_loading, null))
     }
 
     fun showEmpty() {
-        context?.let {
-            emptyView = LayoutInflater.from(it).inflate(R.layout.base_view_empty, null)
-        }
+        setEmptyView(LayoutInflater.from(mContext).inflate(R.layout.base_view_empty, null))
     }
 
     fun showNoNetwork() {
-        context?.let {
-            emptyView = LayoutInflater.from(it).inflate(R.layout.base_view_no_network, null)
-        }
+        setEmptyView(LayoutInflater.from(mContext).inflate(R.layout.base_view_no_network, null))
     }
 
     fun showReload() {
-        context?.let {
-            val noNetWorkView = LayoutInflater.from(it).inflate(R.layout.base_view_no_network, null)
-            val reloadBtn = noNetWorkView.findViewById<CommonShapeButton>(R.id.reloadBtn)
-            reloadBtn?.click {
-                onReloadListener?.onReload()
-            }
-            emptyView = noNetWorkView
+        val noNetWorkView = LayoutInflater.from(mContext).inflate(R.layout.base_view_no_network, null)
+        val reloadBtn = noNetWorkView.findViewById<CommonShapeButton>(R.id.reloadBtn)
+        reloadBtn?.click {
+            onReloadListener?.onReload()
         }
+        setEmptyView(noNetWorkView)
     }
 
 }

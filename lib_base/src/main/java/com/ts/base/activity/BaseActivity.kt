@@ -1,4 +1,4 @@
-package com.ts.base
+package com.ts.base.activity
 
 import android.app.Activity
 import android.content.Intent
@@ -9,12 +9,12 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.provider.Settings
-import android.support.v7.widget.AppCompatImageButton
 import android.text.TextUtils
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageButton
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatImageButton
 import com.blankj.utilcode.util.ImageUtils
 import com.blankj.utilcode.util.KeyboardUtils
 import com.blankj.utilcode.util.LogUtils
@@ -23,6 +23,9 @@ import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import com.gyf.barlibrary.ImmersionBar
 import com.smarx.notchlib.NotchScreenManager
+import com.ts.base.BaseApplication
+import com.ts.base.BuildConfig
+import com.ts.base.R
 import com.ts.base.constant.RequestCode
 import com.ts.base.event.BaseEvent
 import com.ts.base.printer.PrinterConnectAct
@@ -47,7 +50,7 @@ import java.io.IOException
 /**
  * 基础activity
  */
-abstract class BaseActivity : BaseAbstractActivity() {
+abstract class BaseActivity : IBaseActivity() {
 
     companion object {
         const val SIGNATURE_WIDTH = 150

@@ -7,8 +7,8 @@ import android.webkit.WebChromeClient
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import com.ts.base.BaseActivity
 import com.ts.base.R
+import com.ts.base.activity.BaseActivity
 import kotlinx.android.synthetic.main.base_act_office_reader.*
 
 /**

@@ -13,9 +13,6 @@ import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.Settings;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
-import android.support.v7.widget.CardView;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -24,10 +21,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
+
 import com.blankj.utilcode.util.PermissionUtils;
-import com.ts.base.BaseActivity;
 import com.ts.base.BuildConfig;
 import com.ts.base.R;
+import com.ts.base.activity.BaseActivity;
 import com.ts.base.constant.RequestCode;
 import com.ts.base.sign.config.PenConfig;
 import com.ts.base.sign.util.BitmapUtil;

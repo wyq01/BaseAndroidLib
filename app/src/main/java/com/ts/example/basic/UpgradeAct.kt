@@ -2,8 +2,9 @@ package com.ts.example.basic
 
 import android.content.Context
 import android.content.Intent
+import com.ts.base.activity.BaseActivity
 import com.ts.upgrade.UpgradeUtils
-import com.ts.base.BaseActivity
+import com.ts.base.activity.IBaseActivity
 import com.ts.base.util.click
 import com.ts.example.R
 import kotlinx.android.synthetic.main.act_upgrade.*

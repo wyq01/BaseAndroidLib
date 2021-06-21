@@ -1,11 +1,10 @@
-package com.ts.base
+package com.ts.base.activity
 
 import android.content.Intent
-import android.os.Handler
-import android.support.annotation.LayoutRes
-import android.support.v7.app.AppCompatActivity
+import androidx.annotation.LayoutRes
+import androidx.appcompat.app.AppCompatActivity
 
-abstract class BaseAbstractActivity : AppCompatActivity() {
+abstract class IBaseActivity : AppCompatActivity() {
 
     /**
      * 布局

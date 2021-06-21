@@ -1,10 +1,10 @@
 package com.ts.base.image
 
 import android.content.Context
-import android.support.v4.view.PagerAdapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.viewpager.widget.PagerAdapter
 import com.github.chrisbanes.photoview.PhotoView
 import com.ts.base.R
 import com.ts.base.util.ImageLoader

@@ -11,10 +11,6 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.ts.base.sign.pen.BasePen;
-import com.ts.base.sign.pen.Eraser;
-import com.ts.base.sign.pen.SteelPen;
-import com.ts.base.sign.util.StepOperator;
 import com.ts.base.R;
 import com.ts.base.sign.config.PenConfig;
 import com.ts.base.sign.pen.BasePen;

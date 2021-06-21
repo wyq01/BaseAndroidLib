@@ -1,9 +1,0 @@
-package com.ts.base.mvp
-
-/**
- *
- * Created by ts
- * Date: 2019/1/16
- */
-interface IView {
-}

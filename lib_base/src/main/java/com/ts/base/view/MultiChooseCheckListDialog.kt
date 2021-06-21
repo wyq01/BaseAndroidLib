@@ -3,17 +3,17 @@ package com.ts.base.view
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
-import android.support.v7.widget.AppCompatCheckBox
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.SimpleItemAnimator
+import androidx.recyclerview.widget.RecyclerView
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatCheckBox
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.SimpleItemAnimator
 import com.chad.library.adapter.base.BaseQuickAdapter
-import com.chad.library.adapter.base.BaseViewHolder
+import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.ts.base.R
 import com.ts.base.util.click
 
@@ -95,7 +95,7 @@ class MultiChooseCheckListDialog private constructor(
         val filterAdapter = FilterAdapter(data, selectedList)
         filterRv.adapter = filterAdapter
 
-        filterAdapter.onItemClickListener = BaseQuickAdapter.OnItemClickListener { _, _, position ->
+        filterAdapter.setOnItemClickListener { _, _, position ->
             filterAdapter.click(position)
         }
 

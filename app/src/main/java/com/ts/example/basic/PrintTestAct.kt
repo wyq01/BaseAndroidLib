@@ -5,7 +5,7 @@ import android.content.Context
 import android.content.Intent
 import com.blankj.utilcode.util.LogUtils
 import com.google.gson.Gson
-import com.ts.base.BaseActivity
+import com.ts.base.activity.BaseActivity
 import com.ts.base.constant.RequestCode
 import com.ts.base.printer.PrinterConnectAct
 import com.ts.base.printer.bean.*

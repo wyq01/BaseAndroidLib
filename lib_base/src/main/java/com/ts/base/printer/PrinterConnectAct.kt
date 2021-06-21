@@ -6,15 +6,14 @@ import android.bluetooth.BluetoothDevice
 import android.content.DialogInterface
 import android.content.Intent
 import android.provider.Settings
-import android.support.v4.content.ContextCompat
-import android.support.v4.graphics.drawable.DrawableCompat
-import android.support.v7.widget.LinearLayoutManager
 import android.view.View
-import com.chad.library.adapter.base.BaseQuickAdapter
-import com.ts.base.BaseActivity
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.ts.base.BaseApplication
 import com.ts.base.BuildConfig
 import com.ts.base.R
+import com.ts.base.activity.BaseActivity
 import com.ts.base.constant.RequestCode
 import com.ts.base.printer.event.BluetoothBindEvent
 import com.ts.base.printer.event.BluetoothStatusEvent
@@ -104,10 +103,10 @@ class PrinterConnectAct : BaseActivity() {
         )
         printerAdapter = PrinterAdapter(this, sourceData)
         devicesRv.adapter = printerAdapter
-        printerAdapter?.onItemClickListener = BaseQuickAdapter.OnItemClickListener { baseQuickAdapter, _, position ->
-                val device = baseQuickAdapter.getItem(position) as BluetoothDevice?
-                connect(device?.address)
-            }
+        printerAdapter?.setOnItemClickListener { baseQuickAdapter, _, position ->
+            val device = baseQuickAdapter.getItem(position) as BluetoothDevice?
+            connect(device?.address)
+        }
         val deviceAddress = (application as BaseApplication).getDeviceAddress()
         if (isConnect) {
             printerAdapter?.updateSelected(deviceAddress)

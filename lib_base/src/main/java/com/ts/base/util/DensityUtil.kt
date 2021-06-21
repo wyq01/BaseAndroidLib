@@ -1,7 +1,7 @@
 package com.ts.base.util
 
 import android.content.Context
-import android.support.annotation.DimenRes
+import androidx.annotation.DimenRes
 
 object DensityUtil {
 

@@ -3,20 +3,19 @@ package com.ts.example.basic.adapter
 import android.content.Context
 import android.view.View
 import android.widget.TextView
-import com.chad.library.adapter.base.BaseQuickAdapter.OnItemClickListener
-import com.chad.library.adapter.base.BaseViewHolder
+import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.ts.example.R
 import com.ts.example.basic.WebViewAct
 import com.ts.base.adapter.BaseAda
 import com.ts.base.util.ClickUtil
 
-class HistoryAdapter(context: Context?, data: List<String>?) :
+class HistoryAdapter(context: Context, data: MutableList<String>?) :
         BaseAda<String, HistoryAdapter.ViewHolder>(context, R.layout.ada_history, data) {
 
     init {
-        onItemClickListener = OnItemClickListener { _, _, position ->
+        setOnItemClickListener { _, _, position ->
             if (ClickUtil.isFastClick()) {
-                return@OnItemClickListener
+                return@setOnItemClickListener
             }
             val item = getItem(position)
             item?.let {
@@ -25,8 +24,8 @@ class HistoryAdapter(context: Context?, data: List<String>?) :
         }
     }
 
-    override fun convert(viewHolder: ViewHolder, item: String) {
-        viewHolder.urlTv.text = item
+    override fun convert(holder: ViewHolder, item: String) {
+        holder.urlTv.text = item
     }
 
     inner class ViewHolder(view: View) : BaseViewHolder(view) {
