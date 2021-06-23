@@ -14,7 +14,7 @@ import com.ts.base.R
  * loading页
  * Created by Administrator on 2016/9/29.
  */
-class ProgressDialog private constructor(context: Context?) : Dialog(context, R.style.progressDialog) {
+class BaseProgressDialog private constructor(context: Context?) : Dialog(context, R.style.progressDialog) {
 
     //    private ImageView loadingIv;
     //    private Animation operatingAnim;
@@ -52,10 +52,10 @@ class ProgressDialog private constructor(context: Context?) : Dialog(context, R.
     }
 
     companion object {
-        private var progressDialog: ProgressDialog? = null
+        private var baseProgressDialog: BaseProgressDialog? = null
         private var message: String? = null
 
-        fun showDialog(context: Context, cancelable: Boolean): ProgressDialog? {
+        fun showDialog(context: Context, cancelable: Boolean): BaseProgressDialog? {
             return showDialog(
                 context,
                 "",
@@ -65,36 +65,36 @@ class ProgressDialog private constructor(context: Context?) : Dialog(context, R.
         }
 
         @JvmOverloads
-        fun showDialog(context: Context?, msg: String?, cancelable: Boolean = false, l: DialogInterface.OnDismissListener? = null): ProgressDialog? {
+        fun showDialog(context: Context?, msg: String?, cancelable: Boolean = false, l: DialogInterface.OnDismissListener? = null): BaseProgressDialog? {
             message = msg
             try {
                 hideDialog()
-                progressDialog =
-                    ProgressDialog(context)
-                progressDialog?.setCancelable(cancelable)
-                progressDialog?.setCanceledOnTouchOutside(false)
+                baseProgressDialog =
+                    BaseProgressDialog(context)
+                baseProgressDialog?.setCancelable(cancelable)
+                baseProgressDialog?.setCanceledOnTouchOutside(false)
                 if (l != null) {
-                    progressDialog?.setOnDismissListener(l)
+                    baseProgressDialog?.setOnDismissListener(l)
                 }
                 if (context is Activity && context.isFinishing) {
-                    progressDialog = null
+                    baseProgressDialog = null
                 } else {
-                    progressDialog?.show()
+                    baseProgressDialog?.show()
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
                 return null
             }
 
-            return progressDialog
+            return baseProgressDialog
         }
 
         fun hideDialog() {
             try {
-                if (progressDialog != null && progressDialog!!.isShowing) {
-                    progressDialog?.setOnDismissListener(null)
-                    progressDialog?.dismiss()
-                    progressDialog = null
+                if (baseProgressDialog != null && baseProgressDialog!!.isShowing) {
+                    baseProgressDialog?.setOnDismissListener(null)
+                    baseProgressDialog?.dismiss()
+                    baseProgressDialog = null
                 }
             } catch (e: Exception) {
                 e.printStackTrace()

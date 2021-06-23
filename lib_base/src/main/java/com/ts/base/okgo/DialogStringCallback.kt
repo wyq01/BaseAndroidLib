@@ -1,7 +1,7 @@
 package com.ts.base.okgo
 
 import android.app.Activity
-import com.ts.base.view.ProgressDialog
+import com.ts.base.view.BaseProgressDialog
 import com.lzy.okgo.callback.StringCallback
 import com.lzy.okgo.model.Response
 import com.lzy.okgo.request.base.Request
@@ -13,7 +13,7 @@ import java.net.UnknownHostException
  */
 abstract class DialogStringCallback(var activity: Activity?, var cancelable: Boolean, var msg: String?) : StringCallback() {
 
-    private var progressDialog: ProgressDialog? = null
+    private var baseProgressDialog: BaseProgressDialog? = null
 
     constructor (activity: Activity?) : this(activity, false, null)
 
@@ -21,16 +21,16 @@ abstract class DialogStringCallback(var activity: Activity?, var cancelable: Boo
 
     override fun onStart(request: Request<String, out Request<*, *>>?) {
         super.onStart(request)
-        progressDialog = ProgressDialog.showDialog(activity, msg, cancelable)
+        baseProgressDialog = BaseProgressDialog.showDialog(activity, msg, cancelable)
         if (cancelable) {
-            progressDialog?.setOnDismissListener { onCancel() }
+            baseProgressDialog?.setOnDismissListener { onCancel() }
         }
     }
 
     override fun onFinish() {
         super.onFinish()
-        progressDialog?.setOnDismissListener(null)
-        ProgressDialog.hideDialog()
+        baseProgressDialog?.setOnDismissListener(null)
+        BaseProgressDialog.hideDialog()
     }
 
     override fun onError(response: Response<String>) {

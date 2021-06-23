@@ -22,7 +22,7 @@ import com.ts.base.printer.jqPrinter.PrinterConnectService
 import com.ts.base.util.ToastUtil
 import com.ts.base.util.click
 import com.ts.base.view.ItemDivider
-import com.ts.base.view.ProgressDialog
+import com.ts.base.view.BaseProgressDialog
 import io.reactivex.Observable
 import io.reactivex.ObservableOnSubscribe
 import io.reactivex.Observer
@@ -198,7 +198,7 @@ class PrinterConnectAct : BaseActivity() {
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onPrinterConnectEvent(event: PrinterConnectEvent) {
         when (event.status) {
-            PrinterConnectEvent.STATUS_CONNECTING -> ProgressDialog.showDialog(
+            PrinterConnectEvent.STATUS_CONNECTING -> BaseProgressDialog.showDialog(
                 this,
                 "正在连接打印机",
                 true,
@@ -207,12 +207,12 @@ class PrinterConnectAct : BaseActivity() {
                 })
             PrinterConnectEvent.STATUS_FAILED -> {
                 ToastUtil.shortToast(this, "打印机连接失败")
-                ProgressDialog.hideDialog()
+                BaseProgressDialog.hideDialog()
                 printerAdapter?.updateSelected("")
             }
             PrinterConnectEvent.STATUS_SUCCESS -> {
                 ToastUtil.shortToast(this, "打印机连接成功")
-                ProgressDialog.hideDialog()
+                BaseProgressDialog.hideDialog()
                 val deviceAddress = (application as BaseApplication).getDeviceAddress()
                 printerAdapter?.updateSelected(deviceAddress)
                 val data = Intent()
@@ -222,7 +222,7 @@ class PrinterConnectAct : BaseActivity() {
             }
             PrinterConnectEvent.STATUS_CONNECTED -> {
                 ToastUtil.shortToast(this, "打印机已连接")
-                ProgressDialog.hideDialog()
+                BaseProgressDialog.hideDialog()
             }
         }
     }

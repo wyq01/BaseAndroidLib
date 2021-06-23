@@ -1,7 +1,7 @@
 package com.ts.base.okgo
 
 import android.app.Activity
-import com.ts.base.view.ProgressDialog
+import com.ts.base.view.BaseProgressDialog
 import com.lzy.okgo.callback.AbsCallback
 import com.lzy.okgo.request.base.Request
 import com.ts.base.util.convert
@@ -18,13 +18,13 @@ abstract class DialogJsonCallback<T>(var activity: Activity?, var cancelable: Bo
 
     private var type: Type? = null
     private var clazz: Class<T>? = null
-    private var progressDialog: ProgressDialog? = null
+    private var baseProgressDialog: BaseProgressDialog? = null
 
     override fun onStart(request: Request<T, out Request<Any, Request<*, *>>>?) {
         super.onStart(request)
-        progressDialog = ProgressDialog.showDialog(activity, msg, cancelable)
-        if (progressDialog != null && cancelable) {
-            progressDialog?.setOnDismissListener {
+        baseProgressDialog = BaseProgressDialog.showDialog(activity, msg, cancelable)
+        if (baseProgressDialog != null && cancelable) {
+            baseProgressDialog?.setOnDismissListener {
                 onCancel()
             }
         }
@@ -32,8 +32,8 @@ abstract class DialogJsonCallback<T>(var activity: Activity?, var cancelable: Bo
 
     override fun onFinish() {
         super.onFinish()
-        progressDialog?.setOnDismissListener(null)
-        ProgressDialog.hideDialog()
+        baseProgressDialog?.setOnDismissListener(null)
+        BaseProgressDialog.hideDialog()
     }
 
     override fun convertResponse(response: Response): T? {

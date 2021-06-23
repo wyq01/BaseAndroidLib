@@ -1,11 +1,21 @@
 package com.ts.base.util
 
+import android.annotation.SuppressLint
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import android.webkit.WebView
+import androidx.lifecycle.LifecycleOwner
 import cn.pedant.SafeWebViewBridge.JsCallback
 import com.jakewharton.rxbinding2.view.RxView
+import com.ts.base.lifecycle.DisposableLifecycleObserver
+import io.reactivex.Completable
+import io.reactivex.Flowable
+import io.reactivex.Maybe
+import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 import java.lang.ref.SoftReference
 import java.util.concurrent.TimeUnit
 
@@ -42,20 +52,36 @@ fun String?.isNotNull(): Boolean {
     return !TextUtils.isEmpty(this)
 }
 
+@SuppressLint("CheckResult")
 fun View.click(action: (View) -> Unit) {
     RxView.clicks(this)
         .throttleFirst(ClickUtil.MIN_DELAY_TIME, TimeUnit.MILLISECONDS)
         .subscribe {
             action(this)
         }
-//    RxView.clicks(view)
-//        .throttleFirst(1, TimeUnit.SECONDS)
-//        .subscribe(new Consumer<Object>() {
-//            @Override
-//            public void accept(Object o) throws Exception {
-//                // do something
-//            }
-//        })
+}
+
+// 线程切换
+fun Completable.back2Main(): Completable {
+    return this.subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+}
+fun <T> Single<T>.back2Main(): Single<T> {
+    return this.subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+}
+fun <T> Flowable<T>.back2Main(): Flowable<T> {
+    return this.subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+}
+fun <T> Maybe<T>.back2Main(): Maybe<T> {
+    return this.subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+}
+// 绑定生命周期
+fun Disposable.bindLifecycle(lifecycleOwner: LifecycleOwner): Disposable {
+    lifecycleOwner.lifecycle.addObserver(DisposableLifecycleObserver(this))
+    return this
 }
 
 @Throws
