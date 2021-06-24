@@ -57,10 +57,10 @@ android {
 dependencies {
     api fileTree(include: ['*.jar'], dir: 'libs')
     api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    api 'androidx.multidex:multidex:2.0.0'
-    api 'com.google.android.material:material:1.0.0'
-    api 'androidx.recyclerview:recyclerview:1.0.0'
-    api 'androidx.appcompat:appcompat:1.0.0'
+    api 'androidx.multidex:multidex:2.0.1'
+    api 'com.google.android.material:material:1.2.1'
+    api 'androidx.recyclerview:recyclerview:1.1.0'
+    api 'androidx.appcompat:appcompat:1.2.0'
     api 'androidx.cardview:cardview:1.0.0'
     api 'androidx.constraintlayout:constraintlayout:2.0.4'
 
@@ -92,6 +92,7 @@ dependencies {
     api 'com.squareup.retrofit2:converter-gson:2.9.0'
     api 'com.squareup.retrofit2:adapter-rxjava3:2.9.0'
     api 'io.reactivex.rxjava3:rxandroid:3.0.0'
+    api 'io.reactivex.rxjava3:rxjava:3.0.4' // 线程调度
 }
 
 configurations.all {

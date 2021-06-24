@@ -96,7 +96,6 @@ class OkHttpHelper {
     }
 
     fun create(): OkHttpClient {
-        LogUtils.d("okHttp builder内存地址$builder")
         return builder.build()
     }
 
