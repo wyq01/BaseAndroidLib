@@ -51,7 +51,7 @@ import java.util.Objects;
  */
 public class SignActivity extends BaseActivity implements View.OnClickListener, PaintView.StepCallback {
 
-    public static final int CANVAS_MAX_WIDTH = 3000; // 画布最大宽度
+    public static final int CANVAS_MAX_WIDTH = 5000; // 画布最大宽度
     public static final int CANVAS_MAX_HEIGHT = 3000; // 画布最大高度
 
     private static final int saveImageWidth = 200;
@@ -492,4 +492,5 @@ public class SignActivity extends BaseActivity implements View.OnClickListener, 
     protected boolean overStatusBar() {
         return false;
     }
+
 }
